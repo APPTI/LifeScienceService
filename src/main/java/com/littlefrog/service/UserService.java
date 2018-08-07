@@ -2,8 +2,11 @@ package com.littlefrog.service;
 
 import com.littlefrog.entity.User;
 import com.littlefrog.respository.UserRepository;
+import com.littlefrog.store.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 import java.util.List;
 
 @Service("UserService")
@@ -11,19 +14,67 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public String AddUser(String name, int age){
-        userRepository.save(new User(name,age));
-        return "添加成功";
+    private Store store;
+
+    public User addUser(String name, String openID){
+        User user=userRepository.save(new User(name,openID));
+        store.AddUser(user);
+        return user;
     }
 
-    public String Index(){
+    public List<User> getAllUser(){
         List<User> u= userRepository.findall();
-        return u.toString();
+        return u;
     }
 
-    public String Index(int id){
-        if(userRepository.FindById(id).toString()==null)
-            return "null";
-        else return userRepository.FindById(id).toString();
+    public User getUserInfo(int id){
+        User user = store.getById(id);
+        if(user == null) {
+            user = userRepository.FindById(id);
+            if (user == null){
+                return null;
+            } else {
+                store.AddUser(user);
+            }
+        }
+        return user;
+    }
+
+    public User login(String name,String openID){
+        User user = userRepository.FindByopenID(openID);
+        if(user == null){
+            user = userRepository.save(new User(name,openID));
+            store.AddUser(user);
+            return user;
+        }else{
+            if(user.getName() == name) {
+                user = userRepository.SetLoginTime(user.getId(),new Date());
+                store.UpdateUserInfo(user.getId(),user);
+                return user;
+            }
+            else{
+                userRepository.SetName(user.getId(),name);
+                user = userRepository.SetLoginTime(user.getId(),new Date());
+                store.UpdateUserInfo(user.getId(),user);
+                return user;
+            }
+        }
+    }
+    public User setUserInfo(int id, int gender, String name, String phoneNum){
+        User user = userRepository.UpdateInfo(id,gender,name,phoneNum);
+        store.UpdateUserInfo(user.getId(),user);
+        return user;
+    }
+
+    public User recharge(int id, double money, double balance){
+        User user = userRepository.SetBalance(id,balance+money);
+        store.UpdateUserInfo(user.getId(),user);
+        return user;
+    }
+
+    public User payMoney(int id,double money){
+        User user = userRepository.SetBalance(id,money);
+        store.UpdateUserInfo(user.getId(),user);
+        return user;
     }
 }

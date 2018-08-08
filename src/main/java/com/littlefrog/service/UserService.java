@@ -57,7 +57,6 @@ public class UserService {
                 userRepository.SetName(user.getId(),name);
                 userRepository.SetLoginTime(user.getId(),new Date());
                 user = userRepository.FindById(user.getId());
-                System.out.print(user.toString());
                 store.UpdateUserInfo(user.getId(),user);
                 return user;
             }

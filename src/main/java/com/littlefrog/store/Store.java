@@ -3,12 +3,13 @@ package com.littlefrog.store;
 import com.littlefrog.entity.User;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 
-public class Store {
+public  class Store {
     private final int MAX_SIZE = 100;
-    private Map<Integer,User> userStore;
+    private static Map<Integer,User> userStore = new HashMap<Integer, User>();
 
     public User getById(int Id){
         if(userStore.containsKey(Id)){

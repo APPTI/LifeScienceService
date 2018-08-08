@@ -14,7 +14,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    private Store store;
+    private Store store = new Store();
 
     public User addUser(String name, String openID){
         User user=userRepository.save(new User(name,openID));
@@ -48,32 +48,38 @@ public class UserService {
             return user;
         }else{
             if(user.getName() == name) {
-                user = userRepository.SetLoginTime(user.getId(),new Date());
+                userRepository.SetLoginTime(user.getId(),new Date());
+                user = userRepository.FindById(user.getId());
                 store.UpdateUserInfo(user.getId(),user);
                 return user;
             }
             else{
                 userRepository.SetName(user.getId(),name);
-                user = userRepository.SetLoginTime(user.getId(),new Date());
+                userRepository.SetLoginTime(user.getId(),new Date());
+                user = userRepository.FindById(user.getId());
+                System.out.print(user.toString());
                 store.UpdateUserInfo(user.getId(),user);
                 return user;
             }
         }
     }
     public User setUserInfo(int id, int gender, String name, String phoneNum){
-        User user = userRepository.UpdateInfo(id,gender,name,phoneNum);
+        userRepository.UpdateInfo(id,gender,name,phoneNum);
+        User user = userRepository.FindById(id);
         store.UpdateUserInfo(user.getId(),user);
         return user;
     }
 
     public User recharge(int id, double money, double balance){
-        User user = userRepository.SetBalance(id,balance+money);
+        userRepository.SetBalance(id,balance+money);
+        User user = userRepository.FindById(id);
         store.UpdateUserInfo(user.getId(),user);
         return user;
     }
 
     public User payMoney(int id,double money){
-        User user = userRepository.SetBalance(id,money);
+        userRepository.SetBalance(id,money);
+        User user = userRepository.FindById(id);
         store.UpdateUserInfo(user.getId(),user);
         return user;
     }

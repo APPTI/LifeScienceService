@@ -44,4 +44,18 @@ public class PostController {
             return genFailResult("该帖子不存在");
         }
     }
+
+    /**
+     * 修改评论
+     */
+    @RequestMapping("/edit")
+    public Response modify(@RequestParam Integer postID, @RequestParam String newContent) {
+        return genSuccessResult(postService.setUserInfo(postID, newContent));
+    }
+
+    @PostMapping("/delete")
+    public Response delete(@RequestParam Integer postID) {
+        postService.removePost(postID);
+        return genSuccessResult();
+    }
 }

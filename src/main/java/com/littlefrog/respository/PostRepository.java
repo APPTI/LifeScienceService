@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,15 +23,13 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query(value = "SELECT * FROM post a where a.postID = ?", nativeQuery = true)
     Optional<Post> findById(Integer id);
 
-
+    @Transactional
     @Modifying
-    @Query(value = "UPDATE post SET content =  ?2 where postID = ?1;select * from post where postID = ?1",nativeQuery = true)
-    Post updateInfo(Integer postID,String content);
+    @Query(value = "UPDATE post SET content =  ?2 where postID = ?1 ", nativeQuery = true)
+    void updateInfo(Integer postID, String content);
 
-    @Query(value = "select LAST_INSERT_ID();",nativeQuery = true)
-     Integer getLastInsertId();
-
+    @Transactional
     @Modifying
-    @Query(value = "delete * from post where postID = ?1",nativeQuery = true)
-    void deleteUser(Integer id);
+    @Query(value = "delete from post where postID = ?", nativeQuery = true)
+    void deletePost(Integer id);
 }

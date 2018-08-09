@@ -24,6 +24,7 @@ public class PostService {
     public Post addPost(Integer lessonId, String content, Integer userID){
         Post post = new Post( lessonId,  content,  userID);
         //可能要缓存在这里
+        postRepository.save(post);
         return post;
     }
 

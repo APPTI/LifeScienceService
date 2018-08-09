@@ -19,7 +19,6 @@ import static com.littlefrog.common.ResultGenerator.genSuccessResult;
 public class PostController {
     @Autowired
     private PostService postService;
-    private Response response;
 
     @GetMapping("/index")
     public Response index() {

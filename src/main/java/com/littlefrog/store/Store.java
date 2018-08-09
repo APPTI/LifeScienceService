@@ -1,5 +1,6 @@
 package com.littlefrog.store;
 
+import com.littlefrog.entity.Course;
 import com.littlefrog.entity.User;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -10,6 +11,7 @@ import java.util.Queue;
 public  class Store {
     private final int MAX_SIZE = 100;
     private static Map<Integer,User> userStore = new HashMap<Integer, User>();
+    private static Map<Integer, Course> courseStore = new HashMap<Integer, Course>();
 
     public User getById(int Id){
         if(userStore.containsKey(Id)){
@@ -33,6 +35,26 @@ public  class Store {
             userStore.replace(id,user);
         }else{
             this.AddUser(user);
+        }
+    }
+
+    public Course getCourseById(int id){
+        if (courseStore.containsKey(id)){
+            return courseStore.get(id);
+        }else {
+            return null;
+        }
+    }
+
+    public void addCourse(Course course){
+        if (courseStore.containsValue(course)){
+            return;
+        }
+        else {
+            if (courseStore.size()>MAX_SIZE){
+                courseStore.clear();
+            }
+            courseStore.put(course.getId(),course);
         }
     }
 }

@@ -22,13 +22,39 @@ public class CourseController {
 
     private Response response;
 
+    private int currentID=0;
     @GetMapping("course/by-keyword")
     public Response getCoursesByKeyword(@RequestParam String keyword, @RequestParam int sortBy, @RequestParam Tag tag, @RequestParam int index, @RequestParam int offset){
         List<Course>  courseList;
         switch (sortBy){
-
+            case 0:
+                if (tag == Tag.NONE){
+                    courseList = courseService.getCourseByReleaseTime(keyword,index,offset,currentID++);
+                }
+                else {
+                    courseList = courseService.getCourseByTagAndReleaseTime(tag,keyword,index,offset,currentID++);
+                }
+                break;
+            case 1:
+                courseList=courseService.getCourseByTag(tag,keyword,index,offset,currentID);
+                break;
+            case 2:
+                if (tag == Tag.NONE){
+                    courseList = courseService.getCourseByPopularity(keyword,index,offset,currentID++);
+                }
+                else {
+                    courseList = courseService.getCourseByTagAndPopularity(tag,keyword,index,offset,currentID++);
+                }
+                break;
+            default:
+                courseList = null;
         }
-        return null;
+        if (courseList  == null){
+            return genFailResult("获取列表失败");
+        }
+        else {
+            return genSuccessResult(courseList);
+        }
     }
 
 }

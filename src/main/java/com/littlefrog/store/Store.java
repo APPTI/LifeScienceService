@@ -4,14 +4,12 @@ import com.littlefrog.entity.Course;
 import com.littlefrog.entity.User;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 public  class Store {
     private final int MAX_SIZE = 100;
     private static Map<Integer,User> userStore = new HashMap<Integer, User>();
-    private static Map<Integer, Course> courseStore = new HashMap<Integer, Course>();
+    private static Map<Integer, ArrayList<Course>> courseStore = new HashMap<Integer, ArrayList<Course>>();
 
     public User getById(int Id){
         if(userStore.containsKey(Id)){
@@ -38,19 +36,18 @@ public  class Store {
         }
     }
 
-    public Course getCourseById(int id){
+    public List<Course> getCourseList(int id,int index,int offset){
         if (courseStore.containsKey(id)){
-            return courseStore.get(id);
+            return courseStore.get(id).subList(index,Math.min(index+offset-1,courseStore.get(id).size()));
         }else {
             return null;
         }
     }
 
-    public void addCourseList(Course course){
-        courseStore.clear();
+    public void addCourseList(int id,List<Course> courseList){
         if (courseStore.size()>MAX_SIZE){
             courseStore.clear();
         }
-        courseStore.put(course.getId(),course);
+        courseStore.put(id,(ArrayList)courseList);
     }
 }

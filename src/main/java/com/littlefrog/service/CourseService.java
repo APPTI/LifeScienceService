@@ -14,56 +14,48 @@ import java.util.List;
 public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
-    List<Course> courseList;
+    int currentID=0;
 
     private Store store = new Store();
-    public Course getCourseById (int id){
-        Course course =store.getCourseById(id);
-        if (course == null){
-            course = courseRepository.FindById(id);
-            if (course == null){
-                return null;
-            }
-            else {
-                store.addCourse(course);
-            }
+
+    public List<Course> getCourseByTag(Tag tag,String keyword,int index,int offset,int id){
+        List<Course> courseList=store.getCourseList(id,index,offset);
+        if ( courseList== null){
+            store.addCourseList(id,courseRepository.findCourseByTag(tag,keyword));
         }
-        return course;
+        return courseList;
     }
 
-    public List<Course> getCourseByTag(Tag tag,int index,int offset){
-        if (index == 0)
-            courseList = courseRepository.findCourseByTag(tag, "");
-        return courseList.subList(index,Math.min(index+offset-1,courseList.size()));
+    public List<Course> getCourseByTagAndPopularity(Tag tag,String keyword,int index,int offset,int id){
+        List<Course> courseList=store.getCourseList(id,index,offset);
+        if ( courseList== null){
+            store.addCourseList(id,courseRepository.findCourseByTagAndPopularity(tag,keyword));
+        }
+        return courseList;
     }
 
-    public List<Course> getCourseByTagAndPopularity(Tag tag,int index,int offset){
-        if (index == 0){
-            courseList = courseRepository.findCourseByTagAndPopularity(tag, "");
+    public List<Course> getCourseByTagAndReleaseTime(Tag tag,String keyword,int index,int offset,int id){
+        List<Course> courseList=store.getCourseList(id,index,offset);
+        if ( courseList== null){
+            store.addCourseList(id,courseRepository.findCourseByTagAndReleaseTime(tag,keyword));
         }
-        return courseList.subList(index,Math.min(index+offset-1,courseList.size()));
+        return courseList;
     }
 
-    public List<Course> getCourseByTagAndReleaseTime(Tag tag,int index,int offset){
-        if (index == 0)
-        {
-            courseList = courseRepository.findCourseByTagAndReleaseTime(tag, "");
+    public List<Course> getCourseByReleaseTime (String keyword,int index,int offset,int id){
+        List<Course> courseList=store.getCourseList(id,index,offset);
+        if ( courseList== null){
+            store.addCourseList(id,courseRepository.findCourseByReleaseTime(keyword));
         }
-        return courseList.subList(index,Math.min(index+offset-1,courseList.size()));
+        return courseList;
     }
 
-    public List<Course> getCourseByReleaseTime (int index,int offset){
-        if (index == 0){
-            courseList=courseRepository.findCourseByReleaseTime("");
+    public List<Course> getCourseByPopularity (String keyword,int index,int offset,int id){
+        List<Course> courseList=store.getCourseList(id,index,offset);
+        if ( courseList== null){
+            store.addCourseList(id,courseRepository.findCourseByPopularity(keyword));
         }
-        return courseList.subList(index,Math.min(index+offset-1,courseList.size()));
-    }
-
-    public List<Course> getCourseByPopularity (int index,int offset){
-        if (index == 0){
-            courseList=courseRepository.findCourseByPopularity("");
-        }
-        return courseList.subList(index,Math.min(index+offset-1,courseList.size()));
+        return courseList;
     }
 
     public Course addCourse (Integer id,String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic, Date releaseTime, double price, int courseNum){

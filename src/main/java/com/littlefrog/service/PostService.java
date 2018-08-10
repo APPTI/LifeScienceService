@@ -6,6 +6,7 @@ import com.littlefrog.store.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,16 +17,31 @@ import java.util.Optional;
 public class PostService {
     @Autowired
     private PostRepository postRepository;
-    private Store store;
+    private Store store = new Store();
 
-    public List<Post> getAllPost() {
-        return postRepository.findAll();
+    public ArrayList<Post> getAllPost(Integer lessonId) {
+        ArrayList<Post> list = store.searchPostInCache(lessonId);
+        if (list == null) {
+            list = postRepository.findAllPost(lessonId);
+            store.addToPostCache(list);
+        }
+        return list;
     }
 
-    public Post addPost(Integer lessonId, String content, Integer userID) {
-        Post post = new Post(lessonId, content, userID);
-        //可能要缓存在这里
-        postRepository.save(post);
+    public List<Post> getAllReply(Integer lessonId) {
+        return postRepository.findAllReply(lessonId);
+    }
+
+    public Post addPost(Integer courseID, String content, Integer userID, Integer prePostID) {
+        Post post;
+        if (prePostID == null) {
+            post = new Post(courseID, content, userID);
+            postRepository.save(post);
+            store.addNewToPostCache(post);
+        } else {
+            post = new Post(courseID, prePostID, content, userID);
+            postRepository.save(post);
+        }
         return post;
     }
 
@@ -40,13 +56,54 @@ public class PostService {
      * @return 修改后的帖子
      */
     public Post setUserInfo(Integer postID, String content) {
-        postRepository.updateInfo(postID, content);
         Optional<Post> o = postRepository.findById(postID);
-        //可能要缓存在这里
-        return o.orElse(null);
+        if (o.isPresent()) {
+            Post old = o.get();
+            Post post = new Post(old);
+            post.setContent(content);
+            store.updatePostCache(old, post);
+            postRepository.updateContent(postID, content);
+            return post;
+        }
+        return null;
     }
 
-    public void removePost(int postID){
-        postRepository.deletePost(postID);
+    public boolean removePost(int postID) {
+        Optional<Post> p = postRepository.findById(postID);
+        if (p.isPresent()) {
+            if (p.get().getPreviousPostID() == null) {
+                postRepository.deleteReplyPost(postID);
+                store.removePostInCache(p.get());
+            }
+            postRepository.deletePost(postID);
+            return true;
+        }
+        return false;
     }
+
+    public boolean likePost(int postID) {
+        Optional<Post> o = postRepository.findById(postID);
+        if (o.isPresent()) {
+            postRepository.updateLikes(postID);
+            Post p = new Post(o.get());
+            p.addLike();
+            store.updatePostCache(o.get(), p);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean replyPost(int postID) {
+        Optional<Post> o = postRepository.findById(postID);
+        if (o.isPresent() && o.get().getPreviousPostID() == null) {
+            postRepository.updateReply(postID);
+            Post p = new Post(o.get());
+            p.addReply();
+            store.updatePostCache(o.get(), p);
+            return true;
+        }
+        return false;
+    }
+
+
 }

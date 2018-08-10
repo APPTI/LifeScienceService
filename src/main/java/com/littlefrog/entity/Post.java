@@ -1,6 +1,7 @@
 package com.littlefrog.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * @author DW
@@ -17,7 +18,7 @@ public class Post {
      * 帖子的课程
      */
     @Column
-    private Integer lessonID;
+    private Integer courseID;
     /**
      * 发帖用户
      */
@@ -33,43 +34,58 @@ public class Post {
      */
     @Column
     private String content;
-
+    /**
+     * 赞
+     */
+    @Column
+    private Integer likes;
+    /**
+     * 回复数
+     */
+    @Column
+    private Integer reply;
 
 
     public Post() {
     }
 
-    public Post(Integer lessonID, Integer prePostID, String content, Integer userID) {
-        this.lessonID = lessonID;
+    public Post(Integer courseID, Integer prePostID, String content, Integer userID) {
+        this.courseID = courseID;
         this.previousPostID = prePostID;
         this.content = content;
         this.userID = userID;
+        this.likes = 0;
+        this.reply = 0;
     }
 
-    public Post(Integer lessonID, String content, Integer userID) {
-        this.lessonID = lessonID;
+    public Post(Integer courseID, String content, Integer userID) {
+        this.courseID = courseID;
         this.content = content;
         this.userID = userID;
+        this.likes = 0;
+        this.reply = 0;
     }
 
     public Post(Post post) {
         this.postID = post.postID;
-        this.lessonID = post.lessonID;
+        this.courseID = post.courseID;
         this.previousPostID = post.previousPostID;
         this.content = post.content;
         this.userID = post.userID;
+        this.likes = post.likes;
+        this.reply = post.reply;
     }
 
     public Integer getPostID() {
         return postID;
     }
 
-    public Integer getLessonID() {
-        return lessonID;
+    public Integer getCourseID() {
+        return courseID;
     }
 
-    public void setLessonID(Integer lessonID) {
-        this.lessonID = lessonID;
+    public void setCourseID(Integer courseID) {
+        this.courseID = courseID;
     }
 
     public Integer getPreviousPostID() {
@@ -96,15 +112,57 @@ public class Post {
         this.userID = userID;
     }
 
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void addLike() {
+        this.likes += 1;
+    }
+
+    public void addReply() {
+        this.reply += 1;
+    }
+
+    public Integer getReply() {
+        return reply;
+    }
+
+
     @Override
     public String toString() {
         return "Post{" +
                 "postID=" + postID +
-                ", lessonID=" + lessonID +
+                ", courseID=" + courseID +
+                ", userID=" + userID +
                 ", previousPostID=" + previousPostID +
                 ", content='" + content + '\'' +
-                ", userID='" + userID + '\'' +
+                ", likes=" + likes +
+                ", reply=" + reply +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Post post = (Post) o;
+        return Objects.equals(postID, post.postID) &&
+                Objects.equals(courseID, post.courseID) &&
+                Objects.equals(userID, post.userID) &&
+                Objects.equals(previousPostID, post.previousPostID) &&
+                Objects.equals(content, post.content) &&
+                Objects.equals(likes, post.likes) &&
+                Objects.equals(reply, post.reply);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(postID, courseID, userID, previousPostID, content, likes, reply);
     }
 
 

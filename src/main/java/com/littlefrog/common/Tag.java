@@ -1,6 +1,10 @@
 package com.littlefrog.common;
 
 public enum Tag {
-    TAG1,
-    TAG2
+    FLOWER_ARRANGEMENT,
+    BAKING,
+    HOME_RELATIONSHIP,
+    HOUSE_KEEPING,
+    OTHER,
+    NONE
 }

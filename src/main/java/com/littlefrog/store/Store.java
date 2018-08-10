@@ -46,15 +46,11 @@ public  class Store {
         }
     }
 
-    public void addCourse(Course course){
-        if (courseStore.containsValue(course)){
-            return;
+    public void addCourseList(Course course){
+        courseStore.clear();
+        if (courseStore.size()>MAX_SIZE){
+            courseStore.clear();
         }
-        else {
-            if (courseStore.size()>MAX_SIZE){
-                courseStore.clear();
-            }
-            courseStore.put(course.getId(),course);
-        }
+        courseStore.put(course.getId(),course);
     }
 }

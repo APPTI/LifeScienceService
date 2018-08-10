@@ -25,7 +25,7 @@ public class CourseController {
     private int currentID=0;
     @GetMapping("course/by-keyword")
     public Response getCoursesByKeyword(@RequestParam String keyword, @RequestParam int sortBy, @RequestParam Tag tag, @RequestParam int index, @RequestParam int offset){
-        List<Course>  courseList;
+        List<Course>  courseList = null;
         switch (sortBy){
             case 0:
                 if (tag == Tag.NONE){
@@ -49,6 +49,11 @@ public class CourseController {
             default:
                 courseList = null;
         }
+        //courseList= courseService.getAllCourse();
+        for (Course each :courseList){
+            System.out.println(each.getId());
+        }
+        System.out.print(courseList.size());
         if (courseList  == null){
             return genFailResult("获取列表失败");
         }

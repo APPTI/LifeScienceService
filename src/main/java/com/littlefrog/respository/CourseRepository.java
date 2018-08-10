@@ -6,6 +6,7 @@ import com.littlefrog.entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -16,20 +17,20 @@ public interface CourseRepository extends JpaRepository<Course,Integer>{
     @Query (value = "SELECT * from course",nativeQuery = true)
     public List<Course> findAll();
 
-    @Query (value = "SELECT * from course order by releaseTime DESC where name like %?1 or ?1% or %?1%",nativeQuery = true)
+    @Query (value = "SELECT * from course where name like concat('%',?1 ,'%') or name like concat(?1,'%') or name like concat('%',?1) order by releaseTime DESC ",nativeQuery = true)
     public List<Course> findCourseByReleaseTime(String keyword);
 
-    @Query (value = "SELECT * from course order by popularity desc ,where name like %?1 or ?1% or %?1%", nativeQuery = true)
+    @Query (value = "SELECT * from course where name like concat('%',?1,'%') or name like concat(?1,'%') or name like concat('%',?1) order by popularity desc  ", nativeQuery = true)
     public List<Course> findCourseByPopularity(String keyword);
 
-    @Query (value = "SELECT * from course where tag=?1 order by popularity DESC ,where name like %?2 or ?2% or %?2%",nativeQuery = true)
+    @Query (value = "SELECT * from course where name like concat('%',?1,'%') or name like concat(?1 ,'%') or name like concat('%',?1) order by popularity DESC  ",nativeQuery = true)
     public List<Course> findCourseByTagAndPopularity(Tag tag, String keyword);
 
-    @Query (value = "select * from course where tag=?1 order by releaseTime DESC where name like %?2 OR ?2% or %?2%",nativeQuery = true)
+    @Query (value = "select * from course where name like concat('%',?2,'%') or name like concat(?2,'%') or name like concat('%',?2) and tag=?1 order by releaseTime DESC",nativeQuery = true)
     public List<Course> findCourseByTagAndReleaseTime(Tag tag, String keyword);
 
-    @Query(value = "select * from course order by tag where name like %?2 OR ?2% or %?2%",nativeQuery = true)
-    public List<Course> findCourseByTag(Tag tag, String keyword);
+    @Query(value = "select * from course where name like concat('%',?1,'%') or name like concat(?1 ,'%') or name like concat('%',?1) order by tag  ",nativeQuery = true)
+    public List<Course> findCourseByTag(String keyword);
 
     @Query (value = "SELECT * FROM course a  where a.id = ?1",nativeQuery = true)
     public Course FindById(Integer id);

@@ -15,7 +15,10 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    public Course(Integer id,String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic, Date releaseTime, double price, int courseNum) {
+    public Course(){
+
+    }
+    public Course(Integer id,String location, String name, String teacher, String introduction, int popularity, Tag tag, String cover_pic, Date releaseTime, double price, int courseNum) {
         this.id=id;
         this.location = location;
         this.name = name;
@@ -23,7 +26,7 @@ public class Course {
         this.introduction = introduction;
         this.popularity = popularity;
         this.tag = tag;
-        this.coverPic = coverPic;
+        this.cover_pic = cover_pic;
         this.releaseTime = releaseTime;
         this.price = price;
         this.courseNum = courseNum;
@@ -39,7 +42,7 @@ public class Course {
                 ", introduction='" + introduction + '\'' +
                 ", popularity=" + popularity +
                 ", tag=" + tag +
-                ", coverPic='" + coverPic + '\'' +
+                ", cover_pic='" + cover_pic + '\'' +
                 ", releaseTime=" + releaseTime +
                 ", price=" + price +
                 ", courseNum=" + courseNum +
@@ -65,7 +68,7 @@ public class Course {
     private Tag tag;
 
     @Column
-    private String coverPic;
+    private String cover_pic;
 
     @Column
     private Date releaseTime;
@@ -105,7 +108,7 @@ public class Course {
     }
 
     public String getCoverPic() {
-        return coverPic;
+        return cover_pic;
     }
 
     public Date getReleaseTime() {
@@ -148,8 +151,8 @@ public class Course {
         this.tag = tag;
     }
 
-    public void setCoverPic(String coverPic) {
-        this.coverPic = coverPic;
+    public void setCoverPic(String cover_pic) {
+        this.cover_pic = cover_pic;
     }
 
     public void setReleaseTime(Date releaseTime) {

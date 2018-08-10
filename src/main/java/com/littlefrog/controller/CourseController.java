@@ -50,10 +50,6 @@ public class CourseController {
                 courseList = null;
         }
         //courseList= courseService.getAllCourse();
-        for (Course each :courseList){
-            System.out.println(each.getId());
-        }
-        System.out.print(courseList.size());
         if (courseList  == null){
             return genFailResult("获取列表失败");
         }

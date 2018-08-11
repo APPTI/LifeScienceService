@@ -51,10 +51,6 @@ public class Coupon {
         return couponID;
     }
 
-    public void setCouponID(Integer couponID) {
-        this.couponID = couponID;
-    }
-
     public Integer getUserID() {
         return userID;
     }
@@ -97,4 +93,15 @@ public class Coupon {
         isValid = now.before(dureTime);
     }
 
+    @Override
+    public String toString() {
+        setValid();
+        return "Coupon{" +
+                "couponID=" + couponID +
+                ", userID=" + userID +
+                ", dureTime=" + dureTime +
+                ", amount=" + amount +
+                ", isValid=" + isValid +
+                '}';
+    }
 }

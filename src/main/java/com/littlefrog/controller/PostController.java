@@ -64,7 +64,7 @@ public class PostController {
     @GetMapping("/getReply")
     public Response getReply(@RequestParam Integer postID) {
         List<Post> list = postService.getAllReply(postID);
-        if (list != null) {
+        if (list != null && list.size() != 0) {
             return genSuccessResult(list);
         } else {
             return genFailResult("没有回复帖子");

@@ -24,7 +24,6 @@ public class CouponController {
     @GetMapping("/index")
     public Response index(@RequestParam Integer userID) {
         ArrayList<Coupon> arrayList = couponService.getAllCoupon(userID);
-        Calendar now = Calendar.getInstance();
         if (arrayList != null && arrayList.size() != 0) {
             for (Coupon coupon : arrayList) {
                 coupon.setValid();
@@ -36,13 +35,13 @@ public class CouponController {
     }
 
     @PostMapping("/give")
-    public Response send(@RequestParam Integer userID, @RequestParam double amount) {
+    public Response give(@RequestParam Integer userID, @RequestParam double amount) {
         couponService.addCoupon(userID, amount);
         return genSuccessResult();
     }
 
     @PostMapping("/use")
-    public Response send(@RequestParam Integer couponID) {
+    public Response use(@RequestParam Integer couponID) {
         if (couponService.useCoupon(couponID)) {
             return genSuccessResult();
         } else {

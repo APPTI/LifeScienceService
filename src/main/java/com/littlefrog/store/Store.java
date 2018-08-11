@@ -16,6 +16,7 @@ public class Store {
     private static Map<Integer, User> userStore = new HashMap<Integer, User>(MAX_SIZE);
     private static Map<Integer, ArrayList<Course>> courseStore = new HashMap<Integer, ArrayList<Course>>();
     private static Map<Integer,ArrayList<Lesson>> lessonStore = new HashMap<Integer, ArrayList<Lesson>>();
+    private static Map<Integer,ArrayList<Course>> myCourseStore = new HashMap<Integer, ArrayList<Course>>();//userID-courseList
 
     public User getById(int id) {
         return userStore.getOrDefault(id, null);
@@ -104,6 +105,22 @@ public class Store {
         courseStore.put(id, (ArrayList) courseList);
     }
 
+    public List<Course> getMyCourseList(int userId,int index,int offset){
+        if (myCourseStore.containsKey(userId)){
+            return myCourseStore.get(userId).subList(index,Math.min(index+offset-1,myCourseStore.get(userId).size()));
+        }
+        else {
+            return null;
+        }
+    }
+
+    public void addMyCourseList(int userId,List<Course> courseList){
+        if (courseStore.size() > MAX_SIZE) {
+            courseStore.clear();
+        }
+        courseStore.put(userId, (ArrayList) courseList);
+    }
+
     public List<Lesson> getLessonList(int id,int index,int offset){
         if (lessonStore.containsKey(id)){
             return lessonStore.get(id).subList(index,Math.min(index+offset-1,lessonStore.get(id).size()));
@@ -118,6 +135,7 @@ public class Store {
         }
         lessonStore.put(id,(ArrayList)lessonList);
     }
+
 
 }
 

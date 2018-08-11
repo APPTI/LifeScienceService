@@ -33,7 +33,7 @@ public interface CourseRepository extends JpaRepository<Course,Integer>{
     public List<Course> findCourseByTag(String keyword);
 
     @Query (value = "SELECT * FROM course a  where a.id = ?1",nativeQuery = true)
-    public Course findByUId(Integer id);
+    public Course findByCourseId(Integer id);
 
     @Transactional
     @Modifying

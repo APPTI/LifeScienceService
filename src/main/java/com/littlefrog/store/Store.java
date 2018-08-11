@@ -92,7 +92,7 @@ public class Store {
 
     public List<Course> getCourseList(int id,int index,int offset){
         if (courseStore.containsKey(id)){
-            return courseStore.get(id).subList(index,Math.min(index+offset-1,courseStore.get(id).size()));
+            return courseStore.get(id).subList(index,Math.min(index+offset,courseStore.get(id).size()));
         }else {
             return null;
         }
@@ -107,7 +107,7 @@ public class Store {
 
     public List<Course> getMyCourseList(int userId,int index,int offset){
         if (myCourseStore.containsKey(userId)){
-            return myCourseStore.get(userId).subList(index,Math.min(index+offset-1,myCourseStore.get(userId).size()));
+            return myCourseStore.get(userId).subList(index,Math.min(index+offset,myCourseStore.get(userId).size()));
         }
         else {
             return null;
@@ -123,7 +123,7 @@ public class Store {
 
     public List<Lesson> getLessonList(int id,int index,int offset){
         if (lessonStore.containsKey(id)){
-            return lessonStore.get(id).subList(index,Math.min(index+offset-1,lessonStore.get(id).size()));
+            return lessonStore.get(id).subList(index,Math.min(index+offset,lessonStore.get(id).size()));
         }
         else {
             return null;

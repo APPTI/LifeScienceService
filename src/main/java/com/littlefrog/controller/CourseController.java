@@ -22,7 +22,7 @@ public class CourseController {
 
     private Response response;
 
-    private int currentID=0;
+    private int currentID=0;//没写加溢出了怎么办
     @GetMapping("course/by-keyword")
     public Response getCoursesByKeyword(@RequestParam String keyword, @RequestParam int sortBy, @RequestParam Tag tag, @RequestParam int index, @RequestParam int offset){
         List<Course>  courseList = null;
@@ -49,7 +49,7 @@ public class CourseController {
             default:
                 courseList = null;
         }
-        //courseList= courseService.getAllCourse();
+
         if (courseList  == null){
             return genFailResult("获取列表失败");
         }
@@ -58,4 +58,14 @@ public class CourseController {
         }
     }
 
+    @GetMapping("/course")
+    public Response getAllCourses(@RequestParam  int index,@RequestParam int offset){
+        List<Course> courseList= courseService.getAllCourse(index,offset,currentID++);
+        if (courseList  == null){
+            return genFailResult("获取列表失败");
+        }
+        else {
+            return genSuccessResult(courseList);
+        }
+    }
 }

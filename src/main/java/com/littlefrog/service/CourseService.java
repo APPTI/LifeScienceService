@@ -23,7 +23,7 @@ public class CourseService {
             courseList = courseRepository.findCourseByTag(keyword);
             store.addCourseList(id,courseList);
         }
-        return courseList;
+        return courseList.subList(index,Math.min(index+offset,courseList.size()));
     }
 
     public List<Course> getCourseByTagAndPopularity(Tag tag,String keyword,int index,int offset,int id){
@@ -32,7 +32,7 @@ public class CourseService {
             courseList=courseRepository.findCourseByTagAndPopularity(tag,keyword);
             store.addCourseList(id,courseList);
         }
-        return courseList;
+        return courseList.subList(index,Math.min(index+offset,courseList.size()));
     }
 
     public List<Course> getCourseByTagAndReleaseTime(Tag tag,String keyword,int index,int offset,int id){
@@ -41,7 +41,7 @@ public class CourseService {
             courseList = courseRepository.findCourseByTagAndReleaseTime(tag,keyword);
             store.addCourseList(id,courseList);
         }
-        return courseList;
+        return courseList.subList(index,Math.min(index+offset,courseList.size()));
     }
 
     public List<Course> getCourseByReleaseTime (String keyword,int index,int offset,int id){
@@ -50,7 +50,7 @@ public class CourseService {
             courseList=courseRepository.findCourseByReleaseTime(keyword);
             store.addCourseList(id,courseList);
         }
-        return courseList;
+        return courseList.subList(index,Math.min(index+offset,courseList.size()));
     }
 
     public List<Course> getCourseByPopularity (String keyword,int index,int offset,int id){
@@ -59,17 +59,23 @@ public class CourseService {
             courseList=courseRepository.findCourseByPopularity(keyword);
             store.addCourseList(id,courseList);
         }
-        return courseList;
+        return courseList.subList(index,Math.min(index+offset,courseList.size()));
     }
 
-    public List<Course> getAllCourse (){
-        return courseRepository.findAll();
+    public List<Course> getAllCourse (int index,int offset,int id){
+        List<Course> courseList=store.getCourseList(id,index,offset);
+        if (courseList== null){
+            courseList=courseRepository.findAll();
+            store.addCourseList(id,courseList);
+        }
+        return courseList.subList(index,Math.min(index+offset,courseList.size()));
     }
+
+
     public Course addCourse (Integer id,String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic, Date releaseTime, double price, int courseNum){
         Course course = courseRepository.save(new Course(id,location,name,teacher,introduction,popularity,tag,coverPic,releaseTime,price,courseNum));
         return course;
     }
-
 
     public boolean deleteCourse(Integer id){
         try {

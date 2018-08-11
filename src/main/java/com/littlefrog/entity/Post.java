@@ -165,5 +165,4 @@ public class Post {
         return Objects.hash(postID, courseID, userID, previousPostID, content, likes, reply);
     }
 
-
 }

@@ -52,7 +52,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Transactional
     @Modifying
     @Query(value = "delete from post where postID = ?", nativeQuery = true)
-    void deletePost(Integer id);
+    void deletePost(Integer postID);
 
     @Transactional
     @Modifying

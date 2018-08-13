@@ -9,5 +9,7 @@ public enum Category {
      * 分类名称
      */
     POST,
-    COUPON
+    COUPON,
+    SYSTEM,
+
 }

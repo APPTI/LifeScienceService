@@ -31,7 +31,7 @@ public class PostController {
     @GetMapping("/index")
     public Response index(@RequestParam Integer courseID, @RequestParam Integer index, @RequestParam Integer offset) {
         ArrayList<Post> p = postService.getAllPost(courseID);
-        if (p != null && p.size() != 0) {
+        if (p != null && p.size() >= index) {
             Post[] posts = new Post[p.size()];
             p.toArray(posts);
             Post[] give = new Post[offset];
@@ -103,7 +103,7 @@ public class PostController {
     public Response modify(@RequestParam Integer postID, @RequestParam String newContent) {
         Post p = postService.setUserInfo(postID, newContent);
         if (p != null) {
-            return genSuccessResult();
+            return genSuccessResult(p);
         } else {
             return genFailResult("原贴不存在");
         }

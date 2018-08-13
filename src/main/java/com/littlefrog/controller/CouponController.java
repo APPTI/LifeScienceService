@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import static com.littlefrog.common.ResultGenerator.genFailResult;
 import static com.littlefrog.common.ResultGenerator.genSuccessResult;
@@ -63,6 +62,11 @@ public class CouponController {
     public Response changeTime(@RequestParam Integer newTime) {
         couponService.changLastTime(newTime);
         return genSuccessResult();
+    }
+
+    @GetMapping("/findLastTime")
+    public Response giveTime() {
+        return genSuccessResult("有效期： " + couponService.findLastTime() + " 天");
     }
 }
 

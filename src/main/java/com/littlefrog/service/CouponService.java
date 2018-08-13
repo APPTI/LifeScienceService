@@ -49,6 +49,9 @@ public class CouponService {
         Coupon.setLastTime(newTime);
     }
 
+    public int findLastTime() {
+        return Coupon.getLastTime();
+    }
 
     /**
      * 按时清理工具

@@ -21,7 +21,7 @@ public class InformService {
         return informRespository.findAllInform(userID);
     }
 
-    public boolean addInform(Integer userID, String content, Category category, int returnID) {
+    public boolean addInform(Integer userID, String content, Category category, Integer returnID) {
         //由于关联等原因抛出异常
         try {
             informRespository.save(new Inform(userID, content, category, returnID));

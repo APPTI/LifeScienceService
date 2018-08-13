@@ -19,7 +19,7 @@ public class Inform {
     /**
      * 被通知用户
      */
-    @Column(name="userid")
+    @Column(name = "userid")
     private Integer userID;
     /**
      * 通知内容
@@ -37,7 +37,7 @@ public class Inform {
     @Column(name = "category")
     private Category category;
     /**
-     *返回的相关id
+     * 返回的相关id
      */
     @Column(name = "return_id")
     private Integer returnID;
@@ -46,12 +46,14 @@ public class Inform {
     public Inform() {
     }
 
-    public Inform(Integer userID, String content, Category category, int returnID) {
+    public Inform(Integer userID, String content, Category category, Integer returnID) {
         this.userID = userID;
         this.content = content;
         sendTime = Calendar.getInstance();
         this.category = category;
-        this.returnID=returnID;
+        if (returnID != null) {
+            this.returnID = returnID;
+        }
     }
 
     public Integer getInformID() {

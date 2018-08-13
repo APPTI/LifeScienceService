@@ -1,6 +1,9 @@
 package com.littlefrog.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.littlefrog.common.Response;
+import com.littlefrog.common.ResultCode;
 import com.littlefrog.entity.User;
 import com.littlefrog.respository.UserRepository;
 import com.littlefrog.service.UserService;
@@ -30,8 +33,14 @@ public class UserController {
         }
     }
     @PostMapping("user/login")
-    public Response addUser(@RequestParam String name, @RequestParam String openId){
-       User user = userService.login(name,openId);
+    public Response addUser(@RequestParam String code){
+       Object user = userService.login(code);
+       if(user.getClass() != User.class){
+           JSONObject res = JSONObject.parseObject(user.toString());
+           int errcode = res.getInteger("errcode");
+           String massage = res.getString("errmsg");
+           return genFailResult(massage);
+       }
        if(user != null){
            return genSuccessResult(user);
        }else{
@@ -43,6 +52,17 @@ public class UserController {
         User user = userService.getUserInfo(id);
         if(user != null){
             return genSuccessResult(user);
+        }else{
+            return genFailResult("该用户不存在");
+        }
+    }
+
+    @PostMapping("user/recharge")
+    public Response recharge(@RequestParam int amount,@RequestParam Integer id){
+        User user = userService.getUserInfo(id);
+        user = userService.recharge(user.getId(),amount,user.getBalance());
+        if(user != null){
+            return genSuccessResult(user.getBalance());
         }else{
             return genFailResult("该用户不存在");
         }

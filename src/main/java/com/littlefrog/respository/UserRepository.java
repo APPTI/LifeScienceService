@@ -65,6 +65,16 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query(value = "delete * from user where id = ?1",nativeQuery = true)
     public void DeleteUser(Integer id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE user SET sessionId =  ?2 where id = ?1",nativeQuery = true)
+    public void UpdateSessionId(Integer Id,String sessionId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE user SET unionId =  ?2 where id = ?1",nativeQuery = true)
+    public void UpdateUnionId(Integer Id,String unionId);
+
     @Query(value = "select LAST_INSERT_ID()",nativeQuery = true)
     public Integer GetLastInsertId();
 

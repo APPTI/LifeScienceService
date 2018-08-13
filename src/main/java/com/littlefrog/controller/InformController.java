@@ -1,5 +1,6 @@
 package com.littlefrog.controller;
 
+import com.littlefrog.common.Page;
 import com.littlefrog.common.Response;
 import com.littlefrog.entity.Inform;
 import com.littlefrog.service.InformService;
@@ -40,8 +41,8 @@ public class InformController {
     }
 
     @PostMapping("/newInform")
-    public Response creat(@RequestParam Integer userID, @RequestParam String content) {
-        informService.addInform(userID, content);
+    public Response creat(@RequestParam Integer userID, @RequestParam String content, Page page, int returnID) {
+        informService.addInform(userID, content, page, returnID);
         return genSuccessResult();
     }
 }

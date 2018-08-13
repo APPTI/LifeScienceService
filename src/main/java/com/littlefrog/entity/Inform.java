@@ -1,5 +1,7 @@
 package com.littlefrog.entity;
 
+import com.littlefrog.common.Page;
+
 import javax.persistence.*;
 import java.util.Calendar;
 
@@ -29,14 +31,27 @@ public class Inform {
      */
     @Column
     private Calendar sendTime;
+    /**
+     * 通知来源页面
+     */
+    @Column
+    private Page page;
+    /**
+     *返回的相关id
+     */
+    @Column(name = "return_id")
+    private Integer returnID;
+
 
     public Inform() {
     }
 
-    public Inform(Integer userID, String content) {
+    public Inform(Integer userID, String content, Page page,int returnID) {
         this.userID = userID;
         this.content = content;
         sendTime = Calendar.getInstance();
+        this.page = page;
+        this.returnID=returnID;
     }
 
     public Integer getInformID() {
@@ -67,6 +82,22 @@ public class Inform {
         this.sendTime = sendTime;
     }
 
+    public Page getPage() {
+        return page;
+    }
+
+    public void setPage(Page page) {
+        this.page = page;
+    }
+
+    public Integer getReturnID() {
+        return returnID;
+    }
+
+    public void setReturnID(Integer returnID) {
+        this.returnID = returnID;
+    }
+
     @Override
     public String toString() {
         return "Inform{" +
@@ -74,8 +105,8 @@ public class Inform {
                 ", userID=" + userID +
                 ", content='" + content + '\'' +
                 ", sendTime=" + sendTime +
+                ", page=" + page +
+                ", returnID=" + returnID +
                 '}';
     }
-
-
 }

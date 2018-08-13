@@ -17,34 +17,45 @@ public class Post {
     /**
      * 帖子的课程
      */
-    @Column
+    @Column(name = "courseid")
     private Integer courseID;
     /**
      * 发帖用户
      */
-    @Column
+    @Column(name = "userid")
     private Integer userID;
     /**
      * 上一被回复贴子
      */
-    @Column
+    @Column(name = "previous_postid")
     private Integer previousPostID;
     /**
      * 帖子内容
      */
-    @Column
+    @Column(name = "content")
     private String content;
     /**
      * 赞
      */
-    @Column
+    @Column(name = "likes")
     private Integer likes;
     /**
      * 回复数
      */
-    @Column
+    @Column(name = "reply")
     private Integer reply;
 
+    @Transient
+    private String prePoster;
+
+    public String getPrePoster() {
+        return prePoster;
+    }
+
+    public void setPrePoster(String prePoster) {
+        System.out.println(prePoster);
+        this.prePoster = prePoster;
+    }
 
     public Post() {
     }
@@ -74,6 +85,7 @@ public class Post {
         this.userID = post.userID;
         this.likes = post.likes;
         this.reply = post.reply;
+        this.prePoster=post.prePoster;
     }
 
     public Integer getPostID() {

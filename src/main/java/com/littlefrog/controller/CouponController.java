@@ -3,6 +3,7 @@ package com.littlefrog.controller;
 import com.littlefrog.common.Response;
 import com.littlefrog.entity.Coupon;
 import com.littlefrog.service.CouponService;
+import com.littlefrog.service.InformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,8 @@ import static com.littlefrog.common.ResultGenerator.genSuccessResult;
 public class CouponController {
     @Autowired
     private CouponService couponService;
+    @Autowired
+    private InformService informService;
 
     @GetMapping("/index")
     public Response index(@RequestParam Integer userID) {

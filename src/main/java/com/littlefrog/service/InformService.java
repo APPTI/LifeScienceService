@@ -1,9 +1,9 @@
 package com.littlefrog.service;
 
+import com.littlefrog.common.Page;
 import com.littlefrog.entity.Inform;
 import com.littlefrog.respository.InformRespository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,7 +13,6 @@ import java.util.Optional;
  * @author DW
  */
 @Service("InformService")
-@EnableScheduling
 public class InformService {
     @Autowired
     private InformRespository informRespository;
@@ -22,8 +21,8 @@ public class InformService {
         return informRespository.findAllInform(userID);
     }
 
-    public void addInform(Integer userID, String content) {
-        informRespository.save(new Inform(userID, content));
+    public void addInform(Integer userID, String content, Page page, int returnID) {
+        informRespository.save(new Inform(userID, content, page, returnID));
     }
 
     public Inform getInformInfo(Integer informID) {

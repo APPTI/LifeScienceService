@@ -1,6 +1,6 @@
 package com.littlefrog.controller;
 
-import com.littlefrog.common.Page;
+import com.littlefrog.common.Category;
 import com.littlefrog.common.Response;
 import com.littlefrog.entity.Inform;
 import com.littlefrog.service.InformService;
@@ -40,9 +40,16 @@ public class InformController {
         }
     }
 
+    /**
+     * @param userID 为-1则通知所有人
+     */
     @PostMapping("/newInform")
-    public Response creat(@RequestParam Integer userID, @RequestParam String content, Page page, int returnID) {
-        informService.addInform(userID, content, page, returnID);
-        return genSuccessResult();
+    public Response creat(@RequestParam Integer userID, @RequestParam String content, Category category, int returnID) {
+        if(informService.addInform(userID, content, category, returnID)){
+            return genSuccessResult();
+        }else {
+            return genFailResult("信息添加失败");
+
+        }
     }
 }

@@ -4,9 +4,9 @@ package com.littlefrog.common;
  * @author DW
  */
 
-public enum Page {
+public enum Category {
     /**
-     * 页面名称
+     * 分类名称
      */
     POST,
     COUPON

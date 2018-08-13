@@ -1,6 +1,6 @@
 package com.littlefrog.controller;
 
-import com.littlefrog.common.Page;
+import com.littlefrog.common.Category;
 import com.littlefrog.common.Response;
 import com.littlefrog.entity.Post;
 import com.littlefrog.service.InformService;
@@ -64,13 +64,13 @@ public class PostController {
         Post post;
         if (postService.replyPost(prePostID) != null) {
             if ((post = postService.addPost(courseID, content, userID, prePostID)) != null) {
-
-                informService.addInform(userID, post.getPrePoster() + "回复了你 ", Page.POST, prePostID);
-
-                System.out.println(post.getPrePoster());
-                return genSuccessResult();
+                if (informService.addInform(userID, "用户  " + post.getPrePoster() + "  回复了你。", Category.POST, prePostID)) {
+                    return genSuccessResult();
+                } else {
+                    return genFailResult("回复成功但是添加通知失败");
+                }
             } else {
-                return genFailResult("回复失败");
+                return genFailResult("帖子添加失败");
             }
         }
         return genFailResult("没有帖子可回复(被回复的帖子被删除等） 或者 被回复的帖子为子贴");
@@ -119,9 +119,13 @@ public class PostController {
     }
 
     @PostMapping("/like")
-    public Response like(@RequestParam Integer postID) {
+    public Response like(@RequestParam Integer postID, @RequestParam Integer userID) {
         if (postService.likePost(postID)) {
-            return genSuccessResult();
+            if (informService.addInform(postService.getPostInfo(postID).getUserID(), "用户  " + postService.getName(userID) + "  喜欢了你发布的评论。", Category.POST, postID)) {
+                return genSuccessResult();
+            } else {
+                return genFailResult("喜欢但是添加通知失败");
+            }
         } else {
             return genFailResult("帖子不存在");
         }

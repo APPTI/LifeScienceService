@@ -53,7 +53,6 @@ public class Post {
     }
 
     public void setPrePoster(String prePoster) {
-        System.out.println(prePoster);
         this.prePoster = prePoster;
     }
 

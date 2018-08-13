@@ -115,4 +115,7 @@ public class PostService {
     }
 
 
+    public String getName(Integer userID) {
+        return postRepository.findName(userID);
+    }
 }

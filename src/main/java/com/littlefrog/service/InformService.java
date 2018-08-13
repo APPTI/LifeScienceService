@@ -1,6 +1,6 @@
 package com.littlefrog.service;
 
-import com.littlefrog.common.Page;
+import com.littlefrog.common.Category;
 import com.littlefrog.entity.Inform;
 import com.littlefrog.respository.InformRespository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,14 @@ public class InformService {
         return informRespository.findAllInform(userID);
     }
 
-    public void addInform(Integer userID, String content, Page page, int returnID) {
-        informRespository.save(new Inform(userID, content, page, returnID));
+    public boolean addInform(Integer userID, String content, Category category, int returnID) {
+        //由于关联等原因抛出异常
+        try {
+            informRespository.save(new Inform(userID, content, category, returnID));
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     public Inform getInformInfo(Integer informID) {

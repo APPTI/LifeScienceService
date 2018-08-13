@@ -1,5 +1,6 @@
 package com.littlefrog.controller;
 
+import com.littlefrog.common.Category;
 import com.littlefrog.common.Response;
 import com.littlefrog.entity.Coupon;
 import com.littlefrog.service.CouponService;
@@ -38,8 +39,16 @@ public class CouponController {
 
     @PostMapping("/give")
     public Response give(@RequestParam Integer userID, @RequestParam double amount) {
-        couponService.addCoupon(userID, amount);
-        return genSuccessResult();
+        Coupon c;
+        if ((c = couponService.addCoupon(userID, amount)) != null) {
+            if (informService.addInform(userID, "您获得了一张新的优惠券！", Category.COUPON, c.getCouponID())){
+                return genSuccessResult();
+            }else {
+                return genFailResult("获取优惠券成功，但是添加通知失败");
+            }
+        } else {
+            return genFailResult("优惠券添加失败");
+        }
     }
 
     @PostMapping("/use")

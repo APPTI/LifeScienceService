@@ -27,8 +27,14 @@ public class CouponService {
         return couponRepository.findAllCoupon(userID);
     }
 
-    public void addCoupon(Integer userID, double amount) {
-        couponRepository.save(new Coupon(userID, amount));
+    public Coupon addCoupon(Integer userID, double amount) {
+        Coupon c;
+        try {
+            c = couponRepository.save(new Coupon(userID, amount));
+            return c;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Coupon getCouponInfo(Integer couponID) {

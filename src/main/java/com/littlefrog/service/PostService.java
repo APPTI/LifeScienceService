@@ -36,12 +36,21 @@ public class PostService {
         Post post;
         if (prePostID == null) {
             post = new Post(courseID, content, userID);
-            postRepository.save(post);
+            try {
+                postRepository.save(post);
+            } catch (Exception e) {
+                return null;
+            }
             store.addNewToPostCache(post);
         } else {
             post = new Post(courseID, prePostID, content, userID);
-            postRepository.save(post);
+            try {
+                postRepository.save(post);
+            } catch (Exception e) {
+                return null;
+            }
         }
+        post.setPrePoster(postRepository.findName(userID));
         return post;
     }
 
@@ -93,17 +102,20 @@ public class PostService {
         return false;
     }
 
-    public boolean replyPost(int postID) {
+    public Post replyPost(int postID) {
         Optional<Post> o = postRepository.findById(postID);
         if (o.isPresent() && o.get().getPreviousPostID() == null) {
             postRepository.updateReply(postID);
             Post p = new Post(o.get());
             p.addReply();
             store.updatePostCache(o.get(), p);
-            return true;
+            return p;
         }
-        return false;
+        return null;
     }
 
 
+    public String getName(Integer userID) {
+        return postRepository.findName(userID);
+    }
 }

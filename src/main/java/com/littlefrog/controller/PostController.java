@@ -60,20 +60,23 @@ public class PostController {
      */
     @PostMapping("/reply")
     public Response reply(@RequestParam Integer courseID, @RequestParam String content, @RequestParam Integer userID, @RequestParam Integer prePostID) {
-        //此处应该有通知
-        Post post;
-        if (postService.replyPost(prePostID) != null) {
-            if ((post = postService.addPost(courseID, content, userID, prePostID)) != null) {
-                if (informService.addInform(userID, "用户  " + post.getPrePoster() + "  回复了你。", Category.POST, prePostID)) {
-                    return genSuccessResult();
+        if (postService.getName(userID) != null) {
+            Post post;
+            if (postService.replyPost(prePostID) != null) {
+                if ((post = postService.addPost(courseID, content, userID, prePostID)) != null) {
+                    if (informService.addInform(userID, "用户  " + post.getPrePoster() + "  回复了你。", Category.POST, prePostID)) {
+                        return genSuccessResult();
+                    } else {
+                        return genFailResult("回复成功但是添加通知失败");
+                    }
                 } else {
-                    return genFailResult("回复成功但是添加通知失败");
+                    return genFailResult("帖子添加失败");
                 }
-            } else {
-                return genFailResult("帖子添加失败");
             }
+            return genFailResult("没有帖子可回复(被回复的帖子被删除等） 或者 被回复的帖子为子贴");
         }
-        return genFailResult("没有帖子可回复(被回复的帖子被删除等） 或者 被回复的帖子为子贴");
+        return genFailResult("回帖用户不存在");
+
     }
 
     @GetMapping("/getReply")
@@ -120,14 +123,18 @@ public class PostController {
 
     @PostMapping("/like")
     public Response like(@RequestParam Integer postID, @RequestParam Integer userID) {
-        if (postService.likePost(postID)) {
-            if (informService.addInform(postService.getPostInfo(postID).getUserID(), "用户  " + postService.getName(userID) + "  喜欢了你发布的评论。", Category.POST, postID)) {
-                return genSuccessResult();
+        if (postService.getName(userID) != null) {
+            if (postService.likePost(postID)) {
+                if (informService.addInform(postService.getPostInfo(postID).getUserID(), "用户  " + postService.getName(userID) + "  喜欢了你发布的评论。", Category.POST, postID)) {
+                    return genSuccessResult();
+                } else {
+                    return genFailResult("喜欢但是添加通知失败");
+                }
             } else {
-                return genFailResult("喜欢但是添加通知失败");
+                return genFailResult("帖子不存在");
             }
-        } else {
-            return genFailResult("帖子不存在");
+        }else {
+            return genFailResult("点赞用户不存在");
         }
     }
 }

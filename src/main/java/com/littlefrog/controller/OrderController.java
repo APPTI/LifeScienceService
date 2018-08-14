@@ -94,7 +94,7 @@ public class OrderController {
             }
         }
         double wallet = userService.getUserInfo(userId).getBalance();
-        double price = courseService.findByid(courseId).getPrice();
+        double price = courseService.(courseId).getPrice();
         if(wallet>price-couponMoney){
             userService.payMoney(userId,price-couponMoney);
             return genSuccessResult();

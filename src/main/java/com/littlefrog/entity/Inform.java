@@ -1,5 +1,7 @@
 package com.littlefrog.entity;
 
+import com.littlefrog.common.Category;
+
 import javax.persistence.*;
 import java.util.Calendar;
 
@@ -17,26 +19,41 @@ public class Inform {
     /**
      * 被通知用户
      */
-    @Column
+    @Column(name = "userid")
     private Integer userID;
     /**
      * 通知内容
      */
-    @Column
+    @Column(name = "content")
     private String content;
     /**
      * 通知发送时间
      */
-    @Column
+    @Column(name = "send_time")
     private Calendar sendTime;
+    /**
+     * 通知来源页面
+     */
+    @Column(name = "category")
+    private Category category;
+    /**
+     * 返回的相关id
+     */
+    @Column(name = "return_id")
+    private Integer returnID;
+
 
     public Inform() {
     }
 
-    public Inform(Integer userID, String content) {
+    public Inform(Integer userID, String content, Category category, Integer returnID) {
         this.userID = userID;
         this.content = content;
         sendTime = Calendar.getInstance();
+        this.category = category;
+        if (returnID != null) {
+            this.returnID = returnID;
+        }
     }
 
     public Integer getInformID() {
@@ -67,6 +84,22 @@ public class Inform {
         this.sendTime = sendTime;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Integer getReturnID() {
+        return returnID;
+    }
+
+    public void setReturnID(Integer returnID) {
+        this.returnID = returnID;
+    }
+
     @Override
     public String toString() {
         return "Inform{" +
@@ -74,8 +107,8 @@ public class Inform {
                 ", userID=" + userID +
                 ", content='" + content + '\'' +
                 ", sendTime=" + sendTime +
+                ", category=" + category +
+                ", returnID=" + returnID +
                 '}';
     }
-
-
 }

@@ -31,8 +31,12 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
      * @return 指定id的post
      */
     @Override
-    @Query(value = "SELECT * FROM post a where a.postID = ?", nativeQuery = true)
+    @Query(value = "SELECT * FROM post a where a.postid = ?", nativeQuery = true)
     Optional<Post> findById(Integer postID);
+
+    @Query(value = "SELECT name FROM user a where a.id = ?", nativeQuery = true)
+    String findName(Integer id);
+
 
     @Transactional
     @Modifying

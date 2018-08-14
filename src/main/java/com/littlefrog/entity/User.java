@@ -25,23 +25,57 @@ public class User {
     private Date lastlogintime;
     @Column
     private boolean phonevalid;
+    @Column
+    private String sessionId;
+    @Column
+    private String unionId;
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public String getUnionId() {
+        return unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
+    }
 
     public User(){
 
     }
-    public User(String name, String openID, int gender, String phoneNum, double balance) {
+    public User(String name, String openID, int gender, String phoneNum, double balance,String sessionId,String unionId) {
         this.name = name;
         this.openid = openID;
         this.gender = gender;
         this.phonenum = phoneNum;
         this.balance = balance;
         this.lastlogintime = new Date();
-        this.phonevalid=true;
+        this.phonevalid = true;
+        this.sessionId = sessionId;
+        this.unionId = unionId;
     }
 
-    public User(String name, String openID) {
-        this.name = name;
+    public User(String sessionId, String openID) {
+        this.name = "null";
         this.openid = openID;
+        this.sessionId = sessionId;
+        this.gender = 0;
+        this.balance = 0;
+        this.phonevalid=false;
+        this.lastlogintime = new Date();
+    }
+
+    public User(String sessionId, String openID,String unionId) {
+        this.name = "null";
+        this.openid = openID;
+        this.sessionId = sessionId;
+        this.unionId = unionId;
         this.gender = 0;
         this.balance = 0;
         this.phonevalid=false;
@@ -87,6 +121,8 @@ public class User {
                 ", balance=" + balance +
                 ", lastlogintime=" + lastlogintime +
                 ", phonevalid=" + phonevalid +
+                ", sessionId='" + sessionId + '\'' +
+                ", unionId='" + unionId + '\'' +
                 '}';
     }
 

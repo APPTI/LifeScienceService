@@ -44,7 +44,7 @@ public class InformController {
      * @param userID 为-1则通知所有人
      */
     @PostMapping("/newInform")
-    public Response creat(@RequestParam Integer userID, @RequestParam String content, String category, Integer returnID) {
+    public Response creat(@RequestParam Integer userID, @RequestParam String content,@RequestParam String category,@RequestParam(required = false) Integer returnID) {
         Category c;
         try {
             c = Category.valueOf(category);

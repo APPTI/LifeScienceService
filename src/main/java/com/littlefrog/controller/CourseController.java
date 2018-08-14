@@ -68,4 +68,14 @@ public class CourseController {
             return genSuccessResult(courseList);
         }
     }
+
+    @GetMapping("/course/findCourse")
+    public  Response findCourse(@RequestParam int courseId){
+        Course c = courseService.findByID(courseId);
+        if (c==null){
+            return genFailResult("获取course失败");
+        }else {
+            return genSuccessResult(c);
+        }
+    }
 }

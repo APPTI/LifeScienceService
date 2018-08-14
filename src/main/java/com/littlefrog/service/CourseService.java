@@ -86,4 +86,8 @@ public class CourseService {
             return false;
         }
     }
+
+    public Course findByID(Integer courseID){
+       return courseRepository.findByCourseId(courseID);
+    }
 }

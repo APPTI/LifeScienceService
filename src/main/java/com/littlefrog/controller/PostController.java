@@ -64,7 +64,7 @@ public class PostController {
             Post post;
             if (postService.replyPost(prePostID) != null) {
                 if ((post = postService.addPost(courseID, content, userID, prePostID)) != null) {
-                    if (informService.addInform(userID, "用户  " + post.getPrePoster() + "  回复了你。", Category.POST, prePostID)) {
+                    if (informService.addInform(postService.getPostInfo(prePostID).getUserID(), "用户  " + post.getPrePoster() + "  回复了你。", Category.POST, prePostID)) {
                         return genSuccessResult();
                     } else {
                         return genFailResult("回复成功但是添加通知失败");

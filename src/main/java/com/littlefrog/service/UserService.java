@@ -45,6 +45,10 @@ public class UserService {
         return user;
     }
 
+    public List<User> findByIds(List<Integer> useridList){
+        List<User> userList = userRepository.findAllById(useridList);
+        return userList;
+    }
     public List<User> getAllUser(){
         List<User> u= userRepository.findall();
         return u;

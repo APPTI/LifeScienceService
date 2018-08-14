@@ -10,17 +10,50 @@ public class Order {
     private Integer id;
 
     @Column
-    private String couponid;
+    private Integer couponid;
     @Column
-    private String courseid;
+    private Integer courseid;
     @Column
-    private String userid;
+    private Integer term;
+    @Column
+    private Integer userid;
     @Column
     private Boolean has_pay;
     @Column
     private Date ordertime;
 
+    public Order(Integer couponid, Integer courseid, Integer term, Integer userid, Boolean has_pay, Date ordertime) {
+        this.couponid = couponid;
+        this.courseid = courseid;
+        this.term = term;
+        this.userid = userid;
+        this.has_pay = has_pay;
+        this.ordertime = ordertime;
+    }
+
+    public Order(int courseid, int term, int userid, Date date,boolean hasPay) {
+        this.courseid=courseid;
+        this.term=term;
+        this.userid=userid;
+        this.ordertime=date;
+        this.has_pay=hasPay;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", couponid=" + couponid +
+                ", courseid=" + courseid +
+                ", term=" + term +
+                ", userid=" + userid +
+                ", has_pay=" + has_pay +
+                ", ordertime=" + ordertime +
+                '}';
+    }
+
     public Integer getId() {
+
         return id;
     }
 
@@ -28,27 +61,35 @@ public class Order {
         this.id = id;
     }
 
-    public String getCouponid() {
+    public Integer getCouponid() {
         return couponid;
     }
 
-    public void setCouponid(String couponid) {
+    public void setCouponid(Integer couponid) {
         this.couponid = couponid;
     }
 
-    public String getCourseid() {
+    public Integer getCourseid() {
         return courseid;
     }
 
-    public void setCourseid(String courseid) {
+    public void setCourseid(Integer courseid) {
         this.courseid = courseid;
     }
 
-    public String getUserid() {
+    public Integer getTerm() {
+        return term;
+    }
+
+    public void setTerm(Integer term) {
+        this.term = term;
+    }
+
+    public Integer getUserid() {
         return userid;
     }
 
-    public void setUserid(String userid) {
+    public void setUserid(Integer userid) {
         this.userid = userid;
     }
 
@@ -65,14 +106,6 @@ public class Order {
     }
 
     public void setOrdertime(Date ordertime) {
-        this.ordertime = ordertime;
-    }
-
-    public Order(String couponid, String courseid, String userid, Boolean has_pay, Date ordertime) {
-        this.couponid = couponid;
-        this.courseid = courseid;
-        this.userid = userid;
-        this.has_pay = has_pay;
         this.ordertime = ordertime;
     }
 }

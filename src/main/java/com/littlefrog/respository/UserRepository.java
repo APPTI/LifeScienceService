@@ -57,7 +57,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE user SET gender =  ?2, name = ?3, phoneNum = ?4 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE user SET gender =  ?2, name = ?3, phoneNum = ?4,phonevalid=true where id = ?1",nativeQuery = true)
     public void UpdateInfo(Integer Id,int gender,String name, String phoneNum);
 
     @Transactional

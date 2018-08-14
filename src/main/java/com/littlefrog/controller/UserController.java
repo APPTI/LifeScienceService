@@ -21,7 +21,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private Response response;
 
     @GetMapping("user/index")
     public Response index(){
@@ -57,6 +56,15 @@ public class UserController {
         }
     }
 
+    @PostMapping("user/updateInfo")
+    public Response updateInfo(@RequestParam int userId,@RequestParam int gender,@RequestParam String name, @RequestParam String phoneNum){
+        User user=userService.setUserInfo(userId,gender,name,phoneNum);
+        if(user ==null){
+            return genFailResult("更新失败，没有该用户！");
+        }else{
+            return genSuccessResult(user);
+        }
+    }
     @PostMapping("user/recharge")
     public Response recharge(@RequestParam int amount,@RequestParam Integer id){
         User user = userService.getUserInfo(id);

@@ -73,8 +73,8 @@ public class OrderController {
         }
     }
     @PostMapping("order/addLike")
-    public Response addOrder(@RequestParam int courseid,@RequestParam int userid,@RequestParam int  term){
-        Order order = new Order(courseid,term,userid,new Date(),false);
+    public Response addOrder(@RequestParam int courseId,@RequestParam int userId,@RequestParam int  term){
+        Order order = new Order(courseId,term,userId,new Date(),false);
         order = orderService.addOrder(order);
         if(order == null){
             return genFailResult("创建失败！");
@@ -94,7 +94,7 @@ public class OrderController {
             }
         }
         double wallet = userService.getUserInfo(userId).getBalance();
-        double price = courseService.(courseId).getPrice();
+        double price = courseService(courseId).getPrice();
         if(wallet>price-couponMoney){
             userService.payMoney(userId,price-couponMoney);
             return genSuccessResult();

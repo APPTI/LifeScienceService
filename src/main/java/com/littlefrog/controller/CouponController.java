@@ -16,7 +16,7 @@ import static com.littlefrog.common.ResultGenerator.genSuccessResult;
 /**
  * @author DW
  */
-@RequestMapping("/coupon")
+@RequestMapping("api/coupon")
 @RestController
 public class CouponController {
     @Autowired

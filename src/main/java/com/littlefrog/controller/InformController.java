@@ -15,7 +15,7 @@ import static com.littlefrog.common.ResultGenerator.genSuccessResult;
 /**
  * @author DW
  */
-@RequestMapping("/inform")
+@RequestMapping("api/inform")
 @RestController
 public class InformController {
     @Autowired

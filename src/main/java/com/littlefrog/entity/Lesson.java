@@ -1,6 +1,7 @@
 package com.littlefrog.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity(name = "lesson")
 public class Lesson {
@@ -22,6 +23,9 @@ public class Lesson {
 
     @Column
     private int course_id;
+
+    @Column
+    private Date time;
 
     public Integer getId() {
         return id;
@@ -71,14 +75,25 @@ public class Lesson {
         this.course_id = course_id;
     }
 
-    public Lesson(int order, String video_url, String description, String cover_url, int course_id) {
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public Lesson(int order, String video_url, String description, String cover_url, int course_id, Date time) {
         this.order = order;
         this.video_url = video_url;
         this.description = description;
         this.cover_url = cover_url;
         this.course_id = course_id;
+        this.time = time;
     }
-    public Lesson(){
+
+
+    public Lesson() {
 
     }
 
@@ -91,6 +106,7 @@ public class Lesson {
                 ", description='" + description + '\'' +
                 ", cover_url='" + cover_url + '\'' +
                 ", course_id=" + course_id +
+                ", time=" + time +
                 '}';
     }
 }

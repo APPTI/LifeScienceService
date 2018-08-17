@@ -17,7 +17,6 @@ import static com.littlefrog.common.ResultGenerator.genSuccessResult;
 /**
  * @author DW
  */
-@RequestMapping("/post")
 @RestController
 public class PostController {
     @Autowired
@@ -28,7 +27,7 @@ public class PostController {
     /**
      * @return 课程下所有帖子
      */
-    @GetMapping("/index")
+    @GetMapping("api/post")
     public Response index(@RequestParam Integer courseID, @RequestParam Integer index, @RequestParam Integer offset) {
         ArrayList<Post> p = postService.getAllPost(courseID);
         if (p != null && p.size() >= index) {
@@ -46,7 +45,7 @@ public class PostController {
         }
     }
 
-    @PostMapping("/send")
+    @PostMapping("api/post/send")
     public Response send(@RequestParam Integer courseID, @RequestParam String content, @RequestParam Integer userID) {
         if (postService.addPost(courseID, content, userID, null) != null) {
             return genSuccessResult();
@@ -58,7 +57,7 @@ public class PostController {
     /**
      * reply后应该重新调用 getReply刷新页面
      */
-    @PostMapping("/reply")
+    @PostMapping("api/post/reply")
     public Response reply(@RequestParam Integer courseID, @RequestParam String content, @RequestParam Integer userID, @RequestParam Integer prePostID) {
         if (postService.getName(userID) != null) {
             Post post;
@@ -79,7 +78,7 @@ public class PostController {
 
     }
 
-    @GetMapping("/getReply")
+    @GetMapping("api/post/getReply")
     public Response getReply(@RequestParam Integer postID) {
         List<Post> list = postService.getAllReply(postID);
         if (list != null && list.size() != 0) {
@@ -89,7 +88,7 @@ public class PostController {
         }
     }
 
-    @GetMapping("/info")
+    @GetMapping("api/post/info")
     public Response indexForID(@RequestParam Integer postID) {
         Post post = postService.getPostInfo(postID);
         if (post != null) {
@@ -102,7 +101,7 @@ public class PostController {
     /**
      * 修改评论(可调用返回值直接刷新原post)
      */
-    @PostMapping("/edit")
+    @PostMapping("api/post/edit")
     public Response modify(@RequestParam Integer postID, @RequestParam String newContent) {
         Post p = postService.setUserInfo(postID, newContent);
         if (p != null) {
@@ -112,7 +111,7 @@ public class PostController {
         }
     }
 
-    @PostMapping("/delete")
+    @PostMapping("api/post/delete")
     public Response delete(@RequestParam Integer postID) {
         if (postService.removePost(postID)) {
             return genSuccessResult();
@@ -121,7 +120,7 @@ public class PostController {
         }
     }
 
-    @PostMapping("/like")
+    @PostMapping("api/post/like")
     public Response like(@RequestParam Integer postID, @RequestParam Integer userID) {
         if (postService.getName(userID) != null) {
             if (postService.likePost(postID)) {

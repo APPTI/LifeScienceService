@@ -105,7 +105,7 @@ public class OrderController {
     @PostMapping("order/deleteOrder")
     public Response deleteOrder(@RequestParam int orderId){
         orderService.deleteOrder(orderId);
-        if(orderService.getById(orderId)==null){
+        if(!orderService.getById(orderId).isPresent()){
             return genSuccessResult();
         }
         else{

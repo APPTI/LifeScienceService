@@ -51,15 +51,6 @@ public class CouponController {
         }
     }
 
-    @PostMapping("/use")
-    public Response use(@RequestParam Integer couponID) {
-        if (couponService.useCoupon(couponID)) {
-            return genSuccessResult();
-        } else {
-            return genFailResult("使用失败");
-        }
-    }
-
     @GetMapping("/info")
     public Response indexForID(@RequestParam Integer couponID) {
         Coupon c = couponService.getCouponInfo(couponID);

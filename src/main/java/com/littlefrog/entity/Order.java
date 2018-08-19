@@ -22,6 +22,11 @@ public class Order {
     @Column
     private Date ordertime;
 
+    public Order(Integer userid) {
+        has_pay=false;
+        this.userid = userid;
+    }
+
     public Order(Integer couponid, Integer courseid, Integer term, Integer userid, Boolean has_pay, Date ordertime) {
         this.couponid = couponid;
         this.courseid = courseid;

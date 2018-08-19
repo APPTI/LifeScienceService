@@ -14,31 +14,29 @@ public class Order {
     @Column
     private Integer courseid;
     @Column
-    private Integer term;
-    @Column
     private Integer userid;
     @Column
     private Boolean has_pay;
     @Column
     private Date ordertime;
+    @Column
+    private boolean is_recharge;
 
     public Order(Integer userid) {
-        has_pay=false;
         this.userid = userid;
+        this.is_recharge = false;
     }
 
-    public Order(Integer couponid, Integer courseid, Integer term, Integer userid, Boolean has_pay, Date ordertime) {
+    public Order(Integer couponid, Integer courseid, Integer userid, Boolean has_pay, Date ordertime) {
         this.couponid = couponid;
         this.courseid = courseid;
-        this.term = term;
         this.userid = userid;
         this.has_pay = has_pay;
         this.ordertime = ordertime;
     }
 
-    public Order(int courseid, int term, int userid, Date date,boolean hasPay) {
+    public Order(int courseid, int userid, Date date,boolean hasPay) {
         this.courseid=courseid;
-        this.term=term;
         this.userid=userid;
         this.ordertime=date;
         this.has_pay=hasPay;
@@ -50,7 +48,6 @@ public class Order {
                 "id=" + id +
                 ", couponid=" + couponid +
                 ", courseid=" + courseid +
-                ", term=" + term +
                 ", userid=" + userid +
                 ", has_pay=" + has_pay +
                 ", ordertime=" + ordertime +
@@ -60,6 +57,14 @@ public class Order {
     public Integer getId() {
 
         return id;
+    }
+
+    public boolean isIs_recharge() {
+        return is_recharge;
+    }
+
+    public void setIs_recharge(boolean is_recharge) {
+        this.is_recharge = is_recharge;
     }
 
     public void setId(Integer id) {
@@ -80,14 +85,6 @@ public class Order {
 
     public void setCourseid(Integer courseid) {
         this.courseid = courseid;
-    }
-
-    public Integer getTerm() {
-        return term;
-    }
-
-    public void setTerm(Integer term) {
-        this.term = term;
     }
 
     public Integer getUserid() {

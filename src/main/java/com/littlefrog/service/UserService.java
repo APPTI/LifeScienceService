@@ -252,7 +252,7 @@ public class UserService {
         return user;
     }
 
-    public User recharge(int id, double money, double balance){//  充钱
+    public User AddRecharge(int id, double money, double balance){//  充钱
         userRepository.SetBalance(id,balance+money);
         User user = userRepository.FindById(id);
         store.updateUserInfo(user.getId(),user);

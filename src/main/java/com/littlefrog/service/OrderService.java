@@ -35,13 +35,13 @@ public class OrderService {
         Order result = orderRepository.save(order);
         return result;
     }
-    public List<Order> getAllOrderByCourseid(int courseId, int term){
-        List<Order> orderList = orderRepository.getAllOrderByCourseid(courseId,term);
+    public List<Order> getAllOrderByCourseid(int courseId){
+        List<Order> orderList = orderRepository.getAllOrderByCourseid(courseId);
         return orderList;
     }
 
-    public List<Integer> getAllUserByCourseid(int courseId,int term){
-        List<Integer> userList = orderRepository.getAlluserIdByCourseid(courseId,term);
+    public List<Integer> getAllUserByCourseid(int courseId){
+        List<Integer> userList = orderRepository.getAlluserIdByCourseid(courseId);
         return userList;
     }
 
@@ -51,6 +51,10 @@ public class OrderService {
 
     public void deleteAllOrder(int userId,boolean hasPay){
         orderRepository.deleteAllOrder(userId,hasPay);
+    }
+
+    public void setIsRecharge(int orderId,boolean isRecharge){
+        orderRepository.SetIsRecharge(orderId,isRecharge);
     }
 
 }

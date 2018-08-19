@@ -9,15 +9,21 @@ import com.littlefrog.entity.User;
 import com.littlefrog.respository.UserRepository;
 import com.littlefrog.service.OrderService;
 import com.littlefrog.service.UserService;
+import com.sun.org.apache.bcel.internal.classfile.Signature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.rmi.CORBA.Util;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Logger;
 
 import static com.littlefrog.common.ResultGenerator.genFailResult;
 import static com.littlefrog.common.ResultGenerator.genSuccessResult;
@@ -89,6 +95,70 @@ public class UserController {
             return genSuccessResult(user);
         }
     }
+
+    @RequestMapping("user/recharge/getresult")
+    @ResponseBody
+    public HttpServletResponse getrechargeResult(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        DataInputStream in;
+        String wxNotifyXml = "";
+        try {
+            in = new DataInputStream(request.getInputStream());
+            byte[] dataOrigin = new byte[request.getContentLength()];
+            in.readFully(dataOrigin); // 根据长度，将消息实体的内容读入字节数组dataOrigin中
+            if(null != in) in.close(); // 关闭数据流
+            wxNotifyXml = new String(dataOrigin); // 从字节数组中得到表示实体的字符串
+            JSONObject result=JSONObject.parseObject(wxNotifyXml);
+            if(result.getString("return_code")=="FAIL"){
+                response.encodeURL(setXml("SUCCESS",""));
+                return response;
+            }else if(result.getString("result_code")=="FAIL"){
+                response.encodeURL(setXml("SUCCESS",""));
+                return response;
+            }else{
+                int orderId=result.getInteger("out_trade_no");
+                double amount = result.getDouble("total_fee");
+                Optional<Order> order = orderService.getById(orderId);
+                if(order.isPresent()){
+                    if(order.get().isIs_recharge()){
+                        response.encodeURL(setXml("SUCCESS",""));
+                        return response;
+                    }else {
+                        int userId=order.get().getUserid();
+                        User user=userService.AddRecharge(userId,amount,userService.getUserInfo(userId).getBalance());
+                        orderService.setIsRecharge(orderId,true);
+                        if(user!=null){
+                            response.encodeURL(setXml("SUCCESS",""));
+                            return response;
+                        }else{
+                            response.encodeURL(setXml("FAIL","找不到用户"));
+                            return response;
+                        }
+                    }
+                }else{
+                    response.encodeURL(setXml("FAIL","找不到订单号"));
+                    return response;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            response.encodeURL(setXml("FAIL",e.getLocalizedMessage()));
+            return response;
+        }
+    }
+    //通过xml 发给微信消息
+    public static String setXml(String return_code, String return_msg) {
+
+        SortedMap<String, String> parameters = new TreeMap<String, String>();
+
+        parameters.put("return_code", return_code);
+
+        parameters.put("return_msg", return_msg);
+
+        return "<xml><return_code><![CDATA[" + return_code + "]]>" +
+
+                "</return_code><return_msg><![CDATA[" + return_msg + "]]></return_msg></xml>";
+    }
+
     @PostMapping("user/recharge")
     public Response recharge(@RequestHeader String appid, @RequestParam int amount,@RequestParam Integer id) throws ParseException {
         if(appid!=this.appid){

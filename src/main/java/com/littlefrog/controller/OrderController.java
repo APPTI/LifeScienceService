@@ -57,11 +57,11 @@ public class OrderController {
         }
     }
     @GetMapping("order/getAllOrderByCourseId")
-    public Response getAllOrderByCourseId(@RequestHeader String appid, @RequestParam int courseId, @RequestParam int term){
+    public Response getAllOrderByCourseId(@RequestHeader String appid, @RequestParam int courseId){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
         }
-        List<Order> userList = orderService.getAllOrderByCourseid(courseId,term);
+        List<Order> userList = orderService.getAllOrderByCourseid(courseId);
         if(userList.isEmpty()){
             return genFailResult("没有订单");
         }else{
@@ -69,11 +69,11 @@ public class OrderController {
         }
     }
     @GetMapping("order/getAllUsersByCourseId")
-    public Response getAllUsersByCourseId(@RequestHeader String appid, @RequestParam int courseId,@RequestParam int term){
+    public Response getAllUsersByCourseId(@RequestHeader String appid, @RequestParam int courseId){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
         }
-        List<Integer> useridList = orderService.getAllUserByCourseid(courseId,term);
+        List<Integer> useridList = orderService.getAllUserByCourseid(courseId);
         if(useridList.isEmpty()){
             return genFailResult("没有用户");
         }else{
@@ -86,11 +86,11 @@ public class OrderController {
         }
     }
     @PostMapping("order/addLike")
-    public Response addOrder(@RequestHeader String appid, @RequestParam int courseid,@RequestParam int userid,@RequestParam int  term){
+    public Response addOrder(@RequestHeader String appid, @RequestParam int courseid,@RequestParam int userid){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
         }
-        Order order = new Order(courseid,term,userid,new Date(),false);
+        Order order = new Order(courseid,userid,new Date(),false);
         order = orderService.addOrder(order);
         if(order == null){
             return genFailResult("创建失败！");
@@ -99,7 +99,7 @@ public class OrderController {
         }
     }
     @PostMapping("order/buy")
-    public Response buy(@RequestHeader String appid, @RequestParam int couponId, @RequestParam int courseId, @RequestParam int userId, @RequestParam int term){
+    public Response buy(@RequestHeader String appid, @RequestParam int couponId, @RequestParam int courseId, @RequestParam int userId){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
         }

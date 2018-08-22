@@ -32,7 +32,7 @@ public class LessonController {
 
     private int currentID = 0;
 
-    @GetMapping("course/lesson")
+    @GetMapping("api/course/lesson")
     public Response getCourseLessons(@RequestParam int courseId,@RequestParam int index,@RequestParam int offset){
         List<Lesson> lessonList = lessonService.getLessonsByCourseID(courseId,currentID++,index,offset);
         if (lessonList  == null){

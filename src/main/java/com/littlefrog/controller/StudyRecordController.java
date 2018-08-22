@@ -18,7 +18,7 @@ public class StudyRecordController {
     @Autowired
     StudyRecordService studyRecordService;
 
-    @GetMapping("/learning-record")
+    @GetMapping("api/learning-record")
     public Response getLatestLearningRecord(@RequestParam int courseId,@RequestParam int userId){
         List<StudyRecord> list = studyRecordService.getProgressRateList(courseId,userId);
         if (list == null){
@@ -29,7 +29,7 @@ public class StudyRecordController {
         }
     }
 
-    @PostMapping ("learning-record/add")
+    @PostMapping ("api/learning-record/add")
     public Response updateLearningProgress (@RequestParam StudyRecord record){
         try {
             studyRecordService.updateProgressRate(record);
@@ -40,7 +40,7 @@ public class StudyRecordController {
         return genSuccessResult("已更新");
     }
 
-    @GetMapping("course/my")
+    @GetMapping("api/course/my")
     public Response getMyCourse(@RequestParam int userId,@RequestParam int index,@RequestParam int offset){
         List<Course> courseList = studyRecordService.getMyCourses(userId,index,offset);
         if (courseList == null){

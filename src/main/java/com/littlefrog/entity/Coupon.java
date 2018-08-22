@@ -14,26 +14,27 @@ public class Coupon {
     /**
      * 优惠券持有用户
      */
-    @Column
+    @Column(name = "userid")
     private Integer userID;
     /**
      * 优惠券到期时间
      */
-    @Column
+    @Column(name = "dure_time")
     private Calendar dureTime;
     /**
      * 优惠券有效天数
      */
-    @Column
+    @Transient
     private static int LAST_TIME = 7;
     /**
      * 优惠券价值
      */
-    @Column
+    @Column(name = "amount")
     private double amount;
     /**
      * 是否有效
      */
+    @Column(name = "is_valid")
     private boolean isValid = true;
 
     public Coupon() {

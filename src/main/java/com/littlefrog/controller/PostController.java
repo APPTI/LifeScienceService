@@ -6,6 +6,7 @@ import com.littlefrog.entity.Post;
 import com.littlefrog.service.InformService;
 import com.littlefrog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,12 +24,17 @@ public class PostController {
     private PostService postService;
     @Autowired
     private InformService informService;
+    @Value("${appid}")
+    private String appID;
 
     /**
      * @return 课程下所有帖子
      */
     @GetMapping("api/post")
-    public Response index(@RequestParam Integer courseID, @RequestParam Integer index, @RequestParam Integer offset) {
+    public Response index(@RequestHeader String appid, @RequestParam Integer courseID, @RequestParam Integer index, @RequestParam Integer offset) {
+        if (!appid.equals(appID)) {
+            return genFailResult("错误的appid");
+        }
         ArrayList<Post> p = postService.getAllPost(courseID);
         if (p != null && p.size() >= index) {
             Post[] posts = new Post[p.size()];
@@ -46,7 +52,10 @@ public class PostController {
     }
 
     @PostMapping("api/post/send")
-    public Response send(@RequestParam Integer courseID, @RequestParam String content, @RequestParam Integer userID) {
+    public Response send(@RequestHeader String appid, @RequestParam Integer courseID, @RequestParam String content, @RequestParam Integer userID) {
+        if (!appid.equals(appID)) {
+            return genFailResult("错误的appid");
+        }
         if (postService.addPost(courseID, content, userID, null) != null) {
             return genSuccessResult();
         } else {
@@ -58,7 +67,10 @@ public class PostController {
      * reply后应该重新调用 getReply刷新页面
      */
     @PostMapping("api/post/reply")
-    public Response reply(@RequestParam Integer courseID, @RequestParam String content, @RequestParam Integer userID, @RequestParam Integer prePostID) {
+    public Response reply(@RequestHeader String appid, @RequestParam Integer courseID, @RequestParam String content, @RequestParam Integer userID, @RequestParam Integer prePostID) {
+        if (!appid.equals(appID)) {
+            return genFailResult("错误的appid");
+        }
         if (postService.getName(userID) != null) {
             Post post;
             if (postService.replyPost(prePostID) != null) {
@@ -79,7 +91,10 @@ public class PostController {
     }
 
     @GetMapping("api/post/getReply")
-    public Response getReply(@RequestParam Integer postID) {
+    public Response getReply(@RequestHeader String appid, @RequestParam Integer postID) {
+        if (!appid.equals(appID)) {
+            return genFailResult("错误的appid");
+        }
         List<Post> list = postService.getAllReply(postID);
         if (list != null && list.size() != 0) {
             return genSuccessResult(list);
@@ -89,7 +104,10 @@ public class PostController {
     }
 
     @GetMapping("api/post/info")
-    public Response indexForID(@RequestParam Integer postID) {
+    public Response indexForID(@RequestHeader String appid, @RequestParam Integer postID) {
+        if (!appid.equals(appID)) {
+            return genFailResult("错误的appid");
+        }
         Post post = postService.getPostInfo(postID);
         if (post != null) {
             return genSuccessResult(post);
@@ -102,7 +120,10 @@ public class PostController {
      * 修改评论(可调用返回值直接刷新原post)
      */
     @PostMapping("api/post/edit")
-    public Response modify(@RequestParam Integer postID, @RequestParam String newContent) {
+    public Response modify(@RequestHeader String appid, @RequestParam Integer postID, @RequestParam String newContent) {
+        if (!appid.equals(appID)) {
+            return genFailResult("错误的appid");
+        }
         Post p = postService.setUserInfo(postID, newContent);
         if (p != null) {
             return genSuccessResult(p);
@@ -112,7 +133,10 @@ public class PostController {
     }
 
     @PostMapping("api/post/delete")
-    public Response delete(@RequestParam Integer postID) {
+    public Response delete(@RequestHeader String appid, @RequestParam Integer postID) {
+        if (!appid.equals(appID)) {
+            return genFailResult("错误的appid");
+        }
         if (postService.removePost(postID)) {
             return genSuccessResult();
         } else {
@@ -121,7 +145,10 @@ public class PostController {
     }
 
     @PostMapping("api/post/like")
-    public Response like(@RequestParam Integer postID, @RequestParam Integer userID) {
+    public Response like(@RequestHeader String appid, @RequestParam Integer postID, @RequestParam Integer userID) {
+        if (!appid.equals(appID)) {
+            return genFailResult("错误的appid");
+        }
         if (postService.getName(userID) != null) {
             if (postService.likePost(postID)) {
                 if (informService.addInform(postService.getPostInfo(postID).getUserID(), "用户  " + postService.getName(userID) + "  喜欢了你发布的评论。", Category.POST, postID)) {
@@ -132,7 +159,7 @@ public class PostController {
             } else {
                 return genFailResult("帖子不存在");
             }
-        }else {
+        } else {
             return genFailResult("点赞用户不存在");
         }
     }

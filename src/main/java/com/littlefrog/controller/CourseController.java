@@ -1,14 +1,14 @@
 package com.littlefrog.controller;
+
 import com.littlefrog.common.Response;
 import com.littlefrog.common.Tag;
 import com.littlefrog.entity.Course;
-import com.littlefrog.entity.User;
-import com.littlefrog.respository.UserRepository;
 import com.littlefrog.service.CourseService;
-import com.littlefrog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class CourseController {
     private Response response;
 
     private int currentID=0;//没写加溢出了怎么办
-    @GetMapping("course/by-keyword")
+    @GetMapping("api/course/by-keyword")
     public Response getCoursesByKeyword(@RequestParam String keyword, @RequestParam int sortBy, @RequestParam Tag tag, @RequestParam int index, @RequestParam int offset){
         List<Course>  courseList = null;
         switch (sortBy){
@@ -58,7 +58,7 @@ public class CourseController {
         }
     }
 
-    @GetMapping("/course")
+    @GetMapping("api/course")
     public Response getAllCourses(@RequestParam  int index,@RequestParam int offset){
         List<Course> courseList= courseService.getAllCourse(index,offset,currentID++);
         if (courseList  == null){
@@ -69,7 +69,7 @@ public class CourseController {
         }
     }
 
-    @GetMapping("/course/findCourse")
+    @GetMapping("api/course/findCourse")
     public  Response findCourse(@RequestParam int courseId){
         Course c = courseService.findByID(courseId);
         if (c==null){

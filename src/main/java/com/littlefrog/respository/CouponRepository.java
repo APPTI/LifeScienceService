@@ -15,7 +15,7 @@ import java.util.Optional;
  */
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {
-    @Query(value = "SELECT * from coupon a where a.userid=? ", nativeQuery = true)
+    @Query(value = "SELECT * from coupon a where a.userid=? order by couponid desc ", nativeQuery = true)
     ArrayList<Coupon> findAllCoupon(Integer userID);
 
     @Query(value = "SELECT * from coupon a where a.couponid =? ", nativeQuery = true)

@@ -18,8 +18,7 @@ public class Course {
     public Course(){
 
     }
-    public Course(Integer id,String location, String name, String teacher, String introduction, int popularity, Tag tag, String cover_pic, Date releaseTime, double price, int courseNum) {
-        this.id=id;
+    public Course(String location, String name, String teacher, String introduction, int popularity, Tag tag, String cover_pic, Date releaseTime, double price, int courseNum) {
         this.location = location;
         this.name = name;
         this.teacher = teacher;

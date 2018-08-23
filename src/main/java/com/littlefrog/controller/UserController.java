@@ -43,7 +43,7 @@ public class UserController {
 
     @GetMapping("api/user/index")
     public Response index(@RequestHeader String appid){
-        if(appid!=this.appid){
+        if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
         List<User> u = userService.getAllUser();
@@ -55,7 +55,7 @@ public class UserController {
     }
     @PostMapping("api/user/login")
     public Response addUser(@RequestHeader String appid, @RequestParam String code){
-        if(appid!=this.appid){
+        if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
        Object user = userService.login(code);
@@ -72,7 +72,7 @@ public class UserController {
     }
     @GetMapping("api/user/info")
     public Response indexforID(@RequestHeader String appid, @RequestParam Integer id){
-        if(appid!=this.appid){
+        if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
         User user = userService.getUserInfo(id);
@@ -85,7 +85,7 @@ public class UserController {
 
     @PostMapping("api/user/updateInfo")
     public Response updateInfo(@RequestHeader String appid, @RequestParam int userId,@RequestParam int gender,@RequestParam String name, @RequestParam String phoneNum){
-        if(appid!=this.appid){
+        if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
         User user=userService.setUserInfo(userId,gender,name,phoneNum);
@@ -161,7 +161,7 @@ public class UserController {
 
     @PostMapping("api/user/recharge")
     public Response recharge(@RequestHeader String appid, @RequestParam int amount,@RequestParam Integer id) throws ParseException {
-        if(appid!=this.appid){
+        if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
         User user = userService.getUserInfo(id);

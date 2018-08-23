@@ -47,8 +47,13 @@ public interface CourseRepository extends JpaRepository<Course,Integer>{
 
     @Transactional
     @Modifying
+    @Query(value = "UPDATE course SET popularity = ?2 where id = ?1",nativeQuery = true)
+    public void setPopularity(Integer Id, int popularity);
+
+    @Transactional
+    @Modifying
     @Query(value = "UPDATE course SET introduction = ?2 where id = ?1",nativeQuery = true)
-    public void setIntroduction(Integer Id, int introduction);
+    public void setIntroduction(Integer Id, String introduction);
 
     @Transactional
     @Modifying
@@ -75,6 +80,11 @@ public interface CourseRepository extends JpaRepository<Course,Integer>{
     @Query(value = "UPDATE course SET courseNum =  ?2 where id = ?1",nativeQuery = true)
     public void setCourseNum(Integer Id,int courseNum);
 
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE course SET location =  ?2, name=?3, teacher=?4, introduction=?5, popularity=?6, tag=?7, coverPic=?8, price=?9, courseNum=?10 where id = ?1",nativeQuery = true)
+    public void setCourseInfo(Integer id,String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic,double price, int courseNum);
     @Transactional
     @Modifying
     @Query(value = "delete * from course where id = ?1",nativeQuery = true)

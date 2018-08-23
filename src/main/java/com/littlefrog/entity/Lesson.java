@@ -13,6 +13,9 @@ public class Lesson {
     private int order;
 
     @Column
+    private String title;
+
+    @Column
     private String video_url;
 
     @Column
@@ -26,6 +29,14 @@ public class Lesson {
 
     @Column
     private Date time;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Integer getId() {
         return id;
@@ -83,7 +94,8 @@ public class Lesson {
         this.time = time;
     }
 
-    public Lesson(int order, String video_url, String description, String cover_url, int course_id, Date time) {
+    public Lesson(int order, String title,String video_url, String description, String cover_url, int course_id, Date time) {
+        this.title = title;
         this.order = order;
         this.video_url = video_url;
         this.description = description;

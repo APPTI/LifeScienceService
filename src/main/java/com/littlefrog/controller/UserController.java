@@ -41,7 +41,7 @@ public class UserController {
     @Value("${appid}")
     private String appid;
 
-    @GetMapping("user/index")
+    @GetMapping("api/user/index")
     public Response index(@RequestHeader String appid){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
@@ -53,7 +53,7 @@ public class UserController {
             return genFailResult("没有用户");
         }
     }
-    @PostMapping("user/login")
+    @PostMapping("api/user/login")
     public Response addUser(@RequestHeader String appid, @RequestParam String code){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
@@ -70,7 +70,7 @@ public class UserController {
            return genFailResult("登陆失败，请稍后再试");
        }
     }
-    @GetMapping("/user/info")
+    @GetMapping("api/user/info")
     public Response indexforID(@RequestHeader String appid, @RequestParam Integer id){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
@@ -83,7 +83,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("user/updateInfo")
+    @PostMapping("api/user/updateInfo")
     public Response updateInfo(@RequestHeader String appid, @RequestParam int userId,@RequestParam int gender,@RequestParam String name, @RequestParam String phoneNum){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
@@ -96,7 +96,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping("user/recharge/getresult")
+    @RequestMapping("api/user/recharge/getresult")
     @ResponseBody
     public HttpServletResponse getrechargeResult(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DataInputStream in;
@@ -159,7 +159,7 @@ public class UserController {
                 "</return_code><return_msg><![CDATA[" + return_msg + "]]></return_msg></xml>";
     }
 
-    @PostMapping("user/recharge")
+    @PostMapping("api/user/recharge")
     public Response recharge(@RequestHeader String appid, @RequestParam int amount,@RequestParam Integer id) throws ParseException {
         if(appid!=this.appid){
             return genFailResult("错误的appid");

@@ -32,7 +32,7 @@ public class OrderController {
     private String appid;
 
     private Response response;
-    @GetMapping("order/getuserOrder")
+    @GetMapping("api/order/getuserOrder")
     public Response getUserOrder(@RequestHeader String appid, @RequestParam int userId){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
@@ -44,7 +44,7 @@ public class OrderController {
             return genSuccessResult(orderList);
         }
     }
-    @GetMapping("order/getuserLike")
+    @GetMapping("api/order/getuserLike")
     public Response getUserLike(@RequestHeader String appid, @RequestParam int userId){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
@@ -56,7 +56,7 @@ public class OrderController {
             return genSuccessResult(orderList);
         }
     }
-    @GetMapping("order/getAllOrderByCourseId")
+    @GetMapping("api/order/getAllOrderByCourseId")
     public Response getAllOrderByCourseId(@RequestHeader String appid, @RequestParam int courseId){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
@@ -68,7 +68,7 @@ public class OrderController {
             return genSuccessResult(userList);
         }
     }
-    @GetMapping("order/getAllUsersByCourseId")
+    @GetMapping("api/order/getAllUsersByCourseId")
     public Response getAllUsersByCourseId(@RequestHeader String appid, @RequestParam int courseId){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
@@ -85,7 +85,7 @@ public class OrderController {
             }
         }
     }
-    @PostMapping("order/addLike")
+    @PostMapping("api/order/addLike")
     public Response addOrder(@RequestHeader String appid, @RequestParam int courseid,@RequestParam int userid){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
@@ -98,7 +98,7 @@ public class OrderController {
             return genSuccessResult(order);
         }
     }
-    @PostMapping("order/buy")
+    @PostMapping("api/order/buy")
     public Response buy(@RequestHeader String appid, @RequestParam int couponId, @RequestParam int courseId, @RequestParam int userId){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
@@ -122,7 +122,7 @@ public class OrderController {
             return genFailResult("您的余额不足，请充值后购买");
         }
     }
-    @PostMapping("order/deleteOrder")
+    @PostMapping("api/order/deleteOrder")
     public Response deleteOrder(@RequestHeader String appid, @RequestParam int orderId){
         if(appid!=this.appid){
             return genFailResult("错误的appid");
@@ -135,7 +135,7 @@ public class OrderController {
             return genFailResult("服务器删除失败");
         }
     }
-    @PostMapping("order/deleteAll")
+    @PostMapping("api/order/deleteAll")
     public Response deleteAll(@RequestHeader String appid, @RequestParam int userID ,@RequestParam  boolean hasPay){
         if(appid!=this.appid){
             return genFailResult("错误的appid");

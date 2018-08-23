@@ -41,7 +41,7 @@ public class UserService {
     @Value("${notify_url}")
     private  String notify_url;
     //交易类型
-    @Value("${JSAPI}")
+    @Value("${trade_type}")
     private  String trade_type;
 
     public static final String SOURCES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

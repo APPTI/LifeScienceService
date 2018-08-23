@@ -18,23 +18,23 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     /**
      * @return 所有根话题
      */
-    @Query(value = "SELECT * from post a where a.previous_postid IS NULL and a.courseid=? ", nativeQuery = true)
+    @Query(value = "SELECT * from post a where a.previous_postid IS NULL and a.courseid=? order by postid desc ", nativeQuery = true)
     ArrayList<Post> findAllPost(Integer lessonId);
 
     /**
      * @param postID 一个根话题
      */
-    @Query(value = "SELECT * from post a where a.previous_postid =? ", nativeQuery = true)
+    @Query(value = "SELECT * from post  where previous_postid =? ", nativeQuery = true)
     ArrayList<Post> findAllReply(Integer postID);
 
     /**
      * @return 指定id的post
      */
     @Override
-    @Query(value = "SELECT * FROM post a where a.postid = ?", nativeQuery = true)
+    @Query(value = "SELECT * FROM post  where postid = ?", nativeQuery = true)
     Optional<Post> findById(Integer postID);
 
-    @Query(value = "SELECT name FROM user a where a.id = ?", nativeQuery = true)
+    @Query(value = "SELECT name FROM user  where id = ?", nativeQuery = true)
     String findName(Integer id);
 
 

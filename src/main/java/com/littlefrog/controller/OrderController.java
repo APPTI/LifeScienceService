@@ -128,7 +128,7 @@ public class OrderController {
             return genFailResult("错误的appid");
         }
         orderService.deleteOrder(orderId);
-        if(orderService.getById(orderId)==null){
+        if(!orderService.getById(orderId).isPresent()){
             return genSuccessResult();
         }
         else{

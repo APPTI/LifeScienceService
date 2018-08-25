@@ -10,8 +10,6 @@ public class Order {
     private Integer id;
 
     @Column
-    private Integer couponid;
-    @Column
     private Integer courseid;
     @Column
     private Integer userid;
@@ -27,8 +25,7 @@ public class Order {
         this.is_recharge = false;
     }
 
-    public Order(Integer couponid, Integer courseid, Integer userid, Boolean has_pay, Date ordertime) {
-        this.couponid = couponid;
+    public Order( Integer courseid, Integer userid, Boolean has_pay, Date ordertime) {
         this.courseid = courseid;
         this.userid = userid;
         this.has_pay = has_pay;
@@ -46,7 +43,6 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", couponid=" + couponid +
                 ", courseid=" + courseid +
                 ", userid=" + userid +
                 ", has_pay=" + has_pay +
@@ -71,13 +67,6 @@ public class Order {
         this.id = id;
     }
 
-    public Integer getCouponid() {
-        return couponid;
-    }
-
-    public void setCouponid(Integer couponid) {
-        this.couponid = couponid;
-    }
 
     public Integer getCourseid() {
         return courseid;

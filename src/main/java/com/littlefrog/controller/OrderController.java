@@ -115,11 +115,16 @@ public class OrderController {
         }
         double wallet = userService.getUserInfo(userId).getBalance();
         double price = courseService.findByID(courseId).getPrice();
-        if(wallet>price-couponMoney){
-            userService.payMoney(userId,price-couponMoney);
-            return genSuccessResult();
+        if(wallet>=price-couponMoney){
+            try{
+                userService.payMoney(userId,wallet-price+couponMoney);
+                Order order = orderService.addOrder(new Order(courseId,userId,true,new Date()));
+                return genSuccessResult(order);
+            }catch (Exception e){
+                return genFailResult(e.getMessage());
+            }
         }else{
-            return genFailResult("您的余额不足，请充值后购买");
+            return genFailResult("您的余额不足，请充值后购买"+wallet+" "+price);
         }
     }
     @PostMapping("api/order/deleteOrder")

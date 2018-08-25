@@ -9,7 +9,7 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(name = "order_num")
     private int order;
 
     @Column
@@ -21,7 +21,7 @@ public class Lesson {
     @Column
     private String description;
 
-    @Column
+    @Column(name = "cover_pic")
     private String cover_url;
 
     @Column

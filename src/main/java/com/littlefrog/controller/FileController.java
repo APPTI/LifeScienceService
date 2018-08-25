@@ -24,9 +24,9 @@ public class FileController {
 
     @PostMapping("api/file/uploadfile")
     public Response uploadfile(@RequestHeader String appid,@RequestParam("file") MultipartFile file , @RequestParam String path){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
-        }
+//        if(!appid.equals(this.appid)){
+//            return genFailResult("错误的appid");
+//        }
         String contentType = file.getContentType();   //图片文件类型
         String fileName = file.getOriginalFilename();  //图片名字
 

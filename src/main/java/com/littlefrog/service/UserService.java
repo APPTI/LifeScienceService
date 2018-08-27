@@ -1,37 +1,55 @@
 package com.littlefrog.service;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.littlefrog.entity.User;
 import com.littlefrog.respository.UserRepository;
 import com.littlefrog.store.Store;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import sun.misc.BASE64Encoder;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
+import java.security.MessageDigest;
 
-import static java.awt.SystemColor.info;
 
 @Service("UserService")
 public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    private final String appid = "";
-    private final String secretId="";
+    //secretId
+    @Value("${secretId}")
+    private  String secretId;
+    //appid
+    @Value("${appid}")
+    private  String appid ;
+    //商户号
+    @Value("${mch_id}")
+    private  String mch_id;
+    //商品描述
+    @Value("${body}")
+    private  String body;
+    //通知地址
+    @Value("${notify_url}")
+    private  String notify_url;
+    //交易类型
+    @Value("${trade_type}")
+    private  String trade_type;
 
-
+    public static final String SOURCES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private Store store = new Store();
+    //商户平台设置的密钥
+    @Value("${key}")
+    private String key;
+    private String spbill_create_ip;
 
     public User addUser(String sessionId,String openID){
         User user=userRepository.save(new User(sessionId,openID));
@@ -65,6 +83,73 @@ public class UserService {
             }
         }
         return user;
+    }
+
+    public String RandomString(Random random, int length){
+        String characters=this.SOURCES;
+        char[] text = new char[length];
+        for (int i = 0; i < length; i++) {
+            text[i] = characters.charAt(random.nextInt(characters.length()));
+        }
+        return new String(text);
+    }
+    public String Md5Sign(Map params){
+        String stringTemp="";
+        String newstr="";
+        Queue<String> paramsSet=new PriorityQueue<String>();
+        for(Object key : params.keySet()){
+            paramsSet.add(key+"="+params.get(key));
+        }
+        for(String string : paramsSet){
+            if(stringTemp!="")
+                stringTemp+="&";
+            stringTemp+=string;
+        }
+        stringTemp+="&key="+this.key;
+        try {
+            MessageDigest md5=MessageDigest.getInstance("MD5");
+            BASE64Encoder base64en = new BASE64Encoder();
+            //加密后的字符串
+             newstr=base64en.encode(md5.digest(stringTemp.getBytes("utf-8")));
+        }catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return newstr;
+    }
+    public JSONObject recharge(String openId,int orderId, int total_fee, HttpServletRequest request) {
+        String requestUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+        Map params = new HashMap();
+        params.put("appid",this.appid);
+        //我们请求的字符串
+        params.put("mch_id",this.mch_id);
+        //数字签名，###填你的数字签名，可以在你的个人中心看到
+        params.put("body",this.body);
+        //随机字符串
+        params.put("nonce_str",this.RandomString(new Random(),16));
+        //验证类型
+        params.put("sign_type","MD5");
+        //商品描述
+        params.put("body",this.body);
+        //商户订单号
+        params.put("out_trade_no",orderId);
+        //价格
+        params.put("total_fee",total_fee);
+        //交易类型
+        params.put("trade_type",this.trade_type);
+        params.put("openid",openId);
+        //终端ip
+        params.put("spbill_create_ip",request.getRemoteAddr());
+        //通知地址
+        params.put("notify_url",this.notify_url);
+        //签名
+        params.put("sign",this.Md5Sign(params));
+        //调用httpRequest方法，这个方法主要用于请求地址，并加上请求参数
+        String string = httpRequest(requestUrl,params);
+        //处理返回的JSON数据并返回
+        JSONObject pageBean = JSONObject.parseObject(string);
+        return pageBean;
     }
 
     public Object login(String code) {
@@ -167,7 +252,7 @@ public class UserService {
         return user;
     }
 
-    public User recharge(int id, double money, double balance){//  充钱
+    public User AddRecharge(int id, double money, double balance){//  充钱
         userRepository.SetBalance(id,balance+money);
         User user = userRepository.FindById(id);
         store.updateUserInfo(user.getId(),user);

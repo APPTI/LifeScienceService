@@ -16,11 +16,11 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
     @Query(value = "select * from userorder where userid = ?1 AND has_pay=false",nativeQuery = true)
     List<Order> getAllLike(Integer userId);
 
-    @Query(value = "select * from userorder where courseid = ?1 AND has_pay=true AND term = ?2",nativeQuery = true)
-    List<Order> getAllOrderByCourseid(Integer courseid,int term);
+    @Query(value = "select * from userorder where courseid = ?1 AND has_pay=true",nativeQuery = true)
+    List<Order> getAllOrderByCourseid(Integer courseid);
 
-    @Query(value = "select userid from userorder where courseid = ?1   AND has_pay = true AND term = ?2",nativeQuery = true)
-    List<Integer> getAlluserIdByCourseid(Integer courseid , int term);
+    @Query(value = "select userid from userorder where courseid = ?1   AND has_pay = true",nativeQuery = true)
+    List<Integer> getAlluserIdByCourseid(Integer courseid);
 
 
     @Transactional
@@ -32,5 +32,10 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
     @Modifying
     @Query(value = "delete * from userorder where userid = ?1 AND hasPay =?2 ",nativeQuery = true)
     public void deleteAllOrder(Integer userId,boolean hasPay);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE user SET is_recharge =  ?2 where id = ?1",nativeQuery = true)
+    public void SetIsRecharge(Integer Id,boolean isRecharge);
 
 }

@@ -72,8 +72,8 @@ public class CourseService {
     }
 
 
-    public Course addCourse (Integer id,String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic, Date releaseTime, double price, int courseNum){
-        Course course = courseRepository.save(new Course(id,location,name,teacher,introduction,popularity,tag,coverPic,releaseTime,price,courseNum));
+    public Course addCourse (String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic, Date releaseTime, double price, int courseNum){
+        Course course = courseRepository.save(new Course(location,name,teacher,introduction,popularity,tag,coverPic,releaseTime,price,courseNum));
         return course;
     }
 
@@ -89,5 +89,24 @@ public class CourseService {
 
     public Course findByID(Integer courseID){
        return courseRepository.findByCourseId(courseID);
+    }
+
+    public boolean setCourseInfo(Integer id,String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic, double price, int courseNum){
+        try {
+            courseRepository.setCourseInfo(id,location,name,teacher,introduction,popularity,tag,coverPic,price,courseNum);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean setCoverPic(int id, String Url){
+        try {
+            courseRepository.setCoverPic(id,Url);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }

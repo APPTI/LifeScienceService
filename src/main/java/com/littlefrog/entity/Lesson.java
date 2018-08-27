@@ -9,8 +9,11 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(name = "order_num")
     private int order;
+
+    @Column
+    private String title;
 
     @Column
     private String video_url;
@@ -18,7 +21,7 @@ public class Lesson {
     @Column
     private String description;
 
-    @Column
+    @Column(name = "cover_pic")
     private String cover_url;
 
     @Column
@@ -27,12 +30,8 @@ public class Lesson {
     @Column
     private Date time;
 
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Integer getId() {
@@ -83,7 +82,16 @@ public class Lesson {
         this.course_id = course_id;
     }
 
-    public Lesson(int order, String video_url, String description, String cover_url, int course_id, Date time) {
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public Lesson(int order, String title,String video_url, String description, String cover_url, int course_id, Date time) {
+        this.title = title;
         this.order = order;
         this.video_url = video_url;
         this.description = description;
@@ -92,7 +100,8 @@ public class Lesson {
         this.time = time;
     }
 
-    public Lesson(){
+
+    public Lesson() {
 
     }
 

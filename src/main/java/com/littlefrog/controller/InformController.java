@@ -5,6 +5,7 @@ import com.littlefrog.common.Response;
 import com.littlefrog.entity.Inform;
 import com.littlefrog.service.InformService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,14 +16,19 @@ import static com.littlefrog.common.ResultGenerator.genSuccessResult;
 /**
  * @author DW
  */
-@RequestMapping("/inform")
+@RequestMapping("api/inform")
 @RestController
 public class InformController {
     @Autowired
     private InformService informService;
+    @Value("${appid}")
+    private String appID;
 
     @GetMapping("/index")
-    public Response index(@RequestParam Integer userID) {
+    public Response index(@RequestHeader String appid, @RequestParam Integer userID) {
+        if (!appid.equals(appID)) {
+            return genFailResult("错误的appid");
+        }
         ArrayList<Inform> arrayList = informService.getAllInform(userID);
         if (arrayList != null && arrayList.size() != 0) {
             return genSuccessResult(arrayList);
@@ -32,7 +38,10 @@ public class InformController {
     }
 
     @PostMapping("/delete")
-    public Response delete(@RequestParam Integer informID) {
+    public Response delete(@RequestHeader String appid, @RequestParam Integer informID) {
+        if (!appid.equals(appID)) {
+            return genFailResult("错误的appid");
+        }
         if (informService.deleteInform(informID)) {
             return genSuccessResult();
         } else {
@@ -44,7 +53,10 @@ public class InformController {
      * @param userID 为-1则通知所有人
      */
     @PostMapping("/newInform")
-    public Response creat(@RequestParam Integer userID, @RequestParam String content,@RequestParam String category,@RequestParam(required = false) Integer returnID) {
+    public Response create(@RequestHeader String appid, @RequestParam Integer userID, @RequestParam String content, @RequestParam String category, @RequestParam(required = false) Integer returnID) {
+        if (!appid.equals(appID)) {
+            return genFailResult("错误的appid");
+        }
         Category c;
         try {
             c = Category.valueOf(category);

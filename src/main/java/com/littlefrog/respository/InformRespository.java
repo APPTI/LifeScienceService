@@ -16,7 +16,7 @@ import java.util.Optional;
  */
 @Repository
 public interface InformRespository extends JpaRepository<Inform, Integer> {
-    @Query(value = "SELECT * from inform a where a.userid=? or a.userid=-1", nativeQuery = true)
+    @Query(value = "SELECT * from inform a where(a.userid=? or a.userid=-1 ) order by informid desc ", nativeQuery = true)
     ArrayList<Inform> findAllInform(Integer userID);
 
     @Query(value = "SELECT * from inform a where a.informid =? ", nativeQuery = true)

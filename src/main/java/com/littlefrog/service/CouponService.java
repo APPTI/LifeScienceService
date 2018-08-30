@@ -62,7 +62,7 @@ public class CouponService {
     /**
      * 按时清理工具
      */
-    @Scheduled(cron = "50 16 13 * * ? ")
+    @Scheduled(cron = "5 0 0 * * ? ")
     public void delete() {
         couponRepository.deleteCoupons();
         try {

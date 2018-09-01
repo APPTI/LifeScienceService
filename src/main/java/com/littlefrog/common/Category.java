@@ -11,5 +11,6 @@ public enum Category {
     POST,
     COUPON,
     SYSTEM,
+    ORDER,
 
 }

@@ -24,7 +24,12 @@ public interface InformRespository extends JpaRepository<Inform, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "delete from inform where informID = ? ", nativeQuery = true)
+    @Query(value = "delete from inform where informid = ? ", nativeQuery = true)
     void deleteInform(Integer informID);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from life_science.inform where life_science.inform.category = ?1 and life_science.inform.return_id= ?2 ", nativeQuery = true)
+    void deleteByCategoryID(int category, int returnID);
 
 }

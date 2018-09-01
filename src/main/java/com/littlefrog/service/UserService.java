@@ -26,7 +26,7 @@ public class UserService {
     private UserRepository userRepository;
 
     //secretId
-    @Value("${secretId}")
+    @Value("AKID42rVxDlgdzkQI4R4sV2Odht0AC6tlvAF")
     private  String secretId;
     //appid
     @Value("${appid}")

@@ -72,6 +72,9 @@ public class PostController {
         if (!appid.equals(appID)) {
             return genFailResult("错误的appid");
         }
+        if (postService.getPostInfo(prePostID)==null){
+            return genFailResult("帖子不存在！");
+        }
         if (postService.getName(userID) != null) {
             Post post;
             if (postService.replyPost(prePostID) != null) {
@@ -95,6 +98,9 @@ public class PostController {
     public Response getReply(@RequestHeader String appid, @RequestParam Integer postID) {
         if (!appid.equals(appID)) {
             return genFailResult("错误的appid");
+        }
+        if (postService.getPostInfo(postID)==null){
+            return genFailResult("帖子不存在！");
         }
         List<Post> list = postService.getAllReply(postID);
         if (list != null && list.size() != 0) {

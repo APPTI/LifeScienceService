@@ -9,16 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface StudyRecordRepository extends JpaRepository<StudyRecord,Integer> {
-    @Query(value = "SELECT * from study_record u where u.course_id = ?1 and u.usr_id = ?2",nativeQuery = true)
-    public List<StudyRecord> getProgressRate(int courseID, int userID);
+    @Query(value = "SELECT * from study_record  where course_id = ?1 and usr_id = ?2 ",nativeQuery = true)
+    public List<StudyRecord> getProgressRate(int course_id, int user_id);
 
 
-    @Query(value = "SELECT u.course_id from study_record u where u.usr_id = ?1",nativeQuery = true)
+    @Query(value = "SELECT u.course_id from study_record u where u.usr_id = ?1 ",nativeQuery = true)
     public List<Integer> getMyCourses(int userID);
 
     @Transactional
     @Modifying
-    @Query (value = "delete * from study_record u where u.usr_id = ?1 and u.course_id = ?2",nativeQuery = true)
+    @Query (value = "delete * from study_record u where u.usr_id = ?1 and u.course_id = ?2 ",nativeQuery = true)
     public void deleteLastRate(int userID,int courseID);
 
 

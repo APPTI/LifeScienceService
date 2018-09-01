@@ -1,13 +1,12 @@
 package com.littlefrog.controller;
 
+import com.littlefrog.common.Category;
 import com.littlefrog.common.Response;
 import com.littlefrog.entity.Coupon;
+import com.littlefrog.entity.Course;
 import com.littlefrog.entity.Order;
 import com.littlefrog.entity.User;
-import com.littlefrog.service.CouponService;
-import com.littlefrog.service.CourseService;
-import com.littlefrog.service.OrderService;
-import com.littlefrog.service.UserService;
+import com.littlefrog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +28,9 @@ public class OrderController {
     private CouponService couponService;
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private InformService informService;
+    
     @Value("${appid}")
     private String appid;
 
@@ -120,6 +122,9 @@ public class OrderController {
             try{
                 userService.payMoney(userId,wallet-price+couponMoney);
                 Order order = orderService.addOrder(new Order(courseId,userId,true,new Date()));
+                Course course = courseService.findByID(courseId);
+                String massage = "恭喜您已经成功购买课程【"+course.getName()+"】,赶快去学习吧！";
+                informService.addInform(userId,massage,Category.ORDER,courseId);
                 return genSuccessResult(order);
             }catch (Exception e){
                 return genFailResult(e.getMessage());

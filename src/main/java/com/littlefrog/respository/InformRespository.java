@@ -1,7 +1,6 @@
 package com.littlefrog.respository;
 
 import com.littlefrog.entity.Inform;
-import com.littlefrog.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Optional;
 
 
@@ -37,5 +37,10 @@ public interface InformRespository extends JpaRepository<Inform, Integer> {
     @Modifying
     @Query(value = "delete from life_science.inform where life_science.inform.category = ?1 and life_science.inform.return_id= ?2 ", nativeQuery = true)
     void deleteByCategoryID(int category, int returnID);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from life_science.inform where life_science.inform.userid = -1 and life_science.inform.send_time < ?1", nativeQuery = true)
+    void deleteInforms(Calendar sendDay);
 
 }

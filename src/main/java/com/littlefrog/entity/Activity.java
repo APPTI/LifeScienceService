@@ -15,7 +15,7 @@ public class Activity {
     @Column
     private String cover_url;//封面图片
 
-    public Activity(String title, String cover_url, String content, Boolean isHasCoupon, int coupon, Date couponExpiry, Date expiry, int requirement, int courseId, int ammount) {
+    public Activity(String title, String cover_url, String content, Boolean isHasCoupon, int coupon, int couponExpiry, Date expiry, int requirement, int courseId, int ammount) {
         this.title = title;
         this.cover_url = cover_url;
         this.content = content;
@@ -47,7 +47,7 @@ public class Activity {
     private int coupon;//代金券面值
 
     @Column(name = "coupon_expiry")
-    private Date couponExpiry;//代金券有效期
+    private int couponExpiry;//代金券有效期
 
     @Column
     private Date expiry;//有效期
@@ -61,15 +61,15 @@ public class Activity {
     @Column
     private int  ammount;//充值金额
 
-    public Date getCouponExpiry() {
+    public int getCouponExpiry() {
         return couponExpiry;
     }
 
-    public void setCouponExpiry(Date couponExpiry) {
+    public void setCouponExpiry(int couponExpiry) {
         this.couponExpiry = couponExpiry;
     }
 
-    public Activity(String title, String content, Boolean isHasCoupon, int coupon, Date couponExpiry, Date expiry, int requirement, int courseId, int ammount) {
+    public Activity(String title, String content, Boolean isHasCoupon, int coupon, int couponExpiry, Date expiry, int requirement, int courseId, int ammount) {
         this.title = title;
         this.content = content;
         this.isHasCoupon = isHasCoupon;

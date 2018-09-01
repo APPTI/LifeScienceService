@@ -39,7 +39,7 @@ public class FileController {
         }
 
         // 返回图片的存放路径
-        return genSuccessResult(path+fileName);
+        return genSuccessResult((path+fileName));
     }
 
     public static void saveFile(byte[] file, String filePath, String fileName) throws Exception{

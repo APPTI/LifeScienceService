@@ -1,11 +1,10 @@
 package com.littlefrog.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.littlefrog.common.Category;
 import com.littlefrog.common.Response;
-import com.littlefrog.entity.Coupon;
-import com.littlefrog.entity.Course;
-import com.littlefrog.entity.Order;
-import com.littlefrog.entity.User;
+import com.littlefrog.entity.*;
 import com.littlefrog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +29,8 @@ public class OrderController {
     private CourseService courseService;
     @Autowired
     private InformService informService;
+    @Autowired
+    private ActivityService activityService;
 
     @Value("${appid}")
     private String appid;
@@ -120,12 +121,26 @@ public class OrderController {
         double price = courseService.findByID(courseId).getPrice();
         if(wallet>=price-couponMoney){
             try{
-                userService.payMoney(userId,wallet-price+couponMoney);
-                Order order = orderService.addOrder(new Order(courseId,userId,true,new Date()));
                 Course course = courseService.findByID(courseId);
+                Order order = orderService.addOrder(new Order(courseId,userId,true,new Date()));
+                userService.payMoney(userId,wallet-price+couponMoney);
                 String massage = "恭喜您已经成功购买课程【"+course.getName()+"】,赶快去学习吧！";
                 informService.addInform(userId,massage,Category.ORDER,courseId);
-                return genSuccessResult(order);
+                if(couponId==-1){
+                    Activity activity = activityService.findByrequirement(courseId,1);
+                    if(activity!=null){
+                        Coupon.setLastTime(activity.getCouponExpiry());
+                        Coupon coupon = couponService.addCoupon(userId,activity.getCoupon());
+                        JSONObject result = new JSONObject();
+                        result.put("order",order);
+                        result.put("coupon",coupon);
+                        return genSuccessResult(result);
+                    }else{
+                        return genSuccessResult(order);
+                    }
+                }else {
+                    return genSuccessResult(order);
+                }
             }catch (Exception e){
                 return genFailResult(e.getMessage());
             }

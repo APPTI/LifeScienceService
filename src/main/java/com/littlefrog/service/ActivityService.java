@@ -21,7 +21,7 @@ public class ActivityService {
     private ActivityRepository activityRepository;
 
 
-    public Activity AddActivity(String title, String cover_url,String url, Boolean isHasCoupon, int coupon,Date coupon_expiry,Date expiry,int requirement,int courseId,int ammount){
+    public Activity AddActivity(String title, String cover_url,String url, Boolean isHasCoupon, int coupon,int coupon_expiry,Date expiry,int requirement,int courseId,int ammount){
         return activityRepository.save(new Activity(title,cover_url,url,isHasCoupon,coupon,coupon_expiry,expiry,requirement,courseId,ammount));
     }
 
@@ -32,6 +32,14 @@ public class ActivityService {
         }catch (Exception e){
             return false;
         }
+    }
+
+    public Activity findByrequirement(int courseId, int requirement){
+        return activityRepository.findActivityByCourseIdAndRequirement(courseId,requirement);
+    }
+
+    public Activity findByrequirementAndAmmount(int ammount, int requirement){
+        return activityRepository.findActivityByAmmountAndRequirement(ammount,requirement);
     }
 
     public Optional<Activity> findById(int id){

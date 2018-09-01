@@ -14,8 +14,14 @@ import java.util.Optional;
 
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Integer> {
-    @Query(value = "SELECT * from activity a where a.courseid=?1", nativeQuery = true)
+    @Query(value = "SELECT * from activity where courseid=?1", nativeQuery = true)
     Activity findByCourseId(Integer courseId);
+
+    @Query(value = "select * from activity where requirement=?2 and courseid=?1",nativeQuery = true)
+    Activity findActivityByCourseIdAndRequirement(Integer courseId,int requirement);
+
+    @Query(value = "select * from activity where requirement=?2 and ammount<?1 order by ammount desc limit 1",nativeQuery = true)
+    Activity findActivityByAmmountAndRequirement(Integer ammount,int requirement);
 
     @Transactional
     @Modifying

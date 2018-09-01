@@ -4,9 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.littlefrog.common.Response;
 import com.littlefrog.common.ResultCode;
+import com.littlefrog.entity.Activity;
+import com.littlefrog.entity.Coupon;
 import com.littlefrog.entity.Order;
 import com.littlefrog.entity.User;
 import com.littlefrog.respository.UserRepository;
+import com.littlefrog.service.ActivityService;
+import com.littlefrog.service.CouponService;
 import com.littlefrog.service.OrderService;
 import com.littlefrog.service.UserService;
 import com.sun.org.apache.bcel.internal.classfile.Signature;
@@ -39,6 +43,13 @@ public class UserController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private ActivityService activityService;
+
+    @Autowired
+    private CouponService couponService;
+
     @Value("${appid}")
     private String appid;
 
@@ -127,6 +138,7 @@ public class UserController {
                         int userId=order.get().getUserid();
                         User user=userService.AddRecharge(userId,amount,userService.getUserInfo(userId).getBalance());
                         orderService.setIsRecharge(orderId,true);
+
                         if(user!=null){
                             response.encodeURL(setXml("SUCCESS",""));
                             return response;
@@ -160,6 +172,28 @@ public class UserController {
                 "</return_code><return_msg><![CDATA[" + return_msg + "]]></return_msg></xml>";
     }
 
+    @PostMapping("api/user/rechargeResult")
+    public Response rechargeResult(@RequestHeader String appid,@RequestParam int userid, @RequestParam int ammount,@RequestParam boolean isSuccess){
+        if(!appid.equals(this.appid)){
+            return genFailResult("错误的appid");
+        }
+        if(!isSuccess){
+            return genSuccessResult();
+        }else{
+            Activity activity = activityService.findByrequirementAndAmmount(ammount,2);
+            if(activity==null){
+                return genSuccessResult();
+            }else{
+                try {
+                    Coupon.setLastTime(activity.getCouponExpiry());
+                    Coupon coupon = couponService.addCoupon(userid, activity.getCoupon());
+                    return genSuccessResult("恭喜您获得"+activity.getCoupon()+"元优惠券");
+                }catch (Exception e){
+                    return genFailResult(e.getMessage());
+                }
+            }
+        }
+    }
     @PostMapping("api/user/recharge")
     public Response recharge(@RequestHeader String appid, @RequestParam int amount,@RequestParam Integer id) throws ParseException {
         if(!appid.equals(this.appid)){

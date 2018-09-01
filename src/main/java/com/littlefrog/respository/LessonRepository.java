@@ -35,12 +35,12 @@ public interface LessonRepository extends JpaRepository<Lesson,Integer>{
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE lesson SET cover_url = ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE lesson SET cover_pic = ?2 where id = ?1",nativeQuery = true)
     public void setCover_url(Integer Id, String cover_url);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE lesson SET title =  ?2, video_url=?3, description=?4, cover_url=?5 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE lesson SET title =  ?2, video_url=?3, description=?4, cover_pic=?5 where id = ?1",nativeQuery = true)
     public void setLessonInfo(Integer id,String title, String video_url, String description, String cover_url);
 
     @Transactional

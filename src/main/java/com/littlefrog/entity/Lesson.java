@@ -22,7 +22,7 @@ public class Lesson {
     private String description;
 
     @Column(name = "cover_pic")
-    private String cover_url;
+    private String cover_pic;
 
     @Column
     private int course_id;
@@ -71,12 +71,12 @@ public class Lesson {
         this.description = description;
     }
 
-    public String getCover_url() {
-        return cover_url;
+    public String getCover_pic() {
+        return cover_pic;
     }
 
-    public void setCover_url(String cover_url) {
-        this.cover_url = cover_url;
+    public void setCover_pic(String cover_pic) {
+        this.cover_pic = cover_pic;
     }
 
     public int getCourse_id() {
@@ -100,7 +100,7 @@ public class Lesson {
         this.order = order;
         this.video_url = video_url;
         this.description = description;
-        this.cover_url = cover_url;
+        this.cover_pic = cover_url;
         this.course_id = course_id;
         this.time = time;
     }
@@ -113,7 +113,7 @@ public class Lesson {
                 ", title='" + title + '\'' +
                 ", video_url='" + video_url + '\'' +
                 ", description='" + description + '\'' +
-                ", cover_url='" + cover_url + '\'' +
+                ", cover_pic='" + cover_pic + '\'' +
                 ", course_id=" + course_id +
                 ", time=" + time +
                 '}';

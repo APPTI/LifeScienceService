@@ -24,11 +24,11 @@ public interface CourseRepository extends JpaRepository<Course,Integer>{
     @Query (value = "SELECT * from course where name like concat('%',?1,'%') or name like concat(?1,'%') or name like concat('%',?1) order by popularity desc ", nativeQuery = true)
     public List<Course> findCourseByPopularity(String keyword);
 
-    @Query (value = "SELECT * from course where name like concat('%',?1,'%') or name like concat(?1 ,'%') or name like concat('%',?1) order by popularity DESC  ",nativeQuery = true)
-    public List<Course> findCourseByTagAndPopularity(Tag tag, String keyword);
+    @Query (value = "SELECT * from course t where t.tag = ?1 AND (t.name like concat('%',?2,'%') or t.name like concat(?2,'%') or t.name like concat('%',?2)) order by popularity DESC",nativeQuery = true)
+    public List<Course> findCourseByTagAndPopularity(int tag, String keyword);
 
-    @Query (value = "select * from course where name like concat('%',?2,'%') or name like concat(?2,'%') or name like concat('%',?2) and tag=?1 order by release_time DESC",nativeQuery = true)
-    public List<Course> findCourseByTagAndReleaseTime(Tag tag, String keyword);
+    @Query (value = "select * from course t where t.tag = ?1 AND (t.name like concat('%',?2,'%') or t.name like concat(?2,'%') or t.name like concat('%',?2)) order by release_time DESC",nativeQuery = true)
+    public List<Course> findCourseByTagAndReleaseTime(int tag, String keyword);
 
     @Query(value = "select * from course where name like concat('%',?1,'%') or name like concat(?1 ,'%') or name like concat('%',?1) order by tag  ",nativeQuery = true)
     public List<Course> findCourseByTag(String keyword);

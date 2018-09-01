@@ -29,7 +29,7 @@ public class CourseService {
     public List<Course> getCourseByTagAndPopularity(Tag tag,String keyword,int index,int offset,int id){
         List<Course> courseList=store.getCourseList(id,index,offset);
         if ( courseList== null){
-            courseList=courseRepository.findCourseByTagAndPopularity(tag,keyword);
+            courseList=courseRepository.findCourseByTagAndPopularity(tag.ordinal(),keyword);
             store.addCourseList(id,courseList);
         }
         return courseList.subList(index,Math.min(index+offset,courseList.size()));
@@ -38,7 +38,7 @@ public class CourseService {
     public List<Course> getCourseByTagAndReleaseTime(Tag tag,String keyword,int index,int offset,int id){
         List<Course> courseList=store.getCourseList(id,index,offset);
         if ( courseList== null){
-            courseList = courseRepository.findCourseByTagAndReleaseTime(tag,keyword);
+            courseList = courseRepository.findCourseByTagAndReleaseTime(tag.ordinal(),keyword);
             store.addCourseList(id,courseList);
         }
         return courseList.subList(index,Math.min(index+offset,courseList.size()));

@@ -14,6 +14,7 @@ import java.util.List;
 
 
 public interface CourseRepository extends JpaRepository<Course,Integer>{
+    //查
     @Query (value = "SELECT * from course",nativeQuery = true)
     public List<Course> findAll();
 
@@ -35,8 +36,15 @@ public interface CourseRepository extends JpaRepository<Course,Integer>{
     @Query (value = "SELECT * FROM course a  where a.id = ?1",nativeQuery = true)
     public Course findByCourseId(Integer id);
 
+    //add
     @Transactional
     @Modifying
+    @Query(value = "UPDATE course  c " +
+            "SET c.location =  ?2 ,c.name = ?3 , c.teacher = ?4 ,c.introduction = ?5 ,c.popularity=?6 ,c.tag=?7 , c.cover_pic = ?8 ,c.release_time = ?9, c.price = ?10, c.course_num = ?11 " +
+            "where id = ?1",nativeQuery = true)
+    public void setCourse(Integer Id,String location,String name, String teacher,String introduction, int popularity, Tag tag, String coverPic, Date releaseTime, int price, int courseNum);
+
+    //delete
     @Query(value = "UPDATE course SET name = ?2 where id = ?1",nativeQuery = true)
     public void setName(Integer Id, String newName);
 

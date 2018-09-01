@@ -29,5 +29,9 @@ public interface StudyRecordRepository extends JpaRepository<StudyRecord,Integer
             "where usr_id = ?1 and course_id = ?2", nativeQuery = true)
     public void updateProgress(Integer userID, Integer courseID, int hour,int minute,int second,int lesson_id);
 
-
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT INTO study_record  " +
+            "SET t.hour = 0 ,t.minute = 0,t.second = 0 ,t.lesson_id = 0 ", nativeQuery = true)
+    public void addProgress(Integer userID, Integer courseID);
 }

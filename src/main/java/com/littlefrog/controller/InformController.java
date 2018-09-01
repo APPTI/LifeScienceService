@@ -53,7 +53,7 @@ public class InformController {
      * @param userID 为-1则通知所有人
      */
     @PostMapping("/newInform")
-    public Response creat(@RequestHeader String appid, @RequestParam Integer userID, @RequestParam String content, @RequestParam String category, @RequestParam(required = false) Integer returnID) {
+    public Response create(@RequestHeader String appid, @RequestParam Integer userID, @RequestParam String content, @RequestParam String category, @RequestParam(required = false) Integer returnID) {
         if (!appid.equals(appID)) {
             return genFailResult("错误的appid");
         }

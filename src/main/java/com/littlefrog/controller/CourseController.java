@@ -25,7 +25,7 @@ public class CourseController {
     @Value("${appid}")
     private String appid;
 
-    private int currentID=0;//没写加溢出了怎么办
+    private int currentID=0;
     @GetMapping("api/course/by-keyword")
     public Response getCoursesByKeyword(@RequestHeader String appid,@RequestParam String keyword, @RequestParam int sortBy, @RequestParam Tag tag, @RequestParam int index, @RequestParam int offset){
         if(!appid.equals(this.appid)){
@@ -92,7 +92,7 @@ public class CourseController {
     }
 
     @PostMapping("api/course/addCourse")
-    public Response addCourse(@RequestHeader String appid,@RequestParam String name, @RequestParam String location, @RequestParam String teacher, @RequestParam String introduction, @RequestParam int popularity, @RequestParam Tag tag, @RequestParam String cover_pic, @RequestParam double price , @RequestParam int courseNum){
+    public Response updateCourse(@RequestHeader String appid, @RequestParam String name, @RequestParam String location, @RequestParam String teacher, @RequestParam String introduction, @RequestParam int popularity, @RequestParam Tag tag, @RequestParam String cover_pic, @RequestParam double price , @RequestParam int courseNum){
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
@@ -105,7 +105,7 @@ public class CourseController {
     }
 
     @PostMapping("api/course/setCourseInfo")
-    public Response addCourse(@RequestHeader String appid,@RequestParam Integer id,@RequestParam String name,@RequestParam String location,@RequestParam String teacher,@RequestParam String introduction,@RequestParam int popularity,@RequestParam Tag tag,@RequestParam String cover_pic,@RequestParam double price ,@RequestParam int courseNum){
+    public Response updateCourse(@RequestHeader String appid, @RequestParam Integer id, @RequestParam String name, @RequestParam String location, @RequestParam String teacher, @RequestParam String introduction, @RequestParam int popularity, @RequestParam Tag tag, @RequestParam String cover_pic, @RequestParam double price , @RequestParam int courseNum){
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }

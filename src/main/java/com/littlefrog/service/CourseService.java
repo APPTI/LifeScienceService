@@ -29,7 +29,7 @@ public class CourseService {
     public List<Course> getCourseByTagAndPopularity(Tag tag,String keyword,int index,int offset,int id){
         List<Course> courseList=store.getCourseList(id,index,offset);
         if ( courseList== null){
-            courseList=courseRepository.findCourseByTagAndPopularity(tag,keyword);
+            courseList=courseRepository.findCourseByTagAndPopularity(tag.ordinal(),keyword);
             store.addCourseList(id,courseList);
         }
         return courseList.subList(index,Math.min(index+offset,courseList.size()));
@@ -38,7 +38,7 @@ public class CourseService {
     public List<Course> getCourseByTagAndReleaseTime(Tag tag,String keyword,int index,int offset,int id){
         List<Course> courseList=store.getCourseList(id,index,offset);
         if ( courseList== null){
-            courseList = courseRepository.findCourseByTagAndReleaseTime(tag,keyword);
+            courseList = courseRepository.findCourseByTagAndReleaseTime(tag.ordinal(),keyword);
             store.addCourseList(id,courseList);
         }
         return courseList.subList(index,Math.min(index+offset,courseList.size()));
@@ -91,9 +91,9 @@ public class CourseService {
        return courseRepository.findByCourseId(courseID);
     }
 
-    public boolean setCourseInfo(Integer id,String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic, double price, int courseNum){
+    public boolean setCourseInfo(Integer id,String location, String name, String teacher, String introduction, int popularity, Tag tag, String cover_pic, double price, int course_num){
         try {
-            courseRepository.setCourseInfo(id,location,name,teacher,introduction,popularity,tag,coverPic,price,courseNum);
+            courseRepository.setCourseInfo(id,location,name,teacher,introduction,popularity,tag.ordinal(),cover_pic,price,course_num);
             return true;
         }
         catch (Exception e) {

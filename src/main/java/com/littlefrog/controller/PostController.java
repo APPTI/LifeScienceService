@@ -33,10 +33,12 @@ public class PostController {
      */
     @GetMapping("api/post")
     public Response index(@RequestHeader String appid, @RequestParam Integer courseID, @RequestParam Integer index, @RequestParam Integer offset) {
+
         if (!appid.equals(appID)) {
             return genFailResult("错误的appid");
         }
         ArrayList<Post> p = postService.getAllPost(courseID);
+        index = index == 0 ? 1 : index;
         if (p != null && p.size() >= index) {
             Post[] posts = new Post[p.size()];
             p.toArray(posts);
@@ -72,7 +74,7 @@ public class PostController {
         if (!appid.equals(appID)) {
             return genFailResult("错误的appid");
         }
-        if (postService.getPostInfo(prePostID)==null){
+        if (postService.getPostInfo(prePostID) == null) {
             return genFailResult("帖子不存在！");
         }
         if (postService.getName(userID) != null) {
@@ -99,7 +101,7 @@ public class PostController {
         if (!appid.equals(appID)) {
             return genFailResult("错误的appid");
         }
-        if (postService.getPostInfo(postID)==null){
+        if (postService.getPostInfo(postID) == null) {
             return genFailResult("帖子不存在！");
         }
         List<Post> list = postService.getAllReply(postID);
@@ -145,7 +147,7 @@ public class PostController {
             return genFailResult("错误的appid");
         }
         if (postService.removePost(postID)) {
-            informService.deleteInformByCategory(Category.POST,postID);
+            informService.deleteInformByCategory(Category.POST, postID);
             return genSuccessResult();
         } else {
             return genFailResult("帖子不存在");

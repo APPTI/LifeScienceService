@@ -1,6 +1,7 @@
 package com.littlefrog.respository;
 
 import com.littlefrog.entity.Inform;
+import com.littlefrog.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +27,11 @@ public interface InformRespository extends JpaRepository<Inform, Integer> {
     @Modifying
     @Query(value = "delete from inform where informid = ? ", nativeQuery = true)
     void deleteInform(Integer informID);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from inform where life_science.inform.userid = ? ", nativeQuery = true)
+    void deleteAllInform(int userID);
 
     @Transactional
     @Modifying

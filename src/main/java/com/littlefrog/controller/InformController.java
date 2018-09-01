@@ -46,8 +46,20 @@ public class InformController {
         if (informService.deleteInform(informID)) {
             return genSuccessResult();
         } else {
-            return genFailResult("原通知不存在");
+            return genFailResult("原通知不存在或者通知全体用户");
         }
+    }
+
+    @PostMapping("/deleteAll")
+    public Response deleteAll(@RequestHeader String appid, @RequestParam Integer userID) {
+        if (!appid.equals(appID)) {
+            return genFailResult("错误的appid");
+        }
+        if (userID == -1) {
+            return genFailResult("用户id不可为全体");
+        }
+        informService.deleteAllInform(userID);
+        return genSuccessResult();
     }
 
     /**

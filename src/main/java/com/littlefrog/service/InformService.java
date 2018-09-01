@@ -38,7 +38,7 @@ public class InformService {
 
     public boolean deleteInform(Integer informID) {
         Optional<Inform> o = informRespository.findOneInform(informID);
-        if (o.isPresent()) {
+        if (o.isPresent() && o.get().getUserID() != -1) {
             informRespository.deleteInform(informID);
             return true;
         } else {
@@ -46,8 +46,12 @@ public class InformService {
         }
     }
 
-    public void deleteInformByCategory(Category category, int returnID){
-        informRespository.deleteByCategoryID(category.ordinal(),returnID);
+    public void deleteInformByCategory(Category category, int returnID) {
+        informRespository.deleteByCategoryID(category.ordinal(), returnID);
+    }
+
+    public void deleteAllInform(int userID) {
+        informRespository.deleteAllInform(userID);
     }
 
 }

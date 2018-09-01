@@ -33,7 +33,7 @@ public class FileController {
 
         //调用文件处理类FileUtil，处理文件，将文件写入指定位置
         try {
-            this.uploadFile(file.getBytes(), filePath, fileName);
+            this.saveFile(file.getBytes(), filePath, fileName);
         } catch (Exception e) {
             return genFailResult(e.getMessage());
         }
@@ -42,7 +42,7 @@ public class FileController {
         return genSuccessResult(path);
     }
 
-    public static void uploadFile(byte[] file, String filePath, String fileName) throws Exception{
+    public static void saveFile(byte[] file, String filePath, String fileName) throws Exception{
 
         File targetFile = new File(filePath);
         if(!targetFile.exists()){

@@ -13,6 +13,31 @@ public class Activity {
     private String title;//活动标题
 
     @Column
+    private String cover_url;//封面图片
+
+    public Activity(String title, String cover_url, String content, Boolean isHasCoupon, int coupon, Date couponExpiry, Date expiry, int requirement, int courseId, int ammount) {
+        this.title = title;
+        this.cover_url = cover_url;
+        this.content = content;
+        this.isHasCoupon = isHasCoupon;
+        this.coupon = coupon;
+        this.couponExpiry = couponExpiry;
+        this.expiry = expiry;
+        this.requirement = requirement;
+        this.courseId = courseId;
+        this.ammount = ammount;
+    }
+
+    public String getCover_url() {
+
+        return cover_url;
+    }
+
+    public void setCover_url(String cover_url) {
+        this.cover_url = cover_url;
+    }
+
+    @Column
     private String content;//活动内容，为svg格式的图片url
 
     @Column(name = "is_has_coupon")

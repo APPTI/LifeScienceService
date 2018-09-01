@@ -47,7 +47,7 @@ public class User {
     }
 
     public User(){
-
+        setLastlogintime(new Date());
     }
     public User(String name, String openID, int gender, String phoneNum, double balance,String sessionId,String unionId) {
         this.name = name;

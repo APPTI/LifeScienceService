@@ -91,9 +91,9 @@ public class CourseService {
        return courseRepository.findByCourseId(courseID);
     }
 
-    public boolean setCourseInfo(Integer id,String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic, double price, int courseNum){
+    public boolean setCourseInfo(Integer id,String location, String name, String teacher, String introduction, int popularity, Tag tag, String cover_pic, double price, int course_num){
         try {
-            courseRepository.setCourseInfo(id,location,name,teacher,introduction,popularity,tag,coverPic,price,courseNum);
+            courseRepository.setCourseInfo(id,location,name,teacher,introduction,popularity,tag.ordinal(),cover_pic,price,course_num);
             return true;
         }
         catch (Exception e) {

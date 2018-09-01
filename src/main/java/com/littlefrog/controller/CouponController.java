@@ -18,6 +18,7 @@ import static com.littlefrog.common.ResultGenerator.genSuccessResult;
  * @author DW
  */
 @RequestMapping("api/coupon")
+@CrossOrigin
 @RestController
 public class CouponController {
     @Autowired

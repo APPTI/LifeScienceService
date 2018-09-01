@@ -18,6 +18,7 @@ import static com.littlefrog.common.ResultGenerator.genSuccessResult;
  */
 @RequestMapping("api/inform")
 @RestController
+@CrossOrigin
 public class InformController {
     @Autowired
     private InformService informService;

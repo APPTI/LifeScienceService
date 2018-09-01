@@ -29,6 +29,7 @@ import static com.littlefrog.common.ResultGenerator.genFailResult;
 import static com.littlefrog.common.ResultGenerator.genSuccessResult;
 
 @RestController
+@CrossOrigin
 public class UserController {
     @Autowired
     private UserService userService;

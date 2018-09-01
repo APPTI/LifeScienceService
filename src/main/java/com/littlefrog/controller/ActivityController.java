@@ -27,7 +27,7 @@ public class ActivityController {
     private String appid;
 
     @PostMapping("api/activity/addActivity")
-    public Response AddActivity(@RequestHeader String appid, @RequestParam String title,@RequestParam String cover_url,@RequestParam String url, @RequestParam Boolean isHasCoupon ,@RequestParam int coupon, @RequestParam Date coupon_expiry,@RequestParam Date expiry,@RequestParam int requirement,@RequestParam int courseId,@RequestParam int ammount){
+    public Response AddActivity(@RequestHeader String appid, @RequestParam String title,@RequestParam String cover_url,@RequestParam String url, @RequestParam Boolean isHasCoupon ,@RequestParam int coupon, @RequestParam int coupon_expiry,@RequestParam Date expiry,@RequestParam int requirement,@RequestParam int courseId,@RequestParam int ammount){
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }

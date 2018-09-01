@@ -25,9 +25,9 @@ public class User {
     private Date lastlogintime;
     @Column
     private boolean phonevalid;
-    @Column
+    @Column(name = "session_id")
     private String sessionId;
-    @Column
+    @Column(name = "union_id")
     private String unionId;
 
     public String getSessionId() {

@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query(value = "SELECT * FROM user a  where a.id = ?1", nativeQuery = true)
     public User FindById(Integer id);
 
-    @Query(value = "select * from user where openID = ?1", nativeQuery = true)
+    @Query(value = "select * from user where openid = ?1", nativeQuery = true)
     public User FindByopenID(String openId);
 
     @Transactional
@@ -37,7 +37,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE user SET phoneNum = ?2, phoneValid=true where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE user SET phonenum = ?2, phonevalid=true where id = ?1",nativeQuery = true)
     public void SetPhoneNum(Integer Id, String phoneNum);
 
     @Transactional
@@ -47,17 +47,17 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE user SET openID = ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE user SET openid = ?2 where id = ?1",nativeQuery = true)
     public void SetOpenId(Integer Id, String openId);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE user SET lastLoginTime = ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE user SET lastlogintime = ?2 where id = ?1",nativeQuery = true)
     public void SetLoginTime(Integer Id, Date time);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE user SET gender =  ?2, name = ?3, phoneNum = ?4,phonevalid=true where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE user SET gender =  ?2, name = ?3, phonenum = ?4,phonevalid=true where id = ?1",nativeQuery = true)
     public void UpdateInfo(Integer Id,int gender,String name, String phoneNum);
 
     @Transactional
@@ -67,12 +67,12 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE user SET sessionId =  ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE user SET session_id =  ?2 where id = ?1",nativeQuery = true)
     public void UpdateSessionId(Integer Id,String sessionId);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE user SET unionId =  ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE user SET union_id =  ?2 where id = ?1",nativeQuery = true)
     public void UpdateUnionId(Integer Id,String unionId);
 
     @Query(value = "select LAST_INSERT_ID()",nativeQuery = true)

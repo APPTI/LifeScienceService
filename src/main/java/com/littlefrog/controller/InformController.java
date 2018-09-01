@@ -60,7 +60,7 @@ public class InformController {
         }
         Category c;
         try {
-            c = Category.valueOf(category);
+            c = Category.valueOf(category.toUpperCase());
         } catch (IllegalArgumentException e) {
             return genFailResult("枚举参数无效");
         }

@@ -46,4 +46,8 @@ public class InformService {
         }
     }
 
+    public void deleteInformByCategory(Category category, int returnID){
+        informRespository.deleteByCategoryID(category.ordinal(),returnID);
+    }
+
 }

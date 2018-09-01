@@ -145,6 +145,7 @@ public class PostController {
             return genFailResult("错误的appid");
         }
         if (postService.removePost(postID)) {
+            informService.deleteInformByCategory(Category.POST,postID);
             return genSuccessResult();
         } else {
             return genFailResult("帖子不存在");

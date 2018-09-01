@@ -19,6 +19,7 @@ import static com.littlefrog.common.ResultGenerator.genSuccessResult;
  * @author DW
  */
 @RestController
+@CrossOrigin
 public class PostController {
     @Autowired
     private PostService postService;

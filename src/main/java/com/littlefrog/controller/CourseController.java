@@ -16,6 +16,7 @@ import static com.littlefrog.common.ResultGenerator.genFailResult;
 import static com.littlefrog.common.ResultGenerator.genSuccessResult;
 
 @RestController
+@CrossOrigin
 public class CourseController {
     @Autowired
     private CourseService courseService;

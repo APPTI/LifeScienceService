@@ -19,6 +19,7 @@ import static com.littlefrog.common.ResultGenerator.genFailResult;
 import static com.littlefrog.common.ResultGenerator.genSuccessResult;
 
 @RestController
+@CrossOrigin
 public class OrderController {
     @Autowired
     private OrderService orderService;

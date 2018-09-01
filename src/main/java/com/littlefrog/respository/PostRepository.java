@@ -18,7 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     /**
      * @return 所有根话题
      */
-    @Query(value = "SELECT * from post a where a.previous_postid IS NULL and a.courseid=? order by postid desc ", nativeQuery = true)
+    @Query(value = "SELECT * from post where previous_postid IS NULL and courseid=? order by postid desc ", nativeQuery = true)
     ArrayList<Post> findAllPost(Integer lessonId);
 
     /**

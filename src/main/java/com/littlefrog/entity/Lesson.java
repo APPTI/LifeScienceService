@@ -30,6 +30,11 @@ public class Lesson {
     @Column
     private Date time;
 
+
+    public String getTitle() {
+        return title;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -100,16 +105,12 @@ public class Lesson {
         this.time = time;
     }
 
-
-    public Lesson() {
-
-    }
-
     @Override
     public String toString() {
         return "Lesson{" +
                 "id=" + id +
                 ", order=" + order +
+                ", title='" + title + '\'' +
                 ", video_url='" + video_url + '\'' +
                 ", description='" + description + '\'' +
                 ", cover_url='" + cover_url + '\'' +
@@ -117,4 +118,9 @@ public class Lesson {
                 ", time=" + time +
                 '}';
     }
+
+    public Lesson() {
+
+    }
+
 }

@@ -30,7 +30,7 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "delete * from userorder where userid = ?1 AND hasPay =?2 ",nativeQuery = true)
+    @Query(value = "delete * from userorder where userid = ?1 AND has_pay =?2 ",nativeQuery = true)
     public void deleteAllOrder(Integer userId,boolean hasPay);
 
     @Transactional

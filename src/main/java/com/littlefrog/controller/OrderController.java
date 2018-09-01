@@ -30,7 +30,7 @@ public class OrderController {
     private CourseService courseService;
     @Autowired
     private InformService informService;
-    
+
     @Value("${appid}")
     private String appid;
 

@@ -175,6 +175,7 @@ public class UserService {
         String sessionId = pageBean.getString("session_key");
         user.setOpenid(openID);
         user.setSessionId(sessionId);
+        user.setName("小程序用户");
         if(pageBean.containsKey("unionId")){
             String unionId = pageBean.getString("unionid");
             user.setUnionId(unionId);

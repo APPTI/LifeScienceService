@@ -21,8 +21,8 @@ public class ActivityService {
     private ActivityRepository activityRepository;
 
 
-    public Activity AddActivity(String title, String url, Boolean isHasCoupon, int coupon,Date coupon_expiry,Date expiry,int requirement,int courseId,int ammount){
-        return activityRepository.save(new Activity(title,url,isHasCoupon,coupon,coupon_expiry,expiry,requirement,courseId,ammount));
+    public Activity AddActivity(String title, String cover_url,String url, Boolean isHasCoupon, int coupon,Date coupon_expiry,Date expiry,int requirement,int courseId,int ammount){
+        return activityRepository.save(new Activity(title,cover_url,url,isHasCoupon,coupon,coupon_expiry,expiry,requirement,courseId,ammount));
     }
 
     public boolean DeleteActivity(int id){
@@ -42,9 +42,9 @@ public class ActivityService {
         return activityRepository.findAll();
     }
 
-    public boolean Update(int id,String title, String url, int coupon,Date coupon_expiry,Date expiry){
+    public boolean Update(int id,String title,String cover_url, String url, int coupon,Date coupon_expiry,Date expiry){
         try{
-            activityRepository.updateActivity(id,title,url,coupon,coupon_expiry,expiry);
+            activityRepository.updateActivity(id,title,cover_url,url,coupon,coupon_expiry,expiry);
             return true;
         }catch (Exception e){
             return false;

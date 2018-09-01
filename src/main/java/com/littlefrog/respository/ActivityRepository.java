@@ -32,6 +32,6 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update activity set title=?2,content=?3,coupon=?4,coupon_expory=?5.expiry=?6 where id=?1", nativeQuery = true)
-    void updateActivity(int id, String title,String url,int coupon,Date coupon_expory,Date expiry);
+    @Query(value = "update activity set title=?2,cover_url=?3,content=?4,coupon=?5,coupon_expory=?6.expiry=?7 where id=?1", nativeQuery = true)
+    void updateActivity(int id, String title,String cover_url,String url,int coupon,Date coupon_expory,Date expiry);
 }

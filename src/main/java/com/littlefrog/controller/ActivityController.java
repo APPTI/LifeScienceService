@@ -27,12 +27,12 @@ public class ActivityController {
     private String appid;
 
     @PostMapping("api/activity/addActivity")
-    public Response AddActivity(@RequestHeader String appid, @RequestParam String title,@RequestParam String url, @RequestParam Boolean isHasCoupon ,@RequestParam int coupon, @RequestParam Date coupon_expiry,@RequestParam Date expiry,@RequestParam int requirement,@RequestParam int courseId,@RequestParam int ammount){
+    public Response AddActivity(@RequestHeader String appid, @RequestParam String title,@RequestParam String cover_url,@RequestParam String url, @RequestParam Boolean isHasCoupon ,@RequestParam int coupon, @RequestParam Date coupon_expiry,@RequestParam Date expiry,@RequestParam int requirement,@RequestParam int courseId,@RequestParam int ammount){
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
         try{
-            Activity activity = activityService.AddActivity(title,url,isHasCoupon,coupon,coupon_expiry,expiry,requirement,courseId,ammount);
+            Activity activity = activityService.AddActivity(title,cover_url,url,isHasCoupon,coupon,coupon_expiry,expiry,requirement,courseId,ammount);
             return genSuccessResult(activity);
         }catch (Exception e){
             return genFailResult(e.getMessage());
@@ -40,12 +40,12 @@ public class ActivityController {
     }
 
     @PostMapping("api/activity/updateActivity")
-    public Response updateActivity(@RequestHeader String appid, @RequestParam int id,@RequestParam String title,@RequestParam String url,@RequestParam int coupon, @RequestParam Date coupon_expiry,@RequestParam Date expiry){
+    public Response updateActivity(@RequestHeader String appid, @RequestParam int id,@RequestParam String title,@RequestParam String cover_url,@RequestParam String url,@RequestParam int coupon, @RequestParam Date coupon_expiry,@RequestParam Date expiry){
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
         try{
-            Boolean result = activityService.Update(id,title,url,coupon,coupon_expiry,expiry);
+            Boolean result = activityService.Update(id,title,cover_url,url,coupon,coupon_expiry,expiry);
             if(result){
                 Optional<Activity> activity = activityService.findById(id);
                 if(activity.isPresent()){

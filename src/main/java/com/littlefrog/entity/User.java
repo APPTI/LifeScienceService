@@ -25,9 +25,9 @@ public class User {
     private Date lastlogintime;
     @Column
     private boolean phonevalid;
-    @Column
+    @Column(name = "session_id")
     private String sessionId;
-    @Column
+    @Column(name = "union_id")
     private String unionId;
 
     public String getSessionId() {
@@ -47,7 +47,7 @@ public class User {
     }
 
     public User(){
-
+        setLastlogintime(new Date());
     }
     public User(String name, String openID, int gender, String phoneNum, double balance,String sessionId,String unionId) {
         this.name = name;

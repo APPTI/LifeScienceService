@@ -36,7 +36,7 @@ public class OrderService {
     public Order addOrder(Order order){
         List<Order> preOrderList = orderRepository.getAllorder(order.getUserID());
         for (Order each: preOrderList){
-            if (each.getCourseID()==order.getCourseID()){
+            if (each.getCourseID().equals(order.getCourseID())){
                 return null;
             }
         }

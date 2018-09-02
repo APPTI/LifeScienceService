@@ -15,15 +15,15 @@ import java.util.Optional;
  */
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {
-    @Query(value = "SELECT * from coupon  where userid=? order by couponid desc ", nativeQuery = true)
+    @Query(value = "SELECT * from coupon  where user_id=? order by coupon_id desc ", nativeQuery = true)
     ArrayList<Coupon> findAllCoupon(Integer userID);
 
-    @Query(value = "SELECT * from coupon  where couponid =? ", nativeQuery = true)
+    @Query(value = "SELECT * from coupon  where coupon_id =? ", nativeQuery = true)
     Optional<Coupon> findOneCoupon(Integer couponID);
 
     @Transactional
     @Modifying
-    @Query(value = "delete from coupon where couponID = ? ", nativeQuery = true)
+    @Query(value = "delete from coupon where coupon_id = ? ", nativeQuery = true)
     void deleteCoupon(Integer couponID);
 
     /**

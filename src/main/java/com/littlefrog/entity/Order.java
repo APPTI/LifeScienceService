@@ -3,7 +3,7 @@ package com.littlefrog.entity;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "userorder")
+@Entity(name = "user_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

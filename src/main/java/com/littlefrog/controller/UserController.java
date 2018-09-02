@@ -113,7 +113,7 @@ public class UserController {
             }else{
                 try {
                     Coupon.setLastTime(activity.getCouponExpiry());
-                    Coupon coupon = couponService.addCoupon(userID, activity.getCoupon());
+                    Coupon coupon = couponService.addCoupon(userID, activity.getCoupon(),activity.getActivityID(),activity.getRequirement());
                     return genSuccessResult("恭喜您获得"+activity.getCoupon()+"元优惠券");
                 }catch (Exception e){
                     return genFailResult(e.getMessage());

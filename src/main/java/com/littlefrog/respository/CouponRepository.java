@@ -16,15 +16,15 @@ import java.util.Optional;
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {
     @Query(value = "SELECT * from coupon  where user_id=? order by coupon_id desc ", nativeQuery = true)
-    ArrayList<Coupon> findAllCoupon(Integer userID);
+    ArrayList<Coupon> findAllCoupon(int userID);
 
     @Query(value = "SELECT * from coupon  where coupon_id =? ", nativeQuery = true)
-    Optional<Coupon> findOneCoupon(Integer couponID);
+    Optional<Coupon> findOneCoupon(int couponID);
 
     @Transactional
     @Modifying
     @Query(value = "delete from coupon where coupon_id = ? ", nativeQuery = true)
-    void deleteCoupon(Integer couponID);
+    void deleteCoupon(int couponID);
 
     /**
      * 删除过期
@@ -34,4 +34,7 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
     @Query(value = "delete from coupon where dure_time < now()", nativeQuery = true)
     void deleteCoupons();
 
+
+    @Query(value = "SELECT * from coupon  where user_id = ?1 and activity_code = ?2", nativeQuery = true)
+    Optional<Coupon> findCouponByActivity(int userID, int code);
 }

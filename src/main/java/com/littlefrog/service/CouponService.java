@@ -27,10 +27,16 @@ public class CouponService {
         return couponRepository.findAllCoupon(userID);
     }
 
-    public Coupon addCoupon(Integer userID, double amount) {
+    public Coupon addCoupon(Integer userID, double amount, int code, int requirement) {
         Coupon c;
         try {
-            c = couponRepository.save(new Coupon(userID, amount));
+            if (requirement == 2) {
+                c = couponRepository.save(new Coupon(userID, amount, code));
+            } else if (couponRepository.findCouponByActivity(userID, code).isPresent()) {
+                return null;
+            } else {
+                c = couponRepository.save(new Coupon(userID, amount, code));
+            }
             return c;
         } catch (Exception e) {
             return null;

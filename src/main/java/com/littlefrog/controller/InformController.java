@@ -44,7 +44,7 @@ public class InformController {
             return genFailResult("错误的appID");
         }
         if (informService.deleteInform(informID)) {
-            return genSuccessResult();
+            return genSuccessResult("删除");
         } else {
             return genFailResult("原通知不存在或者通知全体用户");
         }
@@ -59,7 +59,7 @@ public class InformController {
             return genFailResult("用户id不可为全体");
         }
         informService.deleteAllInform(userID);
-        return genSuccessResult();
+        return genSuccessResult("SUCCESS");
     }
 
     /**

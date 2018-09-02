@@ -10,7 +10,7 @@ public class Coupon {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "coupon_id")
+    @Column(name = "coupon_id")
     private Integer couponID;
     /**
      * 优惠券持有用户
@@ -46,12 +46,13 @@ public class Coupon {
     public Coupon() {
     }
 
-    public Coupon(Integer userID, double amount) {
+    public Coupon(Integer userID, double amount, int code) {
         this.userID = userID;
         Calendar now = Calendar.getInstance();
         this.dureTime = Calendar.getInstance();
         dureTime.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH) + LAST_TIME + 1, 0, 0, 0);
         this.amount = amount;
+        this.code = code;
     }
 
     public Integer getCouponID() {
@@ -90,6 +91,14 @@ public class Coupon {
         LAST_TIME = lastTime;
     }
 
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
     public boolean isValid() {
         setValid();
         return isValid;
@@ -109,6 +118,7 @@ public class Coupon {
                 ", dureTime=" + dureTime +
                 ", amount=" + amount +
                 ", isValid=" + isValid +
+                ", code=" + code +
                 '}';
     }
 }

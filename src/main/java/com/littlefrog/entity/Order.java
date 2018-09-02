@@ -32,6 +32,9 @@ public class Order {
         this.orderTime=new Date();
     }
 
+    public Order() {
+    }
+
     public Order(Integer courseID, Integer userID, Boolean hasPay, Date orderTime) {
         this.courseID = courseID;
         this.userID = userID;

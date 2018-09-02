@@ -25,6 +25,9 @@ public class Order {
     @Column (name = "is_recharge")
     private boolean isRecharge;
 
+    public Order() {
+    }
+
     public Order(Integer userID) {
         this.userID = userID;
         this.isRecharge = false;

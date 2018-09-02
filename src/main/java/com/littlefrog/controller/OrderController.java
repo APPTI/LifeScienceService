@@ -114,20 +114,19 @@ public class OrderController {
             return genFailResult("错误的appID");
         }
 
-        double couponMoney=0;
+        double couponMoney = 0;
+        if (couponID != -1) {
+            Coupon coupon = couponService.getCouponInfo(couponID);
+            if (coupon.isValid()) {
+                couponMoney = coupon.getAmount();
+            } else {
+                return genFailResult("优惠券已过期！");
+            }
+        }
         double wallet = userService.getUserInfo(userID).getBalance();
         double price = courseService.findByID(courseID).getPrice();
-        if(wallet>=price-couponMoney){
-            if(couponID!=-1){
-                Coupon coupon= couponService.getCouponInfo(couponID);
-                if(coupon.isValid()){
-                    couponMoney =coupon.getAmount();
-                    couponService.useCoupon(couponID);
-                }else{
-                    return genFailResult("优惠券已过期！");
-                }
-            }
-            try{
+        if (wallet >= price - couponMoney) {
+            try {
                 String message;
                 Course course = courseService.findByID(courseID);
                 Order order = orderService.addOrder(new Order(courseID, userID, true, new Date()));
@@ -135,6 +134,7 @@ public class OrderController {
                     message = "您已购买过啦";
                     return genFailResult(message);
                 } else {
+                    couponService.useCoupon(couponID);
                     userService.payMoney(userID, wallet - price + couponMoney);
                     message = "恭喜您已经成功购买课程【" + course.getName() + "】,赶快去学习吧！";
                     informService.addInform(userID, message, Category.ORDER, courseID);

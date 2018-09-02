@@ -28,6 +28,8 @@ public class Order {
     public Order(Integer userID) {
         this.userID = userID;
         this.isRecharge = false;
+        this.has_pay = false;
+        this.ordertime=new Date();
     }
 
     public Order(Integer courseID, Integer userID, Boolean hasPay, Date orderTime) {

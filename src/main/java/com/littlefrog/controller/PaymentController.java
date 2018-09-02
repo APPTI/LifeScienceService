@@ -100,7 +100,7 @@ public class PaymentController{
 
         JSONObject JsonObject = new JSONObject() ;
 
-        String nonce_str = UUIDHexGenerator.generate();//随机字符串
+        String nonce_str = userService.RandomString(new Random(),32);//随机字符串
 
         String today = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 
@@ -159,27 +159,14 @@ public class PaymentController{
         sParaTemp.put("trade_type", paymentPo.getTrade_type());
 
         sParaTemp.put("openid", paymentPo.getOpenid());
-
         // 除去数组中的空值和签名参数
 
-        Map sPara = PayUtil.paraFilter(sParaTemp);
-
-        String prestr = PayUtil.createLinkString(sPara); // 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
-
-
-
-        //MD5运算生成签名
-
-        String mysign = PayUtil.sign(prestr, key, "utf-8").toUpperCase();
+        String mysign = userService.Md5Sign(sParaTemp); // 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
 
         paymentPo.setSign(mysign);
-
         //打包要发送的xml
-
         String respXml = XmlUtil.messageToXML(paymentPo);
-
         // 打印respXml发现，得到的xml中有“__”不对，应该替换成“_”
-
         respXml = respXml.replace("__", "_");
 
         String param = respXml;

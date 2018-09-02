@@ -1,6 +1,7 @@
 package com.littlefrog.service;
 
 import com.littlefrog.entity.Coupon;
+import com.littlefrog.entity.Loggers;
 import com.littlefrog.respository.CouponRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -71,15 +72,6 @@ public class CouponService {
     @Scheduled(cron = "5 0 0 * * ? ")
     public void delete() {
         couponRepository.deleteCoupons();
-        try {
-            Date data = new Date();
-            FileWriter f = new FileWriter(new File("a.txt"), true);
-            f.write("Delete  :");
-            f.write(data.toString());
-            f.write("\n");
-            f.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Loggers.getLogger().info("Delete  coupon");
     }
 }

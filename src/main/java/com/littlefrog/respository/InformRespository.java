@@ -40,7 +40,7 @@ public interface InformRespository extends JpaRepository<Inform, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "delete from life_science.inform where life_science.inform.userid = -1 and life_science.inform.send_time < ?1", nativeQuery = true)
+    @Query(value = "delete from life_science.inform where life_science.inform.user_id = -1 and life_science.inform.send_time < ?1", nativeQuery = true)
     void deleteInforms(Calendar sendDay);
 
 }

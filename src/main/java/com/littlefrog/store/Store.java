@@ -15,8 +15,8 @@ public class Store {
     private static final int MAX_SIZE = 100;
     private static Map<Integer, User> userStore = new HashMap<Integer, User>(MAX_SIZE);
     private static Map<Integer, ArrayList<Course>> courseStore = new HashMap<Integer, ArrayList<Course>>();
-    private static Map<Integer,ArrayList<Lesson>> lessonStore = new HashMap<Integer, ArrayList<Lesson>>();
-    private static Map<Integer,ArrayList<Course>> myCourseStore = new HashMap<Integer, ArrayList<Course>>();//userID-courseList
+    private static Map<Integer, ArrayList<Lesson>> lessonStore = new HashMap<Integer, ArrayList<Lesson>>();
+    private static Map<Integer, ArrayList<Course>> myCourseStore = new HashMap<Integer, ArrayList<Course>>();//userID-courseList
 
     public User getById(int id) {
         return userStore.getOrDefault(id, null);
@@ -39,61 +39,10 @@ public class Store {
         }
     }
 
-    /**
-     * 由于post数量问题，重新设置最大值
-     */
-    private static final int MAX_SIZE_FOR_POST = 20;
-    private static Map<Integer, ArrayList<Post>> postStore = new HashMap<>(MAX_SIZE_FOR_POST);
-
-    public ArrayList<Post> searchPostInCache(int courseID) {
-        return postStore.getOrDefault(courseID, null);
-    }
-
-    public void addToPostCache(ArrayList<Post> arrayList) {
-        if (!postStore.containsValue(arrayList) && arrayList.size() != 0) {
-            if (postStore.size() > MAX_SIZE_FOR_POST) {
-                postStore.clear();
-            }
-            postStore.put(arrayList.get(0).getCourseID(), arrayList);
-        }
-    }
-
-
-
-    public void addNewToPostCache(Post p) {
-        if (postStore.containsKey(p.getCourseID())) {
-            ArrayList<Post> arrayList = postStore.get(p.getCourseID());
-            arrayList.add(p);
-            //postStore.put(arrayList.get(0).getCourseID(), arrayList);
-        }
-    }
-
-    public void updatePostCache(Post prePost, Post newPost) {
-        if (postStore.containsKey(prePost.getCourseID())) {
-            ArrayList<Post> l = postStore.get(prePost.getCourseID());
-            if (l.contains(prePost)) {
-                l.set(l.indexOf(prePost), newPost);
-            }
-            //postStore.put(l.get(0).getCourseID(), l);
-        }
-    }
-
-    public void removePostInCache(Post post) {
-        if (postStore.containsKey(post.getCourseID())) {
-            ArrayList<Post> l = postStore.get(post.getCourseID());
-            l.remove(post);
-            //postStore.put(l.get(0).getCourseID(), l);
-        }
-    }
-
-    public static Map<Integer, ArrayList<Post>> getPostStore() {
-        return new HashMap<>(postStore);
-    }
-
-    public List<Course> getCourseList(int id,int index,int offset){
-        if (courseStore.containsKey(id)){
-            return courseStore.get(id).subList(index,Math.min(index+offset,courseStore.get(id).size()));
-        }else {
+    public List<Course> getCourseList(int id, int index, int offset) {
+        if (courseStore.containsKey(id)) {
+            return courseStore.get(id).subList(index, Math.min(index + offset, courseStore.get(id).size()));
+        } else {
             return null;
         }
     }
@@ -105,35 +54,34 @@ public class Store {
         courseStore.put(id, (ArrayList) courseList);
     }
 
-    public List<Course> getMyCourseList(int userId,int index,int offset){
-        if (myCourseStore.containsKey(userId)){
-            return myCourseStore.get(userId).subList(index,Math.min(index+offset,myCourseStore.get(userId).size()));
-        }
-        else {
+    public List<Course> getMyCourseList(int userId, int index, int offset) {
+        if (myCourseStore.containsKey(userId)) {
+            return myCourseStore.get(userId).subList(index, Math.min(index + offset, myCourseStore.get(userId).size()));
+        } else {
             return null;
         }
     }
 
-    public void addMyCourseList(int userId,List<Course> courseList){
+    public void addMyCourseList(int userId, List<Course> courseList) {
         if (courseStore.size() > MAX_SIZE) {
             courseStore.clear();
         }
         courseStore.put(userId, (ArrayList) courseList);
     }
 
-    public List<Lesson> getLessonList(int id,int index,int offset){
-        if (lessonStore.containsKey(id)){
-            return lessonStore.get(id).subList(index,Math.min(index+offset,lessonStore.get(id).size()));
-        }
-        else {
+    public List<Lesson> getLessonList(int id, int index, int offset) {
+        if (lessonStore.containsKey(id)) {
+            return lessonStore.get(id).subList(index, Math.min(index + offset, lessonStore.get(id).size()));
+        } else {
             return null;
         }
     }
-    public void addLessonList(int id,List<Lesson> lessonList){
-        if (lessonStore.size() > MAX_SIZE){
+
+    public void addLessonList(int id, List<Lesson> lessonList) {
+        if (lessonStore.size() > MAX_SIZE) {
             lessonStore.clear();
         }
-        lessonStore.put(id,(ArrayList)lessonList);
+        lessonStore.put(id, (ArrayList) lessonList);
     }
 
 

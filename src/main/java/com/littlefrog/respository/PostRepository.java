@@ -18,8 +18,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     /**
      * @return 所有根话题
      */
-    @Query(value = "SELECT * from post where previous_post_id IS NULL and course_id=? order by post_id desc ", nativeQuery = true)
-    ArrayList<Post> findAllPost(Integer lessonId);
+    @Query(value = "SELECT * from post where previous_post_id IS NULL and course_id=?1 order by post_id desc limit ?2,?3 ", nativeQuery = true)
+    ArrayList<Post> findAllPost(int lessionID, int index, int oddset);
 
     /**
      * @param postID 一个根话题

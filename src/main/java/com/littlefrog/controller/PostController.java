@@ -33,22 +33,12 @@ public class PostController {
      */
     @GetMapping("api/post")
     public Response index(@RequestHeader String appID, @RequestParam Integer courseID, @RequestParam Integer index, @RequestParam Integer offset) {
-
         if (!appID.equals(this.appID)) {
             return genFailResult("错误的appID");
         }
-        ArrayList<Post> p = postService.getAllPost(courseID);
-        index = index == 0 ? 1 : index;
-        if (p != null && p.size() >= index) {
-            Post[] posts = new Post[p.size()];
-            p.toArray(posts);
-            Post[] give = new Post[offset];
-            if (index - 1 + offset >= posts.length) {
-                System.arraycopy(posts, index - 1, give, 0, posts.length - index + 1);
-            } else {
-                System.arraycopy(posts, index - 1, give, 0, offset);
-            }
-            return genSuccessResult(give);
+        ArrayList<Post> p = postService.getAllPost(courseID, index, offset);
+        if (p.size() != 0) {
+            return genSuccessResult(p);
         } else {
             return genFailResult("没有帖子");
         }

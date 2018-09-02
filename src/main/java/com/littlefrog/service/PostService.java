@@ -18,15 +18,10 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    private Store store = new Store();
+    //private Store store = new Store();
 
-    public ArrayList<Post> getAllPost(Integer lessonId) {
-        ArrayList<Post> list = store.searchPostInCache(lessonId);
-        if (list == null) {
-            list = postRepository.findAllPost(lessonId);
-            store.addToPostCache(list);
-        }
-        return list;
+    public ArrayList<Post> getAllPost(int lessionID, int index, int offset) {
+        return postRepository.findAllPost(lessionID, index, offset);
     }
 
     public List<Post> getAllReply(Integer lessonId) {
@@ -42,7 +37,6 @@ public class PostService {
             } catch (Exception e) {
                 return null;
             }
-            store.addNewToPostCache(post);
         } else {
             post = new Post(courseID, prePostID, content, userID);
             try {
@@ -71,7 +65,6 @@ public class PostService {
             Post old = o.get();
             Post post = new Post(old);
             post.setContent(content);
-            store.updatePostCache(old, post);
             postRepository.updateContent(postID, content);
             return post;
         }
@@ -83,7 +76,6 @@ public class PostService {
         if (p.isPresent()) {
             if (p.get().getPreviousPostID() == null) {
                 postRepository.deleteReplyPost(postID);
-                store.removePostInCache(p.get());
             }
             postRepository.deletePost(postID);
             return true;
@@ -97,7 +89,6 @@ public class PostService {
             postRepository.updateLikes(postID);
             Post p = new Post(o.get());
             p.addLike();
-            store.updatePostCache(o.get(), p);
             return true;
         }
         return false;
@@ -109,7 +100,6 @@ public class PostService {
             postRepository.updateReply(postID);
             Post p = new Post(o.get());
             p.addReply();
-            store.updatePostCache(o.get(), p);
             return p;
         }
         return null;

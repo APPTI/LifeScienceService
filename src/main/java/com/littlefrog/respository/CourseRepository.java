@@ -33,7 +33,7 @@ public interface CourseRepository extends JpaRepository<Course,Integer>{
     @Query(value = "select * from course where name like concat('%',?1,'%') or name like concat(?1 ,'%') or name like concat('%',?1) order by tag  ",nativeQuery = true)
     public List<Course> findCourseByTag(String keyword);
 
-    @Query (value = "SELECT * FROM course a  where a.id = ?1",nativeQuery = true)
+    @Query (value = "SELECT * FROM course a  where a.course_id = ?1",nativeQuery = true)
     public Course findByCourseId(Integer id);
 
     //add
@@ -41,51 +41,51 @@ public interface CourseRepository extends JpaRepository<Course,Integer>{
     @Modifying
     @Query(value = "UPDATE course  c " +
             "SET c.location =  ?2 ,c.name = ?3 , c.teacher = ?4 ,c.introduction = ?5 ,c.popularity=?6 ,c.tag=?7 , c.cover_pic = ?8 ,c.release_time = ?9, c.price = ?10, c.course_num = ?11 " +
-            "where id = ?1",nativeQuery = true)
+            "where course_id = ?1",nativeQuery = true)
     public void setCourse(Integer Id,String location,String name, String teacher,String introduction, int popularity, Tag tag, String coverPic, Date releaseTime, int price, int courseNum);
 
     //delete
-    @Query(value = "UPDATE course SET name = ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE course SET name = ?2 where course_id = ?1",nativeQuery = true)
     public void setName(Integer Id, String newName);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE course SET teacher = ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE course SET teacher = ?2 where course_id = ?1",nativeQuery = true)
     public void setTeacherName(Integer Id, String teacherName);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE course SET popularity = ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE course SET popularity = ?2 where course_id = ?1",nativeQuery = true)
     public void setPopularity(Integer Id, int popularity);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE course SET introduction = ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE course SET introduction = ?2 where course_id = ?1",nativeQuery = true)
     public void setIntroduction(Integer Id, String introduction);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE course SET tag = ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE course SET tag = ?2 where course_id = ?1",nativeQuery = true)
     public void setTag(Integer Id, Tag tag);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE course SET releaseTime = ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE course SET release_time = ?2 where course_id = ?1",nativeQuery = true)
     public void setReleaseTime(Integer Id, Date releaseTime);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE course SET cover_pic =  ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE course SET cover_pic =  ?2 where course_id = ?1",nativeQuery = true)
     public void setCoverPic(Integer Id,String coverPic);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE course SET price =  ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE course SET price =  ?2 where course_id = ?1",nativeQuery = true)
     public void setPrice(Integer Id,double price);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE course SET courseNum =  ?2 where id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE course SET course_num =  ?2 where course_id = ?1",nativeQuery = true)
     public void setCourseNum(Integer Id,int courseNum);
 
 
@@ -96,7 +96,7 @@ public interface CourseRepository extends JpaRepository<Course,Integer>{
 
     @Transactional
     @Modifying
-    @Query(value = "delete * from course where id = ?1",nativeQuery = true)
+    @Query(value = "delete * from course where course_id = ?1",nativeQuery = true)
     public void deleteCourse(Integer id);
 
     @Query(value = "select LAST_INSERT_ID()",nativeQuery = true)

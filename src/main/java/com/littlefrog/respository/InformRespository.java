@@ -17,20 +17,20 @@ import java.util.Optional;
  */
 @Repository
 public interface InformRespository extends JpaRepository<Inform, Integer> {
-    @Query(value = "SELECT * from inform where(userid=? or userid=-1 ) order by informid desc ", nativeQuery = true)
+    @Query(value = "SELECT * from inform where(user_id=? or user_id=-1 ) order by inform_id desc ", nativeQuery = true)
     ArrayList<Inform> findAllInform(Integer userID);
 
-    @Query(value = "SELECT * from inform where informid =? ", nativeQuery = true)
+    @Query(value = "SELECT * from inform where inform_id =? ", nativeQuery = true)
     Optional<Inform> findOneInform(Integer informID);
 
     @Transactional
     @Modifying
-    @Query(value = "delete from inform where informid = ? ", nativeQuery = true)
+    @Query(value = "delete from inform where inform_id = ? ", nativeQuery = true)
     void deleteInform(Integer informID);
 
     @Transactional
     @Modifying
-    @Query(value = "delete from inform where life_science.inform.userid = ? ", nativeQuery = true)
+    @Query(value = "delete from inform where life_science.inform.user_id = ? ", nativeQuery = true)
     void deleteAllInform(int userID);
 
     @Transactional

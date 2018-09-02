@@ -30,7 +30,7 @@ public class CouponController {
 
     @GetMapping("/index")
     public Response index(@RequestHeader String appID, @RequestParam Integer userID) {
-        if (!appID.equals(appID)) {
+        if (!appID.equals(this.appID)) {
             return genFailResult("错误的appID");
         }
         ArrayList<Coupon> arrayList = couponService.getAllCoupon(userID);
@@ -46,7 +46,7 @@ public class CouponController {
 
     @PostMapping("/give")
     public Response give(@RequestHeader String appID, @RequestParam Integer userID, @RequestParam double amount) {
-        if (!appID.equals(appID)) {
+        if (!appID.equals(this.appID)) {
             return genFailResult("错误的appID");
         }
         Coupon c;
@@ -63,7 +63,7 @@ public class CouponController {
 
     @GetMapping("/info")
     public Response indexForID(@RequestHeader String appID, @RequestParam Integer couponID) {
-        if (!appID.equals(appID)) {
+        if (!appID.equals(this.appID)) {
             return genFailResult("错误的appID");
         }
         Coupon c = couponService.getCouponInfo(couponID);
@@ -76,7 +76,7 @@ public class CouponController {
 
     @PostMapping("/changeLastTime")
     public Response changeTime(@RequestHeader String appID, @RequestParam Integer newTime) {
-        if (!appID.equals(appID)) {
+        if (!appID.equals(this.appID)) {
             return genFailResult("错误的appID");
         }
         couponService.changLastTime(newTime);
@@ -85,7 +85,7 @@ public class CouponController {
 
     @GetMapping("/findLastTime")
     public Response giveTime(@RequestHeader String appID) {
-        if (!appID.equals(appID)) {
+        if (!appID.equals(this.appID)) {
             return genFailResult("错误的appID");
         }
         return genSuccessResult("有效期： " + couponService.findLastTime() + " 天");

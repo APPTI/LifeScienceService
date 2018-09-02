@@ -37,7 +37,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE user SET phonenum = ?2, phone_valid=true where user_id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE user SET phone_num = ?2, phone_valid=true where user_id = ?1",nativeQuery = true)
     public void SetPhoneNum(Integer Id, String phoneNum);
 
     @Transactional
@@ -52,17 +52,17 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE user SET lastlogintime = ?2 where user_id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE user SET last_login_time = ?2 where user_id = ?1",nativeQuery = true)
     public void SetLoginTime(Integer Id, Date time);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE user SET gender =  ?2, name = ?3, phonenum = ?4,phone_valid=true where user_id = ?1",nativeQuery = true)
+    @Query(value = "UPDATE user SET gender =  ?2, name = ?3, phone_num = ?4,phone_valid=true where user_id = ?1",nativeQuery = true)
     public void UpdateInfo(Integer Id,int gender,String name, String phoneNum);
 
     @Transactional
     @Modifying
-    @Query(value = "delete * from user where user_id = ?1",nativeQuery = true)
+    @Query(value = "delete from user where user_id = ?1",nativeQuery = true)
     public void DeleteUser(Integer id);
 
     @Transactional

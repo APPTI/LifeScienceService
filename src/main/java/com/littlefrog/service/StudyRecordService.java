@@ -27,8 +27,8 @@ public class StudyRecordService {
 
 
     private Store store = new Store();
-    public List<StudyRecord> getProgressRateList(int lessonID, int userID){
-        return studyRecordRepository.getProgressRate(lessonID,userID);
+    public List<StudyRecord> getProgressRateList(int courseID, int userID){
+        return studyRecordRepository.getProgressRate(courseID,userID);
     }
 
     public void updateProgressRate(StudyRecord studyRecord){

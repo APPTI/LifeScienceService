@@ -23,13 +23,13 @@ public class ActivityController {
 
     @Autowired
     private OrderService orderService;
-    @Value("${appid}")
-    private String appid;
+    @Value("${appID}")
+    private String appID;
 
     @PostMapping("api/activity/addActivity")
-    public Response AddActivity(@RequestHeader String appid, @RequestParam String title,@RequestParam String coverUrl,@RequestParam String url, @RequestParam Boolean isHasCoupon ,@RequestParam int coupon, @RequestParam int couponExpiry,@RequestParam Date expiry,@RequestParam int requirement,@RequestParam int courseID,@RequestParam int amount){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response AddActivity(@RequestHeader String appID, @RequestParam String title,@RequestParam String coverUrl,@RequestParam String url, @RequestParam Boolean isHasCoupon ,@RequestParam int coupon, @RequestParam int couponExpiry,@RequestParam Date expiry,@RequestParam int requirement,@RequestParam int courseID,@RequestParam int amount){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         try{
             Activity activity = activityService.AddActivity(title,coverUrl,url,isHasCoupon,coupon,couponExpiry,expiry,requirement,courseID,amount);
@@ -40,9 +40,9 @@ public class ActivityController {
     }
 
     @PostMapping("api/activity/updateActivity")
-    public Response updateActivity(@RequestHeader String appid, @RequestParam int ID,@RequestParam String title,@RequestParam String coverUrl,@RequestParam String url,@RequestParam int coupon, @RequestParam Date couponExpiry,@RequestParam Date expiry){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response updateActivity(@RequestHeader String appID, @RequestParam int ID,@RequestParam String title,@RequestParam String coverUrl,@RequestParam String url,@RequestParam int coupon, @RequestParam Date couponExpiry,@RequestParam Date expiry){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         try{
             Boolean result = activityService.Update(ID,title,coverUrl,url,coupon,couponExpiry,expiry);
@@ -63,9 +63,9 @@ public class ActivityController {
 
 
     @GetMapping("api/activity/getAllActivities")
-    public Response getAllActivities(@RequestHeader String appid){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response getAllActivities(@RequestHeader String appID){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         try{
             List<Activity> activities = activityService.findAllActivity();
@@ -76,9 +76,9 @@ public class ActivityController {
     }
 
     @GetMapping("api/activity/getActivity")
-    public Response getActivity(@RequestHeader String appid,@RequestParam int ID){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response getActivity(@RequestHeader String appID,@RequestParam int ID){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         try{
             Optional<Activity> activity = activityService.findById(ID);
@@ -93,9 +93,9 @@ public class ActivityController {
     }
 
     @PostMapping("api/activity/deleteActivity")
-    public Response deleteActivity(@RequestHeader String appid,@RequestParam int ID){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response deleteActivity(@RequestHeader String appID,@RequestParam int ID){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         try{
             Boolean result = activityService.DeleteActivity(ID);

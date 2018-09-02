@@ -27,21 +27,21 @@ public class ShareController {
     @Autowired
     private CouponService couponService;
 
-    @Value("${appid}")
-    private String appid;
+    @Value("${appID}")
+    private String appID;
 
     @PostMapping("api/share")
-    public Response AddShare(@RequestHeader String appid, @RequestParam int userId, @RequestParam int courseId){
-        if(!this.appid.equals(appid)){
-            return ResultGenerator.genFailResult("错误的appid");
+    public Response AddShare(@RequestHeader String appID, @RequestParam int userID, @RequestParam int courseID){
+        if(!this.appID.equals(appID)){
+            return ResultGenerator.genFailResult("错误的appID");
         }
-        Activity activity = activityService.findByrequirement(courseId,0);
+        Activity activity = activityService.findByrequirement(courseID,0);
         if(activity==null){
             return ResultGenerator.genSuccessResult("成功");
         }else{
             try {
                 Coupon.setLastTime(activity.getCouponExpiry());
-                Coupon coupon = couponService.addCoupon(userId,activity.getCoupon());
+                Coupon coupon = couponService.addCoupon(userID,activity.getCoupon());
                 String msg = "恭喜您获得"+activity.getCoupon()+"元优惠券";
                 return ResultGenerator.genSuccessResult(msg);
             }catch (Exception e){

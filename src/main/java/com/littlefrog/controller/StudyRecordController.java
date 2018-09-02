@@ -20,7 +20,7 @@ public class StudyRecordController {
     StudyRecordService studyRecordService;
 
     @GetMapping("api/learningRecord")
-    public Response getLatestLearningRecord(@RequestHeader String appid,@RequestParam int courseID,@RequestParam int userID){
+    public Response getLatestLearningRecord(@RequestHeader String appID,@RequestParam int courseID,@RequestParam int userID){
         List<StudyRecord> list = studyRecordService.getProgressRateList(courseID,userID);
         if (list == null){
             return genFailResult("获取列表失败");
@@ -31,7 +31,7 @@ public class StudyRecordController {
     }
 
     @PostMapping ("api/learningRecord/add")
-    public Response updateLearningProgress (@RequestHeader String appid,@RequestParam StudyRecord record){
+    public Response updateLearningProgress (@RequestHeader String appID,@RequestParam StudyRecord record){
         try {
             studyRecordService.updateProgressRate(record);
         }
@@ -42,7 +42,7 @@ public class StudyRecordController {
     }
 
     @GetMapping("api/course/my")
-    public Response getMyCourse(@RequestHeader String appid,@RequestParam int userID,@RequestParam int index,@RequestParam int offset){
+    public Response getMyCourse(@RequestHeader String appID,@RequestParam int userID,@RequestParam int index,@RequestParam int offset){
         List<Course> courseList = studyRecordService.getMyCourses(userID,index,offset);
         if (courseList == null){
             return genFailResult("获取失败");

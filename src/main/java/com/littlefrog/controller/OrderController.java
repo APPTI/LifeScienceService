@@ -32,14 +32,14 @@ public class OrderController {
     @Autowired
     private ActivityService activityService;
 
-    @Value("${appid}")
-    private String appid;
+    @Value("${appID}")
+    private String appID;
 
     private Response response;
     @GetMapping("api/order/getUserOrder")
-    public Response getUserOrder(@RequestHeader String appid, @RequestParam int userID){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response getUserOrder(@RequestHeader String appID, @RequestParam int userID){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         List<Order> orderList =orderService.getAllOrder(userID);
         if(orderList.isEmpty()){
@@ -49,9 +49,9 @@ public class OrderController {
         }
     }
     @GetMapping("api/order/getUserLike")
-    public Response getUserLike(@RequestHeader String appid, @RequestParam int userID){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response getUserLike(@RequestHeader String appID, @RequestParam int userID){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         List<Order> orderList =orderService.getAllLike(userID);
         if(orderList.isEmpty()){
@@ -61,9 +61,9 @@ public class OrderController {
         }
     }
     @GetMapping("api/order/getAllOrderByCourseID")
-    public Response getAllOrderByCourseID(@RequestHeader String appid, @RequestParam int courseID){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response getAllOrderByCourseID(@RequestHeader String appID, @RequestParam int courseID){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         List<Order> userList = orderService.getAllOrderByCourseid(courseID);
         if(userList.isEmpty()){
@@ -73,9 +73,9 @@ public class OrderController {
         }
     }
     @GetMapping("api/order/getAllUsersByCourseID")
-    public Response getAllUsersByCourseID(@RequestHeader String appid, @RequestParam int courseID){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response getAllUsersByCourseID(@RequestHeader String appID, @RequestParam int courseID){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         List<Integer> useridList = orderService.getAllUserByCourseid(courseID);
         if(useridList.isEmpty()){
@@ -95,9 +95,9 @@ public class OrderController {
 
 
     @PostMapping("api/order/addLike")
-    public Response addOrder(@RequestHeader String appid, @RequestParam int courseID,@RequestParam int userID){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response addOrder(@RequestHeader String appID, @RequestParam int courseID,@RequestParam int userID){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         Order order = new Order(courseID,userID,new Date(),false);
         order = orderService.addOrder(order);
@@ -108,9 +108,9 @@ public class OrderController {
         }
     }
     @PostMapping("api/order/buy")
-    public Response buy(@RequestHeader String appid, @RequestParam int couponID, @RequestParam int courseID, @RequestParam int userID){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response buy(@RequestHeader String appID, @RequestParam int couponID, @RequestParam int courseID, @RequestParam int userID){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         double couponMoney=0;
         if(couponID!=-1){
@@ -154,9 +154,9 @@ public class OrderController {
         }
     }
     @PostMapping("api/order/deleteOrder")
-    public Response deleteOrder(@RequestHeader String appid, @RequestParam int orderID){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response deleteOrder(@RequestHeader String appID, @RequestParam int orderID){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         orderService.deleteOrder(orderID);
         if(!orderService.getById(orderID).isPresent()){
@@ -167,9 +167,9 @@ public class OrderController {
         }
     }
     @PostMapping("api/order/deleteAll")
-    public Response deleteAll(@RequestHeader String appid, @RequestParam int userID ,@RequestParam  boolean hasPay){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response deleteAll(@RequestHeader String appID, @RequestParam int userID ,@RequestParam  boolean hasPay){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         orderService.deleteAllOrder(userID,hasPay);
         if(hasPay){

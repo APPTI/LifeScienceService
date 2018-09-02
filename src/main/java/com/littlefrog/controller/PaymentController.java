@@ -91,15 +91,7 @@ public class PaymentController{
             if (response.getString("return_code") == "FAIL") {
                 return genFailResult(response.getString("return_msg"));
             } else {
-                JSONObject successResponse = JSONObject.parseObject(response.getString("return_msg"));
-                if(successResponse==null){
-                    return genFailResult("返回值为空");
-                }
-                if (successResponse.containsKey("error_code")) {
-                    return genFailResult(successResponse.getString("error_code"));
-                } else {
-                    return genSuccessResult(successResponse);
-                }
+               return genSuccessResult(response);
             }
         }
     }
@@ -266,7 +258,8 @@ public class PaymentController{
             JsonObject.put("paySign", paySign);
 
         }else{
-            JsonObject.put("error_code",return_msg);
+            JsonObject.put("error_code",return_code);
+            JsonObject.put("error_msg",return_msg);
         }
 
         return JsonObject;

@@ -17,13 +17,13 @@ public class FileController {
     @Value("${web.upload-path}")
     private String rootPath;
 
-    @Value("${appid}")
-    private String appid;
+    @Value("${appID}")
+    private String appID;
 
-    @PostMapping("api/file/uploadfile")
-    public Response uploadfile(@RequestHeader String appid,@RequestParam("file") MultipartFile file , @RequestParam String path){
-//        if(!appid.equals(this.appid)){
-//            return genFailResult("错误的appid");
+    @PostMapping("api/file/uploadFile")
+    public Response uploadFile(@RequestHeader String appID,@RequestParam("file") MultipartFile file , @RequestParam String path){
+//        if(!appID.equals(this.appID)){
+//            return genFailResult("错误的appID");
 //        }
         String contentType = file.getContentType();   //图片文件类型
         String fileName = file.getOriginalFilename();  //图片名字

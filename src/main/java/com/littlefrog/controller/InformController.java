@@ -22,13 +22,13 @@ import static com.littlefrog.common.ResultGenerator.genSuccessResult;
 public class InformController {
     @Autowired
     private InformService informService;
-    @Value("${appid}")
+    @Value("${appID}")
     private String appID;
 
     @GetMapping("/index")
-    public Response index(@RequestHeader String appid, @RequestParam Integer userID) {
-        if (!appid.equals(appID)) {
-            return genFailResult("错误的appid");
+    public Response index(@RequestHeader String appID, @RequestParam Integer userID) {
+        if (!appID.equals(appID)) {
+            return genFailResult("错误的appID");
         }
         ArrayList<Inform> arrayList = informService.getAllInform(userID);
         if (arrayList != null && arrayList.size() != 0) {
@@ -39,9 +39,9 @@ public class InformController {
     }
 
     @PostMapping("/delete")
-    public Response delete(@RequestHeader String appid, @RequestParam Integer informID) {
-        if (!appid.equals(appID)) {
-            return genFailResult("错误的appid");
+    public Response delete(@RequestHeader String appID, @RequestParam Integer informID) {
+        if (!appID.equals(appID)) {
+            return genFailResult("错误的appID");
         }
         if (informService.deleteInform(informID)) {
             return genSuccessResult();
@@ -51,9 +51,9 @@ public class InformController {
     }
 
     @PostMapping("/deleteAll")
-    public Response deleteAll(@RequestHeader String appid, @RequestParam Integer userID) {
-        if (!appid.equals(appID)) {
-            return genFailResult("错误的appid");
+    public Response deleteAll(@RequestHeader String appID, @RequestParam Integer userID) {
+        if (!appID.equals(appID)) {
+            return genFailResult("错误的appID");
         }
         if (userID == -1) {
             return genFailResult("用户id不可为全体");
@@ -66,9 +66,9 @@ public class InformController {
      * @param userID 为-1则通知所有人
      */
     @PostMapping("/newInform")
-    public Response create(@RequestHeader String appid, @RequestParam Integer userID, @RequestParam String content, @RequestParam String category, @RequestParam(required = false) Integer returnID) {
-        if (!appid.equals(appID)) {
-            return genFailResult("错误的appid");
+    public Response create(@RequestHeader String appID, @RequestParam Integer userID, @RequestParam String content, @RequestParam String category, @RequestParam(required = false) Integer returnID) {
+        if (!appID.equals(appID)) {
+            return genFailResult("错误的appID");
         }
         Category c;
         try {

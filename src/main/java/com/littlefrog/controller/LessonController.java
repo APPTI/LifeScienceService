@@ -36,17 +36,17 @@ public class LessonController {
     @Autowired
     private LessonService lessonService;
 
-    @Value("${appid}")
-    private String appid;
+    @Value("${appID}")
+    private String appID;
 
     private int currentID = 0;
 
     @GetMapping("api/course/lesson")
-    public Response getCourseLessons(@RequestHeader String appid,@RequestParam int courseId,@RequestParam int index,@RequestParam int offset){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response getCourseLessons(@RequestHeader String appID,@RequestParam int courseID,@RequestParam int index,@RequestParam int offset){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
-        List<Lesson> lessonList = lessonService.getLessonsByCourseID(courseId,currentID++,index,offset);
+        List<Lesson> lessonList = lessonService.getLessonsByCourseID(courseID,currentID++,index,offset);
         if (lessonList  == null){
             return genFailResult("获取列表失败");
         } else {
@@ -54,9 +54,9 @@ public class LessonController {
         }
     }
 
-    @PostMapping("api/lesson/Addlesson")
-    public Response AddLesson(@RequestHeader String appid,@RequestParam int courseId,@RequestParam int order,@RequestParam String title,@RequestParam String video_url,@RequestParam String description,@RequestParam String cover_url){
-        Lesson lesson = lessonService.AddLesson(courseId,order,title,video_url,description,cover_url);
+    @PostMapping("api/lesson/addLesson")
+    public Response addLesson(@RequestHeader String appID,@RequestParam int courseID,@RequestParam int order,@RequestParam String title,@RequestParam String videoUrl,@RequestParam String description,@RequestParam String coverUrl){
+        Lesson lesson = lessonService.AddLesson(courseID,order,title,videoUrl,description,coverUrl);
         if(lesson==null){
             return genFailResult("添加课程失败");
         }else{
@@ -64,13 +64,13 @@ public class LessonController {
         }
     }
 
-    @PostMapping("api/lesson/SetlessonInfo")
-    public Response SetLesson(@RequestHeader String appid,@RequestParam int id,@RequestParam String title,@RequestParam String video_url,@RequestParam String description,@RequestParam String cover_url){
-        boolean result=lessonService.setLessonInfo(id,title,video_url,description,cover_url);
+    @PostMapping("api/lesson/setLessonInfo")
+    public Response setLesson(@RequestHeader String appID,@RequestParam int ID,@RequestParam String title,@RequestParam String videoUrl,@RequestParam String description,@RequestParam String coverUrl){
+        boolean result=lessonService.setLessonInfo(ID,title,videoUrl,description,coverUrl);
         if(!result){
             return genFailResult("设置课程信息失败！");
         }else{
-            Optional<Lesson> lesson=lessonService.FindById(id);
+            Optional<Lesson> lesson=lessonService.FindById(ID);
             if(!lesson.isPresent()){
                 return genFailResult("服务器查找数据失败，请重试");
             }else{
@@ -79,13 +79,13 @@ public class LessonController {
         }
     }
 
-    @PostMapping("api/lesson/SetVideoURL")
-    public Response SetVideoURL(@RequestHeader String appid,@RequestParam int id,@RequestParam String video_url){
-        boolean result=lessonService.setVideoUrl(id,video_url);
+    @PostMapping("api/lesson/setVideoURL")
+    public Response setVideoURL(@RequestHeader String appID,@RequestParam int ID,@RequestParam String videoUrl){
+        boolean result=lessonService.setVideoUrl(ID,videoUrl);
         if(!result){
             return genFailResult("设置视频url失败！");
         }else{
-            Optional<Lesson> lesson=lessonService.FindById(id);
+            Optional<Lesson> lesson=lessonService.FindById(ID);
             if(!lesson.isPresent()){
                 return genFailResult("服务器查找数据失败，请重试");
             }else{
@@ -95,7 +95,7 @@ public class LessonController {
     }
 
     @PostMapping("api/lesson/SetCoverPic")
-    public Response SetCoverPic(@RequestHeader String appid,@RequestParam int id,@RequestParam String url){
+    public Response SetCoverPic(@RequestHeader String appID,@RequestParam int id,@RequestParam String url){
         boolean result=lessonService.setCoverPic(id,url);
         if(!result){
             return genFailResult("设置封面url失败！");

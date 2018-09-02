@@ -86,8 +86,8 @@ public class PaymentController{
         if (user == null) {
             return genFailResult("该用户不存在!");
         } else {
-            Order order = orderService.addOrder(new Order(user.getId()));
-            JSONObject response = rechargeservice(user.getOpenid(),order.getId(),amount);
+            Order order = orderService.addOrder(new Order(user.getUserID()));
+            JSONObject response = rechargeservice(user.getOpenID(),order.getOrderID(),amount);
             if (response.getString("return_code") == "FAIL") {
                 return genFailResult(response.getString("return_msg"));
             } else {

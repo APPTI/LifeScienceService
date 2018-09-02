@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface StudyRecordRepository extends JpaRepository<StudyRecord,Integer> {
     @Query(value = "SELECT * from study_record  where course_id = ?1 and user_id = ?2 ",nativeQuery = true)
-    public List<StudyRecord> getProgressRate(int course_id, int user_id);
+    public List<StudyRecord> getProgressRate(int courseID, int userID);
 
 
     @Query(value = "SELECT u.course_id from study_record u where u.user_id = ?1 ",nativeQuery = true)

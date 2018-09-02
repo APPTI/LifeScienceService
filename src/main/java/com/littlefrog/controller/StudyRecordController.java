@@ -19,9 +19,9 @@ public class StudyRecordController {
     @Autowired
     StudyRecordService studyRecordService;
 
-    @GetMapping("api/learning-record")
-    public Response getLatestLearningRecord(@RequestParam int courseId,@RequestParam int userId){
-        List<StudyRecord> list = studyRecordService.getProgressRateList(courseId,userId);
+    @GetMapping("api/learningRecord")
+    public Response getLatestLearningRecord(@RequestHeader String appID,@RequestParam int courseID,@RequestParam int userID){
+        List<StudyRecord> list = studyRecordService.getProgressRateList(courseID,userID);
         if (list == null){
             return genFailResult("获取列表失败");
         }
@@ -30,8 +30,8 @@ public class StudyRecordController {
         }
     }
 
-    @PostMapping ("api/learning-record/add")
-    public Response updateLearningProgress (@RequestParam StudyRecord record){
+    @PostMapping ("api/learningRecord/add")
+    public Response updateLearningProgress (@RequestHeader String appID,@RequestParam StudyRecord record){
         try {
             studyRecordService.updateProgressRate(record);
         }
@@ -42,8 +42,8 @@ public class StudyRecordController {
     }
 
     @GetMapping("api/course/my")
-    public Response getMyCourse(@RequestParam int userId,@RequestParam int index,@RequestParam int offset){
-        List<Course> courseList = studyRecordService.getMyCourses(userId,index,offset);
+    public Response getMyCourse(@RequestHeader String appID,@RequestParam int userID,@RequestParam int index,@RequestParam int offset){
+        List<Course> courseList = studyRecordService.getMyCourses(userID,index,offset);
         if (courseList == null){
             return genFailResult("获取失败");
         }

@@ -17,6 +17,7 @@ import java.util.Optional;
 public class PostService {
     @Autowired
     private PostRepository postRepository;
+
     private Store store = new Store();
 
     public ArrayList<Post> getAllPost(Integer lessonId) {

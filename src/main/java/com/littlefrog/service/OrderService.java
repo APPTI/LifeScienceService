@@ -4,7 +4,7 @@ import com.littlefrog.entity.Order;
 import com.littlefrog.respository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.littlefrog.respository.StudyRecordRepository;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +12,8 @@ import java.util.Optional;
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private StudyRecordRepository studyRecordRepository;
 
     public Optional<Order> getById(int orderId){
         Optional<Order> order = orderRepository.findById(orderId);
@@ -33,6 +35,9 @@ public class OrderService {
 
     public Order addOrder(Order order){
         Order result = orderRepository.save(order);
+        if (order.getHasPay()) {
+            studyRecordRepository.addProgress(order.getUserID(), order.getCourseID());
+        }
         return result;
     }
     public List<Order> getAllOrderByCourseid(int courseId){

@@ -10,11 +10,12 @@ public class Coupon {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "coupon_id")
     private Integer couponID;
     /**
      * 优惠券持有用户
      */
-    @Column(name = "userid")
+    @Column(name = "user_id")
     private Integer userID;
     /**
      * 优惠券到期时间

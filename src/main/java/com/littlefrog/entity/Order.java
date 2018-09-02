@@ -7,98 +7,103 @@ import java.util.Date;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column (name = "order_id")
+    private Integer orderID;
 
-    @Column
-    private Integer courseid;
-    @Column
-    private Integer userid;
-    @Column
-    private Boolean has_pay;
-    @Column
-    private Date ordertime;
-    @Column
-    private boolean is_recharge;
+    @Column(name = "course_id")
+    private Integer courseID;
 
-    public Order(Integer userid) {
-        this.userid = userid;
+    @Column(name = "user_id")
+    private Integer userID;
+
+    @Column(name = "has_pay")
+    private Boolean hasPay;
+
+    @Column(name = "order_time")
+    private Date orderTime;
+
+    @Column (name = "is_recharge")
+    private boolean isRecharge;
+
+    public Order(Integer userID) {
+        this.userID = userID;
+        this.isRecharge = false;
         this.has_pay = false;
         this.ordertime=new Date();
-        this.is_recharge = false;
     }
 
-    public Order( Integer courseid, Integer userid, Boolean has_pay, Date ordertime) {
-        this.courseid = courseid;
-        this.userid = userid;
-        this.has_pay = has_pay;
-        this.ordertime = ordertime;
+    public Order(Integer courseID, Integer userID, Boolean hasPay, Date orderTime) {
+        this.courseID = courseID;
+        this.userID = userID;
+        this.hasPay = hasPay;
+        this.orderTime = orderTime;
     }
 
-    public Order(int courseid, int userid, Date date,boolean hasPay) {
-        this.courseid=courseid;
-        this.userid=userid;
-        this.ordertime=date;
-        this.has_pay=hasPay;
+    public Order(int courseID, int userID, Date date, boolean hasPay) {
+        this.courseID = courseID;
+        this.userID = userID;
+        this.orderTime =date;
+        this.hasPay =hasPay;
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
-                ", courseid=" + courseid +
-                ", userid=" + userid +
-                ", has_pay=" + has_pay +
-                ", ordertime=" + ordertime +
+                "orderID=" + orderID +
+                ", courseID=" + courseID +
+                ", userID=" + userID +
+                ", hasPay=" + hasPay +
+                ", orderTime=" + orderTime +
                 '}';
     }
 
-    public Integer getId() {
+    public Integer getOrderID() {
 
-        return id;
+        return orderID;
     }
 
-    public boolean isIs_recharge() {
-        return is_recharge;
+    public boolean isRecharge() {
+        return isRecharge;
     }
 
-    public void setIs_recharge(boolean is_recharge) {
-        this.is_recharge = is_recharge;
+    public void setRecharge(boolean recharge) {
+        this.isRecharge = recharge;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setOrderID(Integer orderID) {
+        this.orderID = orderID;
     }
 
 
-    public Integer getCourseid() {
-        return courseid;
+    public Integer getCourseID() {
+        return courseID;
     }
 
-    public void setCourseid(Integer courseid) {
-        this.courseid = courseid;
+    public void setCourseID(Integer courseID) {
+        this.courseID = courseID;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public Integer getUserID() {
+        return userID;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setUserID(Integer userID) {
+        this.userID = userID;
     }
 
-    public Boolean getHas_pay() {
-        return has_pay;
+    public Boolean getHasPay() {
+        return hasPay;
     }
 
-    public void setHas_pay(Boolean has_pay) {
-        this.has_pay = has_pay;
+    public void setHasPay(Boolean hasPay) {
+        this.hasPay = hasPay;
     }
 
-    public Date getOrdertime() {
-        return ordertime;
+    public Date getOrderTime() {
+        return orderTime;
     }
 
-    public void setOrdertime(Date ordertime) {
-        this.ordertime = ordertime;
+    public void setOrderTime(Date orderTime) {
+        this.orderTime = orderTime;
     }
 }

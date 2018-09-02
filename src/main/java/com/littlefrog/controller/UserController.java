@@ -1,33 +1,25 @@
 package com.littlefrog.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.littlefrog.common.Response;
-import com.littlefrog.common.ResultCode;
 import com.littlefrog.entity.Activity;
 import com.littlefrog.entity.Coupon;
 import com.littlefrog.entity.Order;
 import com.littlefrog.entity.User;
-import com.littlefrog.respository.UserRepository;
 import com.littlefrog.service.ActivityService;
 import com.littlefrog.service.CouponService;
 import com.littlefrog.service.OrderService;
 import com.littlefrog.service.UserService;
-import com.sun.org.apache.bcel.internal.classfile.Signature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.rmi.CORBA.Util;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.Logger;
 
 import static com.littlefrog.common.ResultGenerator.genFailResult;
 import static com.littlefrog.common.ResultGenerator.genSuccessResult;
@@ -50,13 +42,13 @@ public class UserController {
     @Autowired
     private CouponService couponService;
 
-    @Value("${appid}")
-    private String appid;
+    @Value("${appID}")
+    private String appID;
 
     @GetMapping("api/user/index")
-    public Response index(@RequestHeader String appid){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response index(@RequestHeader String appID){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         List<User> u = userService.getAllUser();
         if(u!=null){
@@ -66,9 +58,9 @@ public class UserController {
         }
     }
     @PostMapping("api/user/login")
-    public Response addUser(@RequestHeader String appid, @RequestParam String code){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response addUser(@RequestHeader String appID, @RequestParam String code){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
        Object user = userService.login(code);
        if(user.getClass() != User.class){
@@ -83,11 +75,11 @@ public class UserController {
        }
     }
     @GetMapping("api/user/info")
-    public Response indexforID(@RequestHeader String appid, @RequestParam Integer id){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response indexforID(@RequestHeader String appID, @RequestParam Integer ID){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
-        User user = userService.getUserInfo(id);
+        User user = userService.getUserInfo(ID);
         if(user != null){
             return genSuccessResult(user);
         }else{
@@ -96,33 +88,32 @@ public class UserController {
     }
 
     @PostMapping("api/user/updateInfo")
-    public Response updateInfo(@RequestHeader String appid, @RequestParam int userId,@RequestParam int gender,@RequestParam String name, @RequestParam String phoneNum){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response updateInfo(@RequestHeader String appID, @RequestParam int userID,@RequestParam int gender,@RequestParam String name, @RequestParam String phoneNum){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
-        User user=userService.setUserInfo(userId,gender,name,phoneNum);
+        User user=userService.setUserInfo(userID,gender,name,phoneNum);
         if(user ==null){
             return genFailResult("更新失败，没有该用户！");
         }else{
             return genSuccessResult(user);
         }
     }
-
     @PostMapping("api/user/rechargeResult")
-    public Response rechargeResult(@RequestHeader String appid,@RequestParam int userid, @RequestParam int ammount,@RequestParam boolean isSuccess){
-        if(!appid.equals(this.appid)){
-            return genFailResult("错误的appid");
+    public Response rechargeResult(@RequestHeader String appID,@RequestParam int userID, @RequestParam int amount,@RequestParam boolean isSuccess){
+        if(!appID.equals(this.appID)){
+            return genFailResult("错误的appID");
         }
         if(!isSuccess){
             return genSuccessResult();
         }else{
-            Activity activity = activityService.findByrequirementAndAmmount(ammount,2);
+            Activity activity = activityService.findByrequirementAndAmmount(amount,2);
             if(activity==null){
                 return genSuccessResult();
             }else{
                 try {
                     Coupon.setLastTime(activity.getCouponExpiry());
-                    Coupon coupon = couponService.addCoupon(userid, activity.getCoupon());
+                    Coupon coupon = couponService.addCoupon(userID, activity.getCoupon());
                     return genSuccessResult("恭喜您获得"+activity.getCoupon()+"元优惠券");
                 }catch (Exception e){
                     return genFailResult(e.getMessage());

@@ -7,7 +7,8 @@ import java.util.Date;
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column (name = "lesson_id")
+    private Integer lessonID;
 
     @Column(name = "order_num")
     private int order;
@@ -15,20 +16,21 @@ public class Lesson {
     @Column
     private String title;
 
-    @Column
-    private String video_url;
+    @Column(name = "video_url")
+    private String videoUrl;
 
     @Column
     private String description;
 
     @Column(name = "cover_pic")
-    private String cover_url;
+    private String coverPic;
 
-    @Column
-    private int course_id;
+    @Column(name = "course_id")
+    private int courseID;
 
     @Column
     private Date time;
+
 
     public String getTitle() {
         return title;
@@ -38,12 +40,12 @@ public class Lesson {
         this.title = title;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getLessonID() {
+        return lessonID;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setLessonID(Integer lessonID) {
+        this.lessonID = lessonID;
     }
 
     public int getOrder() {
@@ -54,12 +56,12 @@ public class Lesson {
         this.order = order;
     }
 
-    public String getVideo_url() {
-        return video_url;
+    public String getVideoUrl() {
+        return videoUrl;
     }
 
-    public void setVideo_url(String video_url) {
-        this.video_url = video_url;
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
     public String getDescription() {
@@ -70,20 +72,20 @@ public class Lesson {
         this.description = description;
     }
 
-    public String getCover_url() {
-        return cover_url;
+    public String getCoverPic() {
+        return coverPic;
     }
 
-    public void setCover_url(String cover_url) {
-        this.cover_url = cover_url;
+    public void setCoverPic(String coverPic) {
+        this.coverPic = coverPic;
     }
 
-    public int getCourse_id() {
-        return course_id;
+    public int getCourseID() {
+        return courseID;
     }
 
-    public void setCourse_id(int course_id) {
-        this.course_id = course_id;
+    public void setCourseID(int courseID) {
+        this.courseID = courseID;
     }
 
     public Date getTime() {
@@ -94,31 +96,32 @@ public class Lesson {
         this.time = time;
     }
 
-    public Lesson(int order, String title,String video_url, String description, String cover_url, int course_id, Date time) {
+    public Lesson(int order, String title, String videoUrl, String description, String cover_url, int courseID, Date time) {
         this.title = title;
         this.order = order;
-        this.video_url = video_url;
+        this.videoUrl = videoUrl;
         this.description = description;
-        this.cover_url = cover_url;
-        this.course_id = course_id;
+        this.coverPic = cover_url;
+        this.courseID = courseID;
         this.time = time;
-    }
-
-
-    public Lesson() {
-
     }
 
     @Override
     public String toString() {
         return "Lesson{" +
-                "id=" + id +
+                "lessonID=" + lessonID +
                 ", order=" + order +
-                ", video_url='" + video_url + '\'' +
+                ", title='" + title + '\'' +
+                ", videoUrl='" + videoUrl + '\'' +
                 ", description='" + description + '\'' +
-                ", cover_url='" + cover_url + '\'' +
-                ", course_id=" + course_id +
+                ", coverPic='" + coverPic + '\'' +
+                ", courseID=" + courseID +
                 ", time=" + time +
                 '}';
     }
+
+    public Lesson() {
+
+    }
+
 }

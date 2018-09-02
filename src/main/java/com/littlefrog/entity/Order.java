@@ -22,6 +22,8 @@ public class Order {
 
     public Order(Integer userid) {
         this.userid = userid;
+        this.has_pay = false;
+        this.ordertime=new Date();
         this.is_recharge = false;
     }
 

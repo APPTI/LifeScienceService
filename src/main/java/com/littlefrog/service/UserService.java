@@ -49,7 +49,6 @@ public class UserService {
     //商户平台设置的密钥
     @Value("${key}")
     private String key;
-    private String spbill_create_ip;
 
     public User addUser(String sessionId,String openID){
         User user=userRepository.save(new User(sessionId,openID));
@@ -118,39 +117,6 @@ public class UserService {
         }
         return newstr;
     }
-    public JSONObject recharge(String openId,int orderId, int total_fee, HttpServletRequest request) {
-        String requestUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-        Map params = new HashMap();
-        params.put("appid",this.appid);
-        //我们请求的字符串
-        params.put("mch_id",this.mch_id);
-        //数字签名，###填你的数字签名，可以在你的个人中心看到
-        params.put("body",this.body);
-        //随机字符串
-        params.put("nonce_str",this.RandomString(new Random(),16));
-        //验证类型
-        params.put("sign_type","MD5");
-        //商品描述
-        params.put("body",this.body);
-        //商户订单号
-        params.put("out_trade_no",orderId);
-        //价格
-        params.put("total_fee",total_fee);
-        //交易类型
-        params.put("trade_type",this.trade_type);
-        params.put("openid",openId);
-        //终端ip
-        params.put("spbill_create_ip",request.getRemoteAddr());
-        //通知地址
-        params.put("notify_url",this.notify_url);
-        //签名
-        params.put("sign",this.Md5Sign(params));
-        //调用httpRequest方法，这个方法主要用于请求地址，并加上请求参数
-        String string = httpRequest(requestUrl,params);
-        //处理返回的JSON数据并返回
-        JSONObject pageBean = JSONObject.parseObject(string);
-        return pageBean;
-    }
 
     public Object login(String code) {
         String requestUrl = "https://api.weixin.qq.com/sns/jscode2session";
@@ -163,7 +129,7 @@ public class UserService {
         //验证类型
         params.put("grant_type","authorization_code");
         //调用httpRequest方法，这个方法主要用于请求地址，并加上请求参数
-        String string = httpRequest(requestUrl,params);
+        String string = httpRequest(requestUrl,params,"GET");
         //处理返回的JSON数据并返回
         JSONObject pageBean = JSONObject.parseObject(string);
 
@@ -197,7 +163,8 @@ public class UserService {
         }
     }
 
-    private static String httpRequest(String requestUrl,Map params) {
+
+    private static String httpRequest(String requestUrl,Map params ,String method) {
         //buffer用于接受返回的字符
         StringBuffer buffer = new StringBuffer();
         try {
@@ -206,7 +173,7 @@ public class UserService {
             //打开http连接
             HttpURLConnection httpUrlConn = (HttpURLConnection) url.openConnection();
             httpUrlConn.setDoInput(true);
-            httpUrlConn.setRequestMethod("GET");
+            httpUrlConn.setRequestMethod(method);
             httpUrlConn.connect();
             //获得输入
             InputStream inputStream = httpUrlConn.getInputStream();

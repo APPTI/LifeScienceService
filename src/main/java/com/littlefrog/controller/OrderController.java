@@ -126,28 +126,32 @@ public class OrderController {
         double price = courseService.findByID(courseID).getPrice();
         if(wallet>=price-couponMoney){
             try{
+                String message;
                 Course course = courseService.findByID(courseID);
                 Order order = orderService.addOrder(new Order(courseID,userID,true,new Date()));
                 if (order == null){
-
+                    message = "您已购买过啦";
+                    return genFailResult(message);
                 }
-                userService.payMoney(userID,wallet-price+couponMoney);
-                String massage = "恭喜您已经成功购买课程【"+course.getName()+"】,赶快去学习吧！";
-                informService.addInform(userID,massage,Category.ORDER,courseID);
-                if(couponID==-1){
-                    Activity activity = activityService.findByrequirement(courseID,1);
-                    if(activity!=null){
-                        Coupon.setLastTime(activity.getCouponExpiry());
-                        Coupon coupon = couponService.addCoupon(userID,activity.getCoupon());
-                        JSONObject result = new JSONObject();
-                        result.put("order",order);
-                        result.put("coupon",coupon);
-                        return genSuccessResult(result);
-                    }else{
+                else {
+                    userService.payMoney(userID, wallet - price + couponMoney);
+                    message = "恭喜您已经成功购买课程【" + course.getName() + "】,赶快去学习吧！";
+                    informService.addInform(userID, message, Category.ORDER, courseID);
+                    if (couponID == -1) {
+                        Activity activity = activityService.findByrequirement(courseID, 1);
+                        if (activity != null) {
+                            Coupon.setLastTime(activity.getCouponExpiry());
+                            Coupon coupon = couponService.addCoupon(userID, activity.getCoupon());
+                            JSONObject result = new JSONObject();
+                            result.put("order", order);
+                            result.put("coupon", coupon);
+                            return genSuccessResult(result);
+                        } else {
+                            return genSuccessResult(order);
+                        }
+                    } else {
                         return genSuccessResult(order);
                     }
-                }else {
-                    return genSuccessResult(order);
                 }
             }catch (Exception e){
                 return genFailResult(e.getMessage());

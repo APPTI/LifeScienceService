@@ -6,24 +6,11 @@ import com.littlefrog.entity.Lesson;
 import com.littlefrog.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.littlefrog.common.Response;
-import com.littlefrog.common.Tag;
-import com.littlefrog.entity.Course;
-import com.littlefrog.entity.User;
-import com.littlefrog.respository.UserRepository;
-import com.littlefrog.service.CourseService;
-import com.littlefrog.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +43,7 @@ public class LessonController {
 
     @PostMapping("api/lesson/addLesson")
     public Response addLesson(@RequestHeader String appID,@RequestParam int courseID,@RequestParam int order,@RequestParam String title,@RequestParam String videoUrl,@RequestParam String description,@RequestParam String coverUrl){
-        Lesson lesson = lessonService.AddLesson(courseID,order,title,videoUrl,description,coverUrl);
+        Lesson lesson = lessonService.addLesson(courseID,order,title,videoUrl,description,coverUrl);
         if(lesson==null){
             return genFailResult("添加课程失败");
         }else{

@@ -23,8 +23,13 @@ public class LessonService {
         }
         return lessonList;
     }
-    public Lesson AddLesson(int courseId,int order,String title, String video_url, String description, String cover_url){
-
+    public Lesson addLesson(int courseId, int order, String title, String video_url, String description, String cover_url){
+        List<Lesson> preLessonList = lessonRepository.findAll(courseId);
+        for (Lesson each : preLessonList){
+            if (order == each.getOrder()){
+                return null;
+            }
+        }
         Lesson lesson = lessonRepository.save(new Lesson(order,title,video_url,description,cover_url,courseId,new Date()));
         if(lesson == null){
             return null;

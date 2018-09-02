@@ -34,6 +34,12 @@ public class OrderService {
     }
 
     public Order addOrder(Order order){
+        List<Order> preOrderList = orderRepository.getAllorder(order.getUserID());
+        for (Order each: preOrderList){
+            if (each.getCourseID()==order.getCourseID()){
+                return null;
+            }
+        }
         Order result = orderRepository.save(order);
         if (order.getHasPay()) {
             studyRecordRepository.addProgress(order.getUserID(), order.getCourseID());

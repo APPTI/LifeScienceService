@@ -78,11 +78,11 @@ public class PaymentController{
     private OrderService orderService;
 
     @PostMapping("api/user/recharge")
-    public Response recharge(@RequestHeader String appid, @RequestParam int amount, @RequestParam Integer id) throws ParseException, UnsupportedEncodingException, DocumentException {
+    public Response recharge(@RequestHeader String appid, @RequestParam int amount, @RequestParam Integer ID) throws ParseException, UnsupportedEncodingException, DocumentException {
         if (!appid.equals(this.appid)) {
             return genFailResult("错误的appid");
         }
-        User user = userService.getUserInfo(id);
+        User user = userService.getUserInfo(ID);
         if (user == null) {
             return genFailResult("该用户不存在!");
         } else {

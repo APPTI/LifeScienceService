@@ -23,6 +23,7 @@ public class LessonService {
         }
         return lessonList;
     }
+
     public Lesson addLesson(int courseId, int order, String title, String video_url, String description, String cover_url){
         List<Lesson> preLessonList = lessonRepository.findAll(courseId);
         for (Lesson each : preLessonList){

@@ -128,6 +128,9 @@ public class OrderController {
             try{
                 Course course = courseService.findByID(courseID);
                 Order order = orderService.addOrder(new Order(courseID,userID,true,new Date()));
+                if (order == null){
+
+                }
                 userService.payMoney(userID,wallet-price+couponMoney);
                 String massage = "恭喜您已经成功购买课程【"+course.getName()+"】,赶快去学习吧！";
                 informService.addInform(userID,massage,Category.ORDER,courseID);

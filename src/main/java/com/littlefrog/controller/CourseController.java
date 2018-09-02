@@ -80,11 +80,11 @@ public class CourseController {
     }
 
     @GetMapping("api/course/findCourse")
-    public  Response findCourse(@RequestHeader String appid,@RequestParam int courseId){
+    public  Response findCourse(@RequestHeader String appid,@RequestParam int courseID){
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
-        Course c = courseService.findByID(courseId);
+        Course c = courseService.findByID(courseID);
         if (c==null){
             return genFailResult("获取course失败");
         }else {
@@ -93,11 +93,11 @@ public class CourseController {
     }
 
     @PostMapping("api/course/addCourse")
-    public Response updateCourse(@RequestHeader String appid, @RequestParam String name, @RequestParam String location, @RequestParam String teacher, @RequestParam String introduction, @RequestParam int popularity, @RequestParam Tag tag, @RequestParam String cover_pic, @RequestParam double price , @RequestParam int course_num){
+    public Response updateCourse(@RequestHeader String appid, @RequestParam String name, @RequestParam String location, @RequestParam String teacher, @RequestParam String introduction, @RequestParam int popularity, @RequestParam Tag tag, @RequestParam String coverPic, @RequestParam double price , @RequestParam int courseNum){
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
-        Course course=courseService.addCourse(location,name,teacher,introduction,popularity,tag,cover_pic,new Date(),price,course_num);
+        Course course=courseService.addCourse(location,name,teacher,introduction,popularity,tag,coverPic,new Date(),price,courseNum);
         if(course==null){
             return genFailResult("添加课程失败");
         }else{
@@ -106,11 +106,11 @@ public class CourseController {
     }
 
     @PostMapping("api/course/setCourseInfo")
-    public Response updateCourse(@RequestHeader String appid, @RequestParam Integer id, @RequestParam String name, @RequestParam String location, @RequestParam String teacher, @RequestParam String introduction, @RequestParam int popularity, @RequestParam Tag tag, @RequestParam String cover_pic, @RequestParam double price , @RequestParam int course_num){
+    public Response updateCourse(@RequestHeader String appid, @RequestParam Integer id, @RequestParam String name, @RequestParam String location, @RequestParam String teacher, @RequestParam String introduction, @RequestParam int popularity, @RequestParam Tag tag, @RequestParam String coverPic, @RequestParam double price , @RequestParam int courseNum){
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
-        boolean result=courseService.setCourseInfo(id,location,name,teacher,introduction,popularity,tag,cover_pic,price,course_num);
+        boolean result=courseService.setCourseInfo(id,location,name,teacher,introduction,popularity,tag,coverPic,price,courseNum);
         if(!result){
             return genFailResult("修改课程信息失败");
         }else{
@@ -120,15 +120,15 @@ public class CourseController {
     }
 
     @PostMapping("api/course/setCoverPic")
-    public Response setCoverPic(@RequestHeader String appid,@RequestParam int id,@RequestParam String url){
+    public Response setCoverPic(@RequestHeader String appid,@RequestParam int ID,@RequestParam String coverPic){
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
-        boolean result = courseService.setCoverPic(id, url);
+        boolean result = courseService.setCoverPic(ID, coverPic);
         if(!result){
             return genFailResult("设置封面图片失败");
         }else{
-            Course course=courseService.findByID(id);
+            Course course=courseService.findByID(ID);
             return genSuccessResult(course);
         }
     }

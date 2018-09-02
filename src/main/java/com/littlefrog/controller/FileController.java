@@ -20,8 +20,8 @@ public class FileController {
     @Value("${appid}")
     private String appid;
 
-    @PostMapping("api/file/uploadfile")
-    public Response uploadfile(@RequestHeader String appid,@RequestParam("file") MultipartFile file , @RequestParam String path){
+    @PostMapping("api/file/uploadFile")
+    public Response uploadFile(@RequestHeader String appid,@RequestParam("file") MultipartFile file , @RequestParam String path){
 //        if(!appid.equals(this.appid)){
 //            return genFailResult("错误的appid");
 //        }

@@ -83,11 +83,11 @@ public class UserController {
        }
     }
     @GetMapping("api/user/info")
-    public Response indexforID(@RequestHeader String appid, @RequestParam Integer id){
+    public Response indexforID(@RequestHeader String appid, @RequestParam Integer ID){
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
-        User user = userService.getUserInfo(id);
+        User user = userService.getUserInfo(ID);
         if(user != null){
             return genSuccessResult(user);
         }else{
@@ -96,11 +96,11 @@ public class UserController {
     }
 
     @PostMapping("api/user/updateInfo")
-    public Response updateInfo(@RequestHeader String appid, @RequestParam int userId,@RequestParam int gender,@RequestParam String name, @RequestParam String phoneNum){
+    public Response updateInfo(@RequestHeader String appid, @RequestParam int userID,@RequestParam int gender,@RequestParam String name, @RequestParam String phoneNum){
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
-        User user=userService.setUserInfo(userId,gender,name,phoneNum);
+        User user=userService.setUserInfo(userID,gender,name,phoneNum);
         if(user ==null){
             return genFailResult("更新失败，没有该用户！");
         }else{
@@ -108,9 +108,9 @@ public class UserController {
         }
     }
 
-    @RequestMapping("api/user/recharge/getresult")
+    @RequestMapping("api/user/recharge/getResult")
     @ResponseBody
-    public HttpServletResponse getrechargeResult(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public HttpServletResponse getRechargeResult(HttpServletRequest request, HttpServletResponse response) throws IOException {
         DataInputStream in;
         String wxNotifyXml = "";
         try {
@@ -173,20 +173,20 @@ public class UserController {
     }
 
     @PostMapping("api/user/rechargeResult")
-    public Response rechargeResult(@RequestHeader String appid,@RequestParam int userid, @RequestParam int ammount,@RequestParam boolean isSuccess){
+    public Response rechargeResult(@RequestHeader String appid,@RequestParam int userID, @RequestParam int amount,@RequestParam boolean isSuccess){
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
         if(!isSuccess){
             return genSuccessResult();
         }else{
-            Activity activity = activityService.findByrequirementAndAmmount(ammount,2);
+            Activity activity = activityService.findByrequirementAndAmmount(amount,2);
             if(activity==null){
                 return genSuccessResult();
             }else{
                 try {
                     Coupon.setLastTime(activity.getCouponExpiry());
-                    Coupon coupon = couponService.addCoupon(userid, activity.getCoupon());
+                    Coupon coupon = couponService.addCoupon(userID, activity.getCoupon());
                     return genSuccessResult("恭喜您获得"+activity.getCoupon()+"元优惠券");
                 }catch (Exception e){
                     return genFailResult(e.getMessage());
@@ -195,11 +195,11 @@ public class UserController {
         }
     }
     @PostMapping("api/user/recharge")
-    public Response recharge(@RequestHeader String appid, @RequestParam int amount,@RequestParam Integer id) throws ParseException {
+    public Response recharge(@RequestHeader String appid, @RequestParam int amount,@RequestParam Integer ID) throws ParseException {
         if(!appid.equals(this.appid)){
             return genFailResult("错误的appid");
         }
-        User user = userService.getUserInfo(id);
+        User user = userService.getUserInfo(ID);
         if(user==null){
             return genFailResult("该用户不存在!");
         }else{

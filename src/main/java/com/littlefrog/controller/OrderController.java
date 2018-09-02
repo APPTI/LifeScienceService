@@ -113,20 +113,21 @@ public class OrderController {
         if (!appID.equals(this.appID)) {
             return genFailResult("错误的appID");
         }
-        double couponMoney = 0;
-        if (couponID != -1) {
-            Coupon coupon = couponService.getCouponInfo(couponID);
-            if (coupon.isValid()) {
-                couponMoney = coupon.getAmount();
-                couponService.useCoupon(couponID);
-            } else {
-                return genFailResult("优惠券已过期！");
-            }
-        }
+
+        double couponMoney=0;
         double wallet = userService.getUserInfo(userID).getBalance();
         double price = courseService.findByID(courseID).getPrice();
-        if (wallet >= price - couponMoney) {
-            try {
+        if(wallet>=price-couponMoney){
+            if(couponID!=-1){
+                Coupon coupon= couponService.getCouponInfo(couponID);
+                if(coupon.isValid()){
+                    couponMoney =coupon.getAmount();
+                    couponService.useCoupon(couponID);
+                }else{
+                    return genFailResult("优惠券已过期！");
+                }
+            }
+            try{
                 String message;
                 Course course = courseService.findByID(courseID);
                 Order order = orderService.addOrder(new Order(courseID, userID, true, new Date()));

@@ -37,6 +37,11 @@ public class Coupon {
      */
     @Column(name = "is_valid")
     private boolean isValid = true;
+    /**
+     * 活动（作为验证）
+     */
+    @Column(name = "activity_code")
+    private int code;
 
     public Coupon() {
     }

@@ -35,8 +35,8 @@ public class OrderService {
 
     public Order addOrder(Order order){
         Order result = orderRepository.save(order);
-        if (order.getHas_pay()) {
-            studyRecordRepository.addProgress(order.getUserid(), order.getCourseid());
+        if (order.getHasPay()) {
+            studyRecordRepository.addProgress(order.getUserID(), order.getCourseID());
         }
         return result;
     }

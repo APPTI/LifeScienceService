@@ -1,33 +1,25 @@
 package com.littlefrog.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.littlefrog.common.Response;
-import com.littlefrog.common.ResultCode;
 import com.littlefrog.entity.Activity;
 import com.littlefrog.entity.Coupon;
 import com.littlefrog.entity.Order;
 import com.littlefrog.entity.User;
-import com.littlefrog.respository.UserRepository;
 import com.littlefrog.service.ActivityService;
 import com.littlefrog.service.CouponService;
 import com.littlefrog.service.OrderService;
 import com.littlefrog.service.UserService;
-import com.sun.org.apache.bcel.internal.classfile.Signature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.rmi.CORBA.Util;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.Logger;
 
 import static com.littlefrog.common.ResultGenerator.genFailResult;
 import static com.littlefrog.common.ResultGenerator.genSuccessResult;
@@ -131,11 +123,11 @@ public class UserController {
                 double amount = result.getDouble("total_fee");
                 Optional<Order> order = orderService.getById(orderId);
                 if(order.isPresent()){
-                    if(order.get().isIs_recharge()){
+                    if(order.get().isRecharge()){
                         response.encodeURL(setXml("SUCCESS",""));
                         return response;
                     }else {
-                        int userId=order.get().getUserid();
+                        int userId=order.get().getUserID();
                         User user=userService.AddRecharge(userId,amount,userService.getUserInfo(userId).getBalance());
                         orderService.setIsRecharge(orderId,true);
 
@@ -203,8 +195,8 @@ public class UserController {
         if(user==null){
             return genFailResult("该用户不存在!");
         }else{
-            Order order =orderService.addOrder(new Order(user.getId()));
-            JSONObject response = userService.recharge(user.getOpenid(),order.getId(),amount,request);
+            Order order =orderService.addOrder(new Order(user.getUserID()));
+            JSONObject response = userService.recharge(user.getOpenID(),order.getOrderID(),amount,request);
             if(response.getString("return_code")=="FAIL"){
                 return genFailResult(response.getString("return_msg"));
             }else{

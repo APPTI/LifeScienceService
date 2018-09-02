@@ -27,7 +27,7 @@ public class Store {
             if (userStore.size() > MAX_SIZE) {
                 userStore.clear();
             }
-            userStore.put(user.getId(), user);
+            userStore.put(user.getUserID(), user);
         }
     }
 

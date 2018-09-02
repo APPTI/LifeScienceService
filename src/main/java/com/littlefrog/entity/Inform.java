@@ -15,11 +15,12 @@ public class Inform {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "inform_id")
     private Integer informID;
     /**
      * 被通知用户
      */
-    @Column(name = "userid")
+    @Column(name = "user_id")
     private Integer userID;
     /**
      * 通知内容

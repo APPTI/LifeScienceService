@@ -173,12 +173,12 @@ public class UserService {
         User user = new User();
         String openID = pageBean.getString("openid");
         String sessionId = pageBean.getString("session_key");
-        user.setOpenid(openID);
-        user.setSessionId(sessionId);
+        user.setOpenID(openID);
+        user.setSessionID(sessionId);
         user.setName("小程序用户");
         if(pageBean.containsKey("unionId")){
             String unionId = pageBean.getString("unionid");
-            user.setUnionId(unionId);
+            user.setUnionID(unionId);
         }
         User tempuser = userRepository.FindByopenID(openID);
         if(tempuser == null){
@@ -186,13 +186,13 @@ public class UserService {
             store.addUser(user);
             return user;
         }else{
-                userRepository.UpdateSessionId(tempuser.getId(),sessionId);
-                if(user.getUnionId()!=null){
-                    userRepository.UpdateUnionId(tempuser.getId(),user.getUnionId());
+                userRepository.UpdateSessionId(tempuser.getUserID(),sessionId);
+                if(user.getUnionID()!=null){
+                    userRepository.UpdateUnionId(tempuser.getUserID(),user.getUnionID());
                 }
-                userRepository.SetLoginTime(tempuser.getId(),new Date());
-                user = userRepository.FindById(tempuser.getId());
-                store.updateUserInfo(user.getId(),user);
+                userRepository.SetLoginTime(tempuser.getUserID(),new Date());
+                user = userRepository.FindById(tempuser.getUserID());
+                store.updateUserInfo(user.getUserID(),user);
                 return user;
         }
     }
@@ -249,21 +249,21 @@ public class UserService {
     public User setUserInfo(int id, int gender, String name, String phoneNum){
         userRepository.UpdateInfo(id,gender,name,phoneNum);
         User user = userRepository.FindById(id);
-        store.updateUserInfo(user.getId(),user);
+        store.updateUserInfo(user.getUserID(),user);
         return user;
     }
 
     public User AddRecharge(int id, double money, double balance){//  充钱
         userRepository.SetBalance(id,balance+money);
         User user = userRepository.FindById(id);
-        store.updateUserInfo(user.getId(),user);
+        store.updateUserInfo(user.getUserID(),user);
         return user;
     }
 
     public User payMoney(int id,double money){//付款
         userRepository.SetBalance(id,money);
         User user = userRepository.FindById(id);
-        store.updateUserInfo(user.getId(),user);
+        store.updateUserInfo(user.getUserID(),user);
         return user;
     }
 }

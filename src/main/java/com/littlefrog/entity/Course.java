@@ -11,40 +11,8 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    public Course(){
-
-    }
-    public Course(String location, String name, String teacher, String introduction, int popularity, Tag tag, String cover_pic, Date release_time, double price, int course_num) {
-        this.location = location;
-        this.name = name;
-        this.teacher = teacher;
-        this.introduction = introduction;
-        this.popularity = popularity;
-        this.tag = tag;
-        this.cover_pic = cover_pic;
-        this.release_time = release_time;
-        this.price = price;
-        this.course_num = course_num;
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", location='" + location + '\'' +
-                ", name='" + name + '\'' +
-                ", teacher='" + teacher + '\'' +
-                ", introduction='" + introduction + '\'' +
-                ", popularity=" + popularity +
-                ", tag=" + tag +
-                ", cover_pic='" + cover_pic + '\'' +
-                ", release_time=" + release_time +
-                ", price=" + price +
-                ", course_num=" + course_num +
-                '}';
-    }
+    @Column (name = "course_id")
+    private Integer courseID;
 
     @Column
     private String location;
@@ -64,8 +32,8 @@ public class Course {
     @Column
     private Tag tag;
 
-    @Column
-    private String cover_pic;
+    @Column(name = "coverPic")
+    private String coverPic;
 
     @Column
     private Date release_time;
@@ -77,8 +45,8 @@ public class Course {
     private int course_num;
 
 
-    public Integer getId() {
-        return id;
+    public Integer getCourseID() {
+        return courseID;
     }
     public String getLocation() {
         return location;
@@ -105,7 +73,7 @@ public class Course {
     }
 
     public String getCoverPic() {
-        return cover_pic;
+        return coverPic;
     }
 
     public Date getRelease_time() {
@@ -120,8 +88,8 @@ public class Course {
         return course_num;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCourseID(Integer courseID) {
+        this.courseID = courseID;
     }
 
     public void setLocation(String location) {
@@ -149,7 +117,7 @@ public class Course {
     }
 
     public void setCoverPic(String cover_pic) {
-        this.cover_pic = cover_pic;
+        this.coverPic = cover_pic;
     }
 
     public void setRelease_time(Date release_time) {
@@ -163,4 +131,38 @@ public class Course {
     public void setCourse_num(int course_num) {
         this.course_num = course_num;
     }
+
+    public Course(){
+
+    }
+    public Course(String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic, Date release_time, double price, int course_num) {
+        this.location = location;
+        this.name = name;
+        this.teacher = teacher;
+        this.introduction = introduction;
+        this.popularity = popularity;
+        this.tag = tag;
+        this.coverPic = coverPic;
+        this.release_time = release_time;
+        this.price = price;
+        this.course_num = course_num;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseID=" + courseID +
+                ", location='" + location + '\'' +
+                ", name='" + name + '\'' +
+                ", teacher='" + teacher + '\'' +
+                ", introduction='" + introduction + '\'' +
+                ", popularity=" + popularity +
+                ", tag=" + tag +
+                ", coverPic='" + coverPic + '\'' +
+                ", release_time=" + release_time +
+                ", price=" + price +
+                ", course_num=" + course_num +
+                '}';
+    }
+
 }

@@ -35,14 +35,14 @@ public class Course {
     @Column(name = "coverPic")
     private String coverPic;
 
-    @Column
-    private Date release_time;
+    @Column(name = "releaseTime")
+    private Date releaseTime;
 
     @Column
     private double price;
 
-    @Column
-    private int course_num;
+    @Column(name = "course_num")
+    private int courseNum;
 
 
     public Integer getCourseID() {
@@ -76,16 +76,16 @@ public class Course {
         return coverPic;
     }
 
-    public Date getRelease_time() {
-        return release_time;
+    public Date getReleaseTime() {
+        return releaseTime;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public int getCourse_num() {
-        return course_num;
+    public int getCourseNum() {
+        return courseNum;
     }
 
     public void setCourseID(Integer courseID) {
@@ -120,22 +120,22 @@ public class Course {
         this.coverPic = cover_pic;
     }
 
-    public void setRelease_time(Date release_time) {
-        this.release_time = release_time;
+    public void setReleaseTime(Date releaseTime) {
+        this.releaseTime = releaseTime;
     }
 
     public void setPrice(double price) {
         this.price = price;
     }
 
-    public void setCourse_num(int course_num) {
-        this.course_num = course_num;
+    public void setCourseNum(int courseNum) {
+        this.courseNum = courseNum;
     }
 
     public Course(){
 
     }
-    public Course(String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic, Date release_time, double price, int course_num) {
+    public Course(String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic, Date releaseTime, double price, int courseNum) {
         this.location = location;
         this.name = name;
         this.teacher = teacher;
@@ -143,9 +143,9 @@ public class Course {
         this.popularity = popularity;
         this.tag = tag;
         this.coverPic = coverPic;
-        this.release_time = release_time;
+        this.releaseTime = releaseTime;
         this.price = price;
-        this.course_num = course_num;
+        this.courseNum = courseNum;
     }
 
     @Override
@@ -159,9 +159,9 @@ public class Course {
                 ", popularity=" + popularity +
                 ", tag=" + tag +
                 ", coverPic='" + coverPic + '\'' +
-                ", release_time=" + release_time +
+                ", releaseTime=" + releaseTime +
                 ", price=" + price +
-                ", course_num=" + course_num +
+                ", courseNum=" + courseNum +
                 '}';
     }
 

@@ -49,7 +49,7 @@ import static com.littlefrog.common.ResultGenerator.genSuccessResult;
 @RestController
 @CrossOrigin
 public class PaymentController{
-    @Value("spbill_create_ip")
+    @Value("${spbill_create_ip}")
     private String spbill_create_ip;//终端IP
     private final String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";//统一下单API接口链接
     //商户平台设置的密钥
@@ -160,7 +160,7 @@ public class PaymentController{
 
         sParaTemp.put("openid", paymentPo.getOpenid());
         // 除去数组中的空值和签名参数
-
+        sParaTemp.put("sign_type","MD5");
         String mysign = userService.Md5Sign(sParaTemp); // 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
 
         paymentPo.setSign(mysign);

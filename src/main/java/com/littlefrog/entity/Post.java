@@ -13,21 +13,22 @@ public class Post {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "post_id")
     private Integer postID;
     /**
      * 帖子的课程
      */
-    @Column(name = "courseid")
+    @Column(name = "course_id")
     private Integer courseID;
     /**
      * 发帖用户
      */
-    @Column(name = "userid")
+    @Column(name = "user_id")
     private Integer userID;
     /**
      * 上一被回复贴子
      */
-    @Column(name = "previous_postid")
+    @Column(name = "previous_post_id")
     private Integer previousPostID;
     /**
      * 帖子内容
@@ -46,6 +47,7 @@ public class Post {
     private Integer reply;
 
     @Transient
+    @Column (name = "pre_poster")
     private String prePoster;
 
     public String getPrePoster() {

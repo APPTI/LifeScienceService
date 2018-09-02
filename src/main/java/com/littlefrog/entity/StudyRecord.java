@@ -6,16 +6,17 @@ import javax.persistence.*;
 public class StudyRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column (name = "study_record_id")
+    private Integer studyRecordID;
 
-    @Column
-    private Integer usr_id;
+    @Column(name = "user_id")
+    private Integer userID;
 
-    @Column
-    private Integer course_id;
+    @Column(name = "course_id")
+    private Integer courseID;
 
-    @Column
-    private Integer lesson_id;
+    @Column(name = "lesson_id")
+    private Integer lessonID;
 
     @Column
     private Integer hour;
@@ -30,10 +31,10 @@ public class StudyRecord {
     public StudyRecord() {
     }
 
-    public StudyRecord(Integer usr_id, Integer course_id, Integer lesson_id, Integer hour, Integer minute, Integer second) {
-        this.usr_id = usr_id;
-        this.course_id = course_id;
-        this.lesson_id = lesson_id;
+    public StudyRecord(Integer userID, Integer courseID, Integer lessonID, Integer hour, Integer minute, Integer second) {
+        this.userID = userID;
+        this.courseID = courseID;
+        this.lessonID = lessonID;
         this.hour = hour;
         this.minute = minute;
         this.second = second;
@@ -42,46 +43,46 @@ public class StudyRecord {
     @Override
     public String toString() {
         return "StudyRecord{" +
-                "id=" + id +
-                ", usr_id=" + usr_id +
-                ", course_id=" + course_id +
-                ", lesson_id=" + lesson_id +
+                "studyRecordID=" + studyRecordID +
+                ", userID=" + userID +
+                ", courseID=" + courseID +
+                ", lessonID=" + lessonID +
                 ", hour=" + hour +
                 ", minute=" + minute +
                 ", second=" + second +
                 '}';
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getStudyRecordID() {
+        return studyRecordID;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setStudyRecordID(Integer studyRecordID) {
+        this.studyRecordID = studyRecordID;
     }
 
-    public Integer getUsr_id() {
-        return usr_id;
+    public Integer getUserID() {
+        return userID;
     }
 
-    public void setUsr_id(Integer usr_id) {
-        this.usr_id = usr_id;
+    public void setUserID(Integer userID) {
+        this.userID = userID;
     }
 
-    public Integer getCourse_id() {
-        return course_id;
+    public Integer getCourseID() {
+        return courseID;
     }
 
-    public void setCourse_id(Integer course_id) {
-        this.course_id = course_id;
+    public void setCourseID(Integer courseID) {
+        this.courseID = courseID;
     }
 
-    public Integer getLesson_id() {
-        return lesson_id;
+    public Integer getLessonID() {
+        return lessonID;
     }
 
-    public void setLesson_id(Integer lesson_id) {
-        this.lesson_id = lesson_id;
+    public void setLessonID(Integer lessonID) {
+        this.lessonID = lessonID;
     }
 
     public Integer getHour() {

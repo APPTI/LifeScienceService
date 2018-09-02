@@ -7,35 +7,14 @@ import java.util.Date;
 public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column (name = "activity_id")
+    private Integer activityID;
 
     @Column
     private String title;//活动标题
 
-    @Column
-    private String cover_url;//封面图片
-
-    public Activity(String title, String cover_url, String content, Boolean isHasCoupon, int coupon, int couponExpiry, Date expiry, int requirement, int courseId, int ammount) {
-        this.title = title;
-        this.cover_url = cover_url;
-        this.content = content;
-        this.isHasCoupon = isHasCoupon;
-        this.coupon = coupon;
-        this.couponExpiry = couponExpiry;
-        this.expiry = expiry;
-        this.requirement = requirement;
-        this.courseId = courseId;
-        this.ammount = ammount;
-    }
-
-    public String getCover_url() {
-
-        return cover_url;
-    }
-
-    public void setCover_url(String cover_url) {
-        this.cover_url = cover_url;
-    }
+    @Column(name = "cover_url")
+    private String coverUrl;//封面图片
 
     @Column
     private String content;//活动内容，为svg格式的图片url
@@ -55,11 +34,11 @@ public class Activity {
     @Column
     private int requirement;//获取优惠券条件，0 为分享， 1为报名课程， 2 为充值
 
-    @Column(name = "courseid")
-    private int  courseId;//关联的课程id
+    @Column(name = "course_id")
+    private int courseID;//关联的课程id
 
     @Column
-    private int  ammount;//充值金额
+    private int amount;//充值金额
 
     public int getCouponExpiry() {
         return couponExpiry;
@@ -69,7 +48,7 @@ public class Activity {
         this.couponExpiry = couponExpiry;
     }
 
-    public Activity(String title, String content, Boolean isHasCoupon, int coupon, int couponExpiry, Date expiry, int requirement, int courseId, int ammount) {
+    public Activity(String title, String content, Boolean isHasCoupon, int coupon, int couponExpiry, Date expiry, int requirement, int courseID, int amount) {
         this.title = title;
         this.content = content;
         this.isHasCoupon = isHasCoupon;
@@ -77,16 +56,16 @@ public class Activity {
         this.couponExpiry = couponExpiry;
         this.expiry = expiry;
         this.requirement = requirement;
-        this.courseId = courseId;
-        this.ammount = ammount;
+        this.courseID = courseID;
+        this.amount = amount;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getActivityID() {
+        return activityID;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setActivityID(Integer activityID) {
+        this.activityID = activityID;
     }
 
     public String getTitle() {
@@ -137,26 +116,26 @@ public class Activity {
         this.requirement = requirement;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public int getCourseID() {
+        return courseID;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourseID(int courseID) {
+        this.courseID = courseID;
     }
 
-    public int getAmmount() {
-        return ammount;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setAmmount(int ammount) {
-        this.ammount = ammount;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     @Override
     public String toString() {
         return "Activity{" +
-                "id=" + id +
+                "activityID=" + activityID +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", isHasCoupon=" + isHasCoupon +
@@ -164,8 +143,29 @@ public class Activity {
                 ", couponExpiry=" + couponExpiry +
                 ", expiry=" + expiry +
                 ", requirement=" + requirement +
-                ", courseId=" + courseId +
-                ", ammount=" + ammount +
+                ", courseID=" + courseID +
+                ", amount=" + amount +
                 '}';
+    }
+    public Activity(String title, String coverUrl, String content, Boolean isHasCoupon, int coupon, int couponExpiry, Date expiry, int requirement, int courseID, int amount) {
+        this.title = title;
+        this.coverUrl = coverUrl;
+        this.content = content;
+        this.isHasCoupon = isHasCoupon;
+        this.coupon = coupon;
+        this.couponExpiry = couponExpiry;
+        this.expiry = expiry;
+        this.requirement = requirement;
+        this.courseID = courseID;
+        this.amount = amount;
+    }
+
+    public String getCoverUrl() {
+
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 }

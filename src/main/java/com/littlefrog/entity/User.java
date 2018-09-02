@@ -1,85 +1,92 @@
 package com.littlefrog.entity;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity(name="user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column (name = "user_id")
+    private Integer userID;
 
     @Column
     private String name;
-    @Column
-    private String openid;
+
+    @Column(name = "open_id")
+    private String openID;
+
     @Column
     private int gender;
-    @Column
-    private String phonenum;
+
+    @Column(name = "phone_num")
+    private String phoneNum;
+
     @Column
     private double balance;
-    @Column
-    private Date lastlogintime;
-    @Column
-    private boolean phonevalid;
+
+    @Column(name = "last_login_time")
+    private Date lastLoginTime;
+
+    @Column (name = "phone_valid")
+    private boolean phoneValid;
+
     @Column(name = "session_id")
-    private String sessionId;
+    private String sessionID;
+
     @Column(name = "union_id")
-    private String unionId;
+    private String unionID;
 
-    public String getSessionId() {
-        return sessionId;
+    public String getSessionID() {
+        return sessionID;
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public void setSessionID(String sessionID) {
+        this.sessionID = sessionID;
     }
 
-    public String getUnionId() {
-        return unionId;
+    public String getUnionID() {
+        return unionID;
     }
 
-    public void setUnionId(String unionId) {
-        this.unionId = unionId;
+    public void setUnionID(String unionID) {
+        this.unionID = unionID;
     }
 
     public User(){
-        setLastlogintime(new Date());
+        setLastLoginTime(new Date());
     }
-    public User(String name, String openID, int gender, String phoneNum, double balance,String sessionId,String unionId) {
+    public User(String name, String openID, int gender, String phoneNum, double balance, String sessionID, String unionID) {
         this.name = name;
-        this.openid = openID;
+        this.openID = openID;
         this.gender = gender;
-        this.phonenum = phoneNum;
+        this.phoneNum = phoneNum;
         this.balance = balance;
-        this.lastlogintime = new Date();
-        this.phonevalid = true;
-        this.sessionId = sessionId;
-        this.unionId = unionId;
+        this.lastLoginTime = new Date();
+        this.phoneValid = true;
+        this.sessionID = sessionID;
+        this.unionID = unionID;
     }
 
-    public User(String sessionId, String openID) {
+    public User(String sessionID, String openID) {
         this.name = "null";
-        this.openid = openID;
-        this.sessionId = sessionId;
+        this.openID = openID;
+        this.sessionID = sessionID;
         this.gender = 0;
         this.balance = 0;
-        this.phonevalid=false;
-        this.lastlogintime = new Date();
+        this.phoneValid =false;
+        this.lastLoginTime = new Date();
     }
 
-    public User(String sessionId, String openID,String unionId) {
+    public User(String sessionID, String openID, String unionID) {
         this.name = "null";
-        this.openid = openID;
-        this.sessionId = sessionId;
-        this.unionId = unionId;
+        this.openID = openID;
+        this.sessionID = sessionID;
+        this.unionID = unionID;
         this.gender = 0;
         this.balance = 0;
-        this.phonevalid=false;
-        this.lastlogintime = new Date();
+        this.phoneValid =false;
+        this.lastLoginTime = new Date();
     }
 
 
@@ -113,56 +120,56 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "userID=" + userID +
                 ", name='" + name + '\'' +
-                ", openid='" + openid + '\'' +
+                ", openID='" + openID + '\'' +
                 ", gender=" + gender +
-                ", phonenum='" + phonenum + '\'' +
+                ", phoneNum='" + phoneNum + '\'' +
                 ", balance=" + balance +
-                ", lastlogintime=" + lastlogintime +
-                ", phonevalid=" + phonevalid +
-                ", sessionId='" + sessionId + '\'' +
-                ", unionId='" + unionId + '\'' +
+                ", lastLoginTime=" + lastLoginTime +
+                ", phoneValid=" + phoneValid +
+                ", sessionID='" + sessionID + '\'' +
+                ", unionID='" + unionID + '\'' +
                 '}';
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getUserID() {
+        return userID;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserID(Integer userID) {
+        this.userID = userID;
     }
 
-    public String getOpenid() {
-        return openid;
+    public String getOpenID() {
+        return openID;
     }
 
-    public void setOpenid(String openid) {
-        this.openid = openid;
+    public void setOpenID(String openID) {
+        this.openID = openID;
     }
 
-    public String getPhonenum() {
-        return phonenum;
+    public String getPhoneNum() {
+        return phoneNum;
     }
 
-    public void setPhonenum(String phonenum) {
-        this.phonenum = phonenum;
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
-    public Date getLastlogintime() {
-        return lastlogintime;
+    public Date getLastLoginTime() {
+        return lastLoginTime;
     }
 
-    public void setLastlogintime(Date lastlogintime) {
-        this.lastlogintime = lastlogintime;
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
     }
 
-    public boolean isPhonevalid() {
-        return phonevalid;
+    public boolean isPhoneValid() {
+        return phoneValid;
     }
 
-    public void setPhonevalid(boolean phonevalid) {
-        this.phonevalid = phonevalid;
+    public void setPhoneValid(boolean phoneValid) {
+        this.phoneValid = phoneValid;
     }
 }

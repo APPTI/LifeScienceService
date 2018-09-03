@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.littlefrog.common.Response;
 import com.littlefrog.entity.Activity;
 import com.littlefrog.entity.Coupon;
-import com.littlefrog.entity.Order;
 import com.littlefrog.entity.User;
 import com.littlefrog.service.ActivityService;
 import com.littlefrog.service.CouponService;
@@ -15,10 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.littlefrog.common.ResultGenerator.genFailResult;
@@ -75,11 +70,11 @@ public class UserController {
        }
     }
     @GetMapping("api/user/info")
-    public Response indexforID(@RequestHeader String appID, @RequestParam Integer ID){
+    public Response indexforID(@RequestHeader String appID, @RequestParam Integer userID){
         if(!appID.equals(this.appID)){
             return genFailResult("错误的appID");
         }
-        User user = userService.getUserInfo(ID);
+        User user = userService.getUserInfo(userID);
         if(user != null){
             return genSuccessResult(user);
         }else{

@@ -48,6 +48,11 @@ public class StudyRecordService {
             }
             store.addMyCourseList(userId,courseList);
         }
-        return courseList.subList(index,Math.min(index+offset,courseList.size()));
+        try {
+            return courseList.subList(index, Math.min(index + offset, courseList.size()));
+        }
+        catch (IllegalArgumentException e){
+            return null;
+        }
     }
 }

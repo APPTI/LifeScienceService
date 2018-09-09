@@ -7,22 +7,22 @@ import java.util.Date;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "order_id")
+    @Column(name = "order_id", updatable = false, nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer orderID;
 
-    @Column(name = "course_id")
+    @Column(name = "course_id", nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer courseID;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer userID;
 
-    @Column(name = "has_pay")
+    @Column(name = "has_pay", nullable = false, columnDefinition = "tinyint(1) UNSIGNED")
     private Boolean hasPay;
 
-    @Column(name = "order_time")
+    @Column(name = "order_time", nullable = false)
     private Date orderTime;
 
-    @Column (name = "is_recharge")
+    @Column(name = "is_recharge", nullable = false)
     private boolean isRecharge;
 
     public Order() {
@@ -32,8 +32,9 @@ public class Order {
         this.userID = userID;
         this.isRecharge = false;
         this.hasPay = false;
-        this.orderTime=new Date();
+        this.orderTime = new Date();
     }
+
 
     public Order(Integer courseID, Integer userID, Boolean hasPay, Date orderTime) {
         this.courseID = courseID;
@@ -45,8 +46,8 @@ public class Order {
     public Order(int courseID, int userID, Date date, boolean hasPay) {
         this.courseID = courseID;
         this.userID = userID;
-        this.orderTime =date;
-        this.hasPay =hasPay;
+        this.orderTime = date;
+        this.hasPay = hasPay;
     }
 
     @Override

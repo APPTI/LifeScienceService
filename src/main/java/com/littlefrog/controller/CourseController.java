@@ -28,29 +28,35 @@ public class CourseController {
 
     private int currentID=0;
     @GetMapping("api/course/byKeyword")
-    public Response getCoursesByKeyword(@RequestHeader String appID,@RequestParam String keyword, @RequestParam int sortBy, @RequestParam Tag tag, @RequestParam int index, @RequestParam int offset){
+    public Response getCoursesByKeyword(@RequestHeader String appID,@RequestParam String keyword, @RequestParam int sortBy, @RequestParam String tag, @RequestParam int index, @RequestParam int offset){
         if(!appID.equals(this.appID)){
             return genFailResult("错误的appID");
+        }
+        Tag t;
+        try{
+            t = Tag.valueOf(tag.toUpperCase());
+        }catch (IllegalArgumentException e){
+            return genFailResult("枚举参数无效");
         }
         List<Course>  courseList = null;
         switch (sortBy){
             case 0:
-                if (tag == Tag.NONE){
+                if (t == Tag.NONE){
                     courseList = courseService.getCourseByReleaseTime(keyword,index,offset,currentID++);
                 }
                 else {
-                    courseList = courseService.getCourseByTagAndReleaseTime(tag,keyword,index,offset,currentID++);
+                    courseList = courseService.getCourseByTagAndReleaseTime(t,keyword,index,offset,currentID++);
                 }
                 break;
             case 1:
-                courseList=courseService.getCourseByTag(tag,keyword,index,offset,currentID);
+                courseList=courseService.getCourseByTag(t,keyword,index,offset,currentID);
                 break;
             case 2:
-                if (tag == Tag.NONE){
+                if (t == Tag.NONE){
                     courseList = courseService.getCourseByPopularity(keyword,index,offset,currentID++);
                 }
                 else {
-                    courseList = courseService.getCourseByTagAndPopularity(tag,keyword,index,offset,currentID++);
+                    courseList = courseService.getCourseByTagAndPopularity(t,keyword,index,offset,currentID++);
                 }
                 break;
             default:
@@ -93,11 +99,18 @@ public class CourseController {
     }
 
     @PostMapping("api/course/addCourse")
-    public Response updateCourse(@RequestHeader String appID, @RequestParam String name, @RequestParam String location, @RequestParam String teacher, @RequestParam String introduction, @RequestParam int popularity, @RequestParam Tag tag, @RequestParam String coverPic, @RequestParam double price , @RequestParam int courseNum){
+    public Response updateCourse(@RequestHeader String appID, @RequestParam String name, @RequestParam String location, @RequestParam String teacher, @RequestParam String introduction, @RequestParam int popularity, @RequestParam String tag, @RequestParam String coverPic, @RequestParam double price , @RequestParam int courseNum){
+
         if(!appID.equals(this.appID)){
             return genFailResult("错误的appID");
         }
-        Course course=courseService.addCourse(location,name,teacher,introduction,popularity,tag,coverPic,new Date(),price,courseNum);
+        Tag t;
+        try{
+            t = Tag.valueOf(tag.toUpperCase());
+        }catch (IllegalArgumentException e){
+            return genFailResult("枚举参数无效");
+        }
+        Course course=courseService.addCourse(location,name,teacher,introduction,popularity,t,coverPic,new Date(),price,courseNum);
         if(course==null){
             return genFailResult("添加课程失败");
         }else{
@@ -106,15 +119,21 @@ public class CourseController {
     }
 
     @PostMapping("api/course/setCourseInfo")
-    public Response updateCourse(@RequestHeader String appID, @RequestParam Integer ID, @RequestParam String name, @RequestParam String location, @RequestParam String teacher, @RequestParam String introduction, @RequestParam int popularity, @RequestParam Tag tag, @RequestParam String coverPic, @RequestParam double price , @RequestParam int courseNum){
+    public Response updateCourse(@RequestHeader String appID, @RequestParam Integer courseID, @RequestParam String name, @RequestParam String location, @RequestParam String teacher, @RequestParam String introduction, @RequestParam int popularity, @RequestParam String tag, @RequestParam String coverPic, @RequestParam double price , @RequestParam int courseNum){
         if(!appID.equals(this.appID)){
             return genFailResult("错误的appID");
         }
-        boolean result=courseService.setCourseInfo(ID,location,name,teacher,introduction,popularity,tag,coverPic,price,courseNum);
+        Tag t;
+        try{
+            t = Tag.valueOf(tag.toUpperCase());
+        }catch (IllegalArgumentException e){
+            return genFailResult("枚举参数无效");
+        }
+        boolean result=courseService.setCourseInfo(courseID,location,name,teacher,introduction,popularity,t,coverPic,price,courseNum);
         if(!result){
             return genFailResult("修改课程信息失败");
         }else{
-            Course course=courseService.findByID(ID);
+            Course course=courseService.findByID(courseID);
             return genSuccessResult(course);
         }
     }

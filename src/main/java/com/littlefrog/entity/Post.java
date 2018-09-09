@@ -13,42 +13,53 @@ public class Post {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "post_id")
+    @Column(name = "post_id", updatable = false, nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer postID;
     /**
      * 帖子的课程
      */
-    @Column(name = "course_id")
+    @Column(name = "course_id", nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer courseID;
     /**
      * 发帖用户
      */
-    @Column(name = "user_id")
+    @Column(name = "user_id", insertable = false, updatable = false, nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer userID;
     /**
      * 上一被回复贴子
      */
-    @Column(name = "previous_post_id")
+    @Column(name = "previous_post_id", columnDefinition = "INT(11) UNSIGNED")
     private Integer previousPostID;
     /**
      * 帖子内容
      */
-    @Column(name = "content")
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
     /**
      * 赞
      */
-    @Column(name = "likes")
+    @Column(name = "likes", nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer likes;
     /**
      * 回复数
      */
-    @Column(name = "reply")
+    @Column(name = "reply", nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer reply;
 
     @Transient
-    @Column (name = "pre_poster")
     private String prePoster;
+
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "post_user_key", foreignKeyDefinition = " FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE ON UPDATE CASCADE;"))
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getPrePoster() {
         return prePoster;
@@ -86,7 +97,7 @@ public class Post {
         this.userID = post.userID;
         this.likes = post.likes;
         this.reply = post.reply;
-        this.prePoster=post.prePoster;
+        this.prePoster = post.prePoster;
     }
 
     public Integer getPostID() {

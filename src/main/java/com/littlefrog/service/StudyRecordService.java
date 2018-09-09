@@ -32,7 +32,7 @@ public class StudyRecordService {
     }
 
     public void updateProgressRate(StudyRecord studyRecord){
-        studyRecordRepository.updateProgress(studyRecord.getUserID(), studyRecord.getLessonID(), studyRecord.getHour(), studyRecord.getMinute(), studyRecord.getSecond(), studyRecord.getLessonID());
+        studyRecordRepository.updateProgress(studyRecord.getUserID(), studyRecord.getCourseID(), studyRecord.getHour(), studyRecord.getMinute(), studyRecord.getSecond(), studyRecord.getLessonID());
     }
 
     public void addProgressRate (int usr_id,int course_id){

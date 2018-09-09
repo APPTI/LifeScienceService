@@ -1,24 +1,19 @@
 package com.littlefrog.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.littlefrog.common.Category;
 import com.littlefrog.common.Response;
+import com.littlefrog.common.ResultGenerator;
 import com.littlefrog.entity.Activity;
+import com.littlefrog.entity.ActivityRecord;
 import com.littlefrog.entity.Coupon;
-import com.littlefrog.entity.Order;
 import com.littlefrog.entity.User;
-import com.littlefrog.service.ActivityService;
-import com.littlefrog.service.CouponService;
-import com.littlefrog.service.OrderService;
-import com.littlefrog.service.UserService;
+import com.littlefrog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.littlefrog.common.ResultGenerator.genFailResult;
@@ -41,6 +36,11 @@ public class UserController {
 
     @Autowired
     private CouponService couponService;
+
+    @Autowired
+    private InformService informService;
+    @Autowired
+    private ActivityRecordService activityRecordService;
 
     @Value("${appID}")
     private String appID;
@@ -75,11 +75,11 @@ public class UserController {
        }
     }
     @GetMapping("api/user/info")
-    public Response indexforID(@RequestHeader String appID, @RequestParam Integer ID){
+    public Response indexforID(@RequestHeader String appID, @RequestParam Integer userID){
         if(!appID.equals(this.appID)){
             return genFailResult("错误的appID");
         }
-        User user = userService.getUserInfo(ID);
+        User user = userService.getUserInfo(userID);
         if(user != null){
             return genSuccessResult(user);
         }else{
@@ -112,9 +112,15 @@ public class UserController {
                 return genSuccessResult();
             }else{
                 try {
+                    ActivityRecord activityRecord = activityRecordService.getActivityRecord(userID, activity.getActivityID());
+                    if(activityRecord!=null){
+                        return ResultGenerator.genSuccessResult("成功");
+                    }
+                    activityRecordService.addActivityRecord(new ActivityRecord(userID,activity.getActivityID()));
                     Coupon.setLastTime(activity.getCouponExpiry());
-                    Coupon coupon = couponService.addCoupon(userID, activity.getCoupon(),activity.getActivityID(),activity.getRequirement());
-                    return genSuccessResult("恭喜您获得"+activity.getCoupon()+"元优惠券");
+                    Coupon mycoupon = couponService.addCoupon(userID, activity.getCoupon(), activity.getActivityID(), activity.getRequirement());
+                    informService.addInform(userID,"恭喜您成功获得"+mycoupon.getAmount()+"元优惠券，赶快去使用吧！",Category.SYSTEM,null);
+                    return genSuccessResult("成功");
                 }catch (Exception e){
                     return genFailResult(e.getMessage());
                 }

@@ -40,7 +40,7 @@ public class ActivityController {
     }
 
     @PostMapping("api/activity/updateActivity")
-    public Response updateActivity(@RequestHeader String appID, @RequestParam int ID,@RequestParam String title,@RequestParam String coverUrl,@RequestParam String url,@RequestParam int coupon, @RequestParam Date couponExpiry,@RequestParam Date expiry){
+    public Response updateActivity(@RequestHeader String appID, @RequestParam int ID,@RequestParam String title,@RequestParam String coverUrl,@RequestParam String url,@RequestParam int coupon, @RequestParam Integer couponExpiry,@RequestParam Date expiry){
         if(!appID.equals(this.appID)){
             return genFailResult("错误的appID");
         }

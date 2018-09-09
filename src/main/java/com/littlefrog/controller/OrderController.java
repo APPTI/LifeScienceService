@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.littlefrog.common.Category;
 import com.littlefrog.common.Response;
+import com.littlefrog.common.ResultGenerator;
 import com.littlefrog.entity.*;
 import com.littlefrog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static com.littlefrog.common.ResultGenerator.genFailResult;
 import static com.littlefrog.common.ResultGenerator.genSuccessResult;
@@ -31,6 +33,8 @@ public class OrderController {
     private InformService informService;
     @Autowired
     private ActivityService activityService;
+    @Autowired
+    private ActivityRecordService activityRecordService;
 
     @Value("${appID}")
     private String appID;
@@ -134,18 +138,26 @@ public class OrderController {
                     message = "您已购买过啦";
                     return genFailResult(message);
                 } else {
-                    couponService.useCoupon(couponID);
+                    if(couponID!=-1) {
+                        couponService.useCoupon(couponID);
+                    }
                     userService.payMoney(userID, wallet - price + couponMoney);
                     message = "恭喜您已经成功购买课程【" + course.getName() + "】,赶快去学习吧！";
                     informService.addInform(userID, message, Category.ORDER, courseID);
                     if (couponID == -1) {
                         Activity activity = activityService.findByrequirement(courseID, 1);
                         if (activity != null) {
+                            ActivityRecord activityRecord = activityRecordService.getActivityRecord(userID, activity.getActivityID());
+                            if(activityRecord!=null){
+                                return ResultGenerator.genSuccessResult("成功");
+                            }
+                            activityRecordService.addActivityRecord(new ActivityRecord(userID,activity.getActivityID()));
                             Coupon.setLastTime(activity.getCouponExpiry());
-                            Coupon coupon = couponService.addCoupon(userID, activity.getCoupon(), activity.getActivityID(), activity.getRequirement());
+                            Coupon mycoupon = couponService.addCoupon(userID, activity.getCoupon(), activity.getActivityID(), activity.getRequirement());
+                            informService.addInform(userID,"恭喜您成功获得"+mycoupon.getAmount()+"元优惠券，赶快去使用吧！",Category.SYSTEM,null);
                             JSONObject result = new JSONObject();
                             result.put("order", order);
-                            result.put("coupon", coupon);
+                            result.put("coupon", mycoupon);
                             return genSuccessResult(result);
                         } else {
                             return genSuccessResult(order);

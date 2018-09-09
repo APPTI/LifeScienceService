@@ -3,38 +3,38 @@ package com.littlefrog.entity;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name="user")
+@Entity(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "user_id")
+    @Column(name = "user_id",updatable = false, nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer userID;
 
-    @Column
+    @Column(nullable = false, length = 45)
     private String name;
 
-    @Column(name = "open_id")
+    @Column(name = "open_id", nullable = false, length = 45)
     private String openID;
 
-    @Column
+    @Column(columnDefinition = "TINYINT(1) UNSIGNED")
     private int gender;
 
-    @Column(name = "phone_num")
+    @Column(name = "phone_num", length = 45)
     private String phoneNum;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "decimal(7,2) UNSIGNED")
     private double balance;
 
-    @Column(name = "last_login_time")
+    @Column(name = "last_login_time", nullable = false)
     private Date lastLoginTime;
 
-    @Column (name = "phone_valid")
+    @Column(name = "phone_valid", columnDefinition = "TINYINT(1) UNSIGNED")
     private boolean phoneValid;
 
-    @Column(name = "session_id")
+    @Column(name = "session_id", length = 45)
     private String sessionID;
 
-    @Column(name = "union_id")
+    @Column(name = "union_id", length = 45)
     private String unionID;
 
     public String getSessionID() {
@@ -53,9 +53,10 @@ public class User {
         this.unionID = unionID;
     }
 
-    public User(){
+    public User() {
         setLastLoginTime(new Date());
     }
+
     public User(String name, String openID, int gender, String phoneNum, double balance, String sessionID, String unionID) {
         this.name = name;
         this.openID = openID;
@@ -74,7 +75,7 @@ public class User {
         this.sessionID = sessionID;
         this.gender = 0;
         this.balance = 0;
-        this.phoneValid =false;
+        this.phoneValid = false;
         this.lastLoginTime = new Date();
     }
 
@@ -85,10 +86,9 @@ public class User {
         this.unionID = unionID;
         this.gender = 0;
         this.balance = 0;
-        this.phoneValid =false;
+        this.phoneValid = false;
         this.lastLoginTime = new Date();
     }
-
 
 
     public String getName() {
@@ -106,7 +106,6 @@ public class User {
     public void setGender(int gender) {
         this.gender = gender;
     }
-
 
 
     public double getBalance() {

@@ -8,11 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -56,6 +52,10 @@ public class CouponService {
             return true;
         }
         return false;
+    }
+
+    public Optional<Coupon> findCouponByActivity(int userID, int code){
+        return couponRepository.findCouponByActivity(userID,code);
     }
 
     public void changLastTime(Integer newTime) {

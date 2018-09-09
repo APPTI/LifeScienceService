@@ -7,25 +7,25 @@ import java.util.Date;
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "lesson_id")
+    @Column(name = "lesson_id", updatable = false, nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer lessonID;
 
-    @Column(name = "order_num")
+    @Column(name = "order_num", nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private int order;
 
-    @Column
+    @Column(nullable = false, length = 45)
     private String title;
 
-    @Column(name = "video_url")
+    @Column(name = "video_url", length = 45, nullable = false)
     private String videoUrl;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "cover_pic")
+    @Column(name = "cover_pic", nullable = false, length = 45)
     private String coverPic;
 
-    @Column(name = "course_id")
+    @Column(name = "course_id", nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private int courseID;
 
     @Column

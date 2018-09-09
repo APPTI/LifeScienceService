@@ -1,16 +1,17 @@
 package com.littlefrog.controller;
 
+import com.littlefrog.common.Category;
 import com.littlefrog.common.Response;
 import com.littlefrog.common.ResultGenerator;
 import com.littlefrog.entity.Activity;
+import com.littlefrog.entity.ActivityRecord;
 import com.littlefrog.entity.Coupon;
-import com.littlefrog.service.ActivityService;
-import com.littlefrog.service.CouponService;
-import com.littlefrog.service.CourseService;
-import com.littlefrog.service.UserService;
+import com.littlefrog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -19,13 +20,13 @@ public class ShareController {
     private ActivityService activityService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CourseService courseService;
+    private InformService informService;
 
     @Autowired
     private CouponService couponService;
+
+    @Autowired
+    private ActivityRecordService activityRecordService;
 
     @Value("${appID}")
     private String appID;
@@ -40,10 +41,16 @@ public class ShareController {
             return ResultGenerator.genSuccessResult("成功");
         }else{
             try {
+                ActivityRecord activityRecord = activityRecordService.getActivityRecord(userID, activity.getActivityID());
+                if(activityRecord!=null){
+                    return ResultGenerator.genSuccessResult("成功");
+                }
+                activityRecordService.addActivityRecord(new ActivityRecord(userID,activity.getActivityID()));
                 Coupon.setLastTime(activity.getCouponExpiry());
-                Coupon coupon = couponService.addCoupon(userID,activity.getCoupon(),activity.getActivityID(),activity.getRequirement());
-                String msg = "恭喜您获得"+activity.getCoupon()+"元优惠券";
-                return ResultGenerator.genSuccessResult(msg);
+                couponService.addCoupon(userID,activity.getCoupon(),activity.getActivityID(),activity.getRequirement());
+                String msg = "恭喜您获得"+activity.getCoupon()+"元优惠券,快去使用吧";
+                informService.addInform(userID,msg,Category.SYSTEM,null);
+                return ResultGenerator.genSuccessResult("成功");
             }catch (Exception e){
                 return ResultGenerator.genFailResult(e.getMessage());
             }

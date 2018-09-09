@@ -23,7 +23,12 @@ public class CourseService {
             courseList = courseRepository.findCourseByTag(keyword);
             store.addCourseList(id,courseList);
         }
-        return courseList.subList(index,Math.min(index+offset,courseList.size()));
+        try {
+            return courseList.subList(index, Math.min(index + offset, courseList.size()));
+        }
+        catch (IllegalArgumentException i){
+            return null;
+        }
     }
 
     public List<Course> getCourseByTagAndPopularity(Tag tag,String keyword,int index,int offset,int id){
@@ -32,7 +37,12 @@ public class CourseService {
             courseList=courseRepository.findCourseByTagAndPopularity(tag.ordinal(),keyword);
             store.addCourseList(id,courseList);
         }
-        return courseList.subList(index,Math.min(index+offset,courseList.size()));
+        try {
+            return courseList.subList(index, Math.min(index + offset, courseList.size()));
+        }
+        catch (IllegalArgumentException i){
+            return null;
+        }
     }
 
     public List<Course> getCourseByTagAndReleaseTime(Tag tag,String keyword,int index,int offset,int id){
@@ -41,7 +51,12 @@ public class CourseService {
             courseList = courseRepository.findCourseByTagAndReleaseTime(tag.ordinal(),keyword);
             store.addCourseList(id,courseList);
         }
-        return courseList.subList(index,Math.min(index+offset,courseList.size()));
+        try {
+            return courseList.subList(index, Math.min(index + offset, courseList.size()));
+        }
+        catch (IllegalArgumentException i){
+            return null;
+        }
     }
 
     public List<Course> getCourseByReleaseTime (String keyword,int index,int offset,int id){
@@ -50,7 +65,12 @@ public class CourseService {
             courseList=courseRepository.findCourseByReleaseTime(keyword);
             store.addCourseList(id,courseList);
         }
-        return courseList.subList(index,Math.min(index+offset,courseList.size()));
+        try {
+            return courseList.subList(index, Math.min(index + offset, courseList.size()));
+        }
+        catch (IllegalArgumentException i){
+            return null;
+        }
     }
 
     public List<Course> getCourseByPopularity (String keyword,int index,int offset,int id){
@@ -59,7 +79,12 @@ public class CourseService {
             courseList=courseRepository.findCourseByPopularity(keyword);
             store.addCourseList(id,courseList);
         }
-        return courseList.subList(index,Math.min(index+offset,courseList.size()));
+        try {
+            return courseList.subList(index, Math.min(index + offset, courseList.size()));
+        }
+        catch (IllegalArgumentException i){
+            return null;
+        }
     }
 
     public List<Course> getAllCourse (int index,int offset,int id){
@@ -68,7 +93,12 @@ public class CourseService {
             courseList=courseRepository.findAll();
             store.addCourseList(id,courseList);
         }
-        return courseList.subList(index,Math.min(index+offset,courseList.size()));
+        try {
+            return courseList.subList(index, Math.min(index + offset, courseList.size()));
+        }
+        catch (IllegalArgumentException i){
+            return null;
+        }
     }
 
 

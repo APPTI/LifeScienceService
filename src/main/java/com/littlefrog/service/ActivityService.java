@@ -50,7 +50,7 @@ public class ActivityService {
         return activityRepository.findAll();
     }
 
-    public boolean Update(int id,String title,String cover_url, String url, int coupon,Date coupon_expiry,Date expiry){
+    public boolean Update(int id,String title,String cover_url, String url, int coupon,Integer coupon_expiry,Date expiry){
         try{
             activityRepository.updateActivity(id,title,cover_url,url,coupon,coupon_expiry,expiry);
             return true;

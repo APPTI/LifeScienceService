@@ -3,41 +3,41 @@ package com.littlefrog.entity;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name="activity")
+@Entity(name = "activity")
 public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "activity_id")
+    @Column(name = "activity_id", nullable = false, updatable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer activityID;
 
-    @Column
+    @Column(columnDefinition = "CHAR NOT NULL")
     private String title;//活动标题
 
-    @Column(name = "cover_url")
+    @Column(name = "cover_url", columnDefinition = "char NOT NULL ")
     private String coverUrl;//封面图片
 
-    @Column
+    @Column(columnDefinition = "char NOT NULL ")
     private String content;//活动内容，为svg格式的图片url
 
-    @Column(name = "is_has_coupon")
-    private Boolean  isHasCoupon;//是否有代金券
+    @Column(name = "is_has_coupon", columnDefinition = "tinyint(1) unsigned NOT NULL ")
+    private Boolean isHasCoupon;//是否有代金券
 
-    @Column
+    @Column(columnDefinition = "decimal(6,2) UNSIGNED NOT NULL")
     private int coupon;//代金券面值
 
-    @Column(name = "coupon_expiry")
+    @Column(name = "coupon_expiry", columnDefinition = "smallint unsigned NOT NULL")
     private int couponExpiry;//代金券有效期
 
-    @Column
+    @Column(columnDefinition = "date NOT NULL")
     private Date expiry;//有效期
 
-    @Column
+    @Column(columnDefinition = "tinyint(2) unsigned NOT NULL")
     private int requirement;//获取优惠券条件，0 为分享， 1为报名课程， 2 为充值
 
-    @Column(name = "course_id")
+    @Column(name = "course_id", columnDefinition = "int(11) unsigned  NOT NULL")
     private int courseID;//关联的课程id
 
-    @Column
+    @Column(columnDefinition = "smallint NOT NULL")
     private int amount;//充值金额
 
     public int getCouponExpiry() {
@@ -58,6 +58,9 @@ public class Activity {
         this.requirement = requirement;
         this.courseID = courseID;
         this.amount = amount;
+    }
+
+    public Activity() {
     }
 
     public Integer getActivityID() {
@@ -147,6 +150,7 @@ public class Activity {
                 ", amount=" + amount +
                 '}';
     }
+
     public Activity(String title, String coverUrl, String content, Boolean isHasCoupon, int coupon, int couponExpiry, Date expiry, int requirement, int courseID, int amount) {
         this.title = title;
         this.coverUrl = coverUrl;

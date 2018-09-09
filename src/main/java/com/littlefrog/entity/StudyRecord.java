@@ -6,25 +6,25 @@ import javax.persistence.*;
 public class StudyRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "study_record_id")
+    @Column(name = "study_record_id", updatable = false, nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer studyRecordID;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer userID;
 
-    @Column(name = "course_id")
+    @Column(name = "course_id", nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer courseID;
 
-    @Column(name = "lesson_id")
+    @Column(name = "lesson_id", nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer lessonID;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "TINYINT UNSIGNED")
     private Integer hour;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "TINYINT UNSIGNED")
     private Integer minute;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "TINYINT UNSIGNED")
     private Integer second;
 
 

@@ -31,7 +31,8 @@ public class StudyRecordController {
     }
 
     @PostMapping ("api/learningRecord/add")
-    public Response updateLearningProgress (@RequestHeader String appID,@RequestParam StudyRecord record){
+    public Response updateLearningProgress (@RequestHeader String appID,@RequestParam int userID, int courseID, int lessonID, int hour, int minute, int second){
+        StudyRecord record =new StudyRecord(userID,courseID,lessonID,hour,minute,second);
         try {
             studyRecordService.updateProgressRate(record);
         }

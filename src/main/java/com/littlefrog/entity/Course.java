@@ -5,49 +5,50 @@ import com.littlefrog.common.Tag;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity (name = "course")
+@Entity(name = "course")
 public class Course {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "course_id")
+    @Column(name = "course_id", updatable = false, nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer courseID;
 
-    @Column
+    @Column(nullable = false, length = 45)
     private String location;
 
-    @Column
+    @Column(nullable = false, length = 45)
     private String name;
 
-    @Column
+    @Column(nullable = false, length = 45)
     private String teacher;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String introduction;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private int popularity;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "TINYINT UNSIGNED")
     private Tag tag;
 
-    @Column(name = "coverPic")
+    @Column(name = "coverPic", nullable = false, length = 45)
     private String coverPic;
 
-    @Column(name = "releaseTime")
+    @Column(name = "releaseTime", nullable = false)
     private Date releaseTime;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "decimal(6,2) UNSIGNED")
     private double price;
 
-    @Column(name = "course_num")
+    @Column(name = "course_num", nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private int courseNum;
 
 
     public Integer getCourseID() {
         return courseID;
     }
+
     public String getLocation() {
         return location;
     }
@@ -132,9 +133,10 @@ public class Course {
         this.courseNum = courseNum;
     }
 
-    public Course(){
+    public Course() {
 
     }
+
     public Course(String location, String name, String teacher, String introduction, int popularity, Tag tag, String coverPic, Date releaseTime, double price, int courseNum) {
         this.location = location;
         this.name = name;

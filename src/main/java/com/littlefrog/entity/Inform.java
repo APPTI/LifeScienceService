@@ -15,32 +15,32 @@ public class Inform {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "inform_id")
+    @Column(name = "inform_id", updatable = false, nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer informID;
     /**
      * 被通知用户
      */
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer userID;
     /**
      * 通知内容
      */
-    @Column(name = "content")
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
     /**
      * 通知发送时间
      */
-    @Column(name = "send_time")
+    @Column(name = "send_time", nullable = false)
     private Calendar sendTime;
     /**
      * 通知来源页面
      */
-    @Column(name = "category")
+    @Column(name = "category", nullable = false, columnDefinition = "TINYINT UNSIGNED")
     private Category category;
     /**
      * 返回的相关id
      */
-    @Column(name = "return_id")
+    @Column(name = "return_id", columnDefinition = "INT(11) UNSIGNED")
     private Integer returnID;
 
 

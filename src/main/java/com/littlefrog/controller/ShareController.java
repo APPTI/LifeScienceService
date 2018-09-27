@@ -41,7 +41,7 @@ public class ShareController {
         }else{
             try {
                 Coupon.setLastTime(activity.getCouponExpiry());
-                Coupon coupon = couponService.addCoupon(userID,activity.getCoupon(),activity.getActivityID(),activity.getRequirement());
+                Coupon coupon = couponService.addCoupon(userID,activity.getCoupon());
                 String msg = "恭喜您获得"+activity.getCoupon()+"元优惠券";
                 return ResultGenerator.genSuccessResult(msg);
             }catch (Exception e){

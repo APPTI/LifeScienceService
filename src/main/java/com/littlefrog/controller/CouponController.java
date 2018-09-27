@@ -44,7 +44,7 @@ public class CouponController {
         }
     }
 
-    /*@PostMapping("/give")
+    @PostMapping("/give")
     public Response give(@RequestHeader String appID, @RequestParam Integer userID, @RequestParam double amount) {
         if (!appID.equals(this.appID)) {
             return genFailResult("错误的appID");
@@ -59,7 +59,7 @@ public class CouponController {
         } else {
             return genFailResult("优惠券添加失败");
         }
-    }*/
+    }
 
     @GetMapping("/info")
     public Response indexForID(@RequestHeader String appID, @RequestParam Integer couponID) {
